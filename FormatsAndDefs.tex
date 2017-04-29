@@ -1,3 +1,4 @@
+%!TEX root = main.tex
 
 % Packages
 \usepackage{epsf}
@@ -42,7 +43,7 @@
 }
 
 % Section rules
-\usepackage{sectsty}
+%\usepackage{sectsty}
 \usepackage{times}
 
 % Bookmarks
@@ -167,3 +168,15 @@
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
+
+
+% Paragraph format
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+% Chapter formatting
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{0ex}{2.5ex}
