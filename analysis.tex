@@ -61,10 +61,10 @@ Sieť Stack Exchange\footnote{\url{https://stackexchange.com}}, ktorá patrí me
 sa skladá z viac ako 160 samostatných komunít zameraných na rôzne oblasti. Stack Exchange ponúka používateľom všetkých
 komunít možnosť odoberať informačný bulletin, ktorý je doručovaný raz týždenne.
 
-Informačné bulletiny komunít Stack Exchange obsahujú tri sekcie (Obr.~\ref{fig:so-newsletter}). Prvá sekcia je rovnaká pre všetkých používateľov
-konkrétnej komunity a obsahuje zoznam najlepšie hodnotených nových otázok. Obsah nasledujúcich dvoch sekcií je
-náhodne generovaný. Tieto sekcie obsahujú najpopulárnejšie otázky z predchádzajúceho týždňa a náhodný výber
-nezodpovedaných otázok.
+Informačné bulletiny komunít Stack Exchange obsahujú tri sekcie (Obr.~\ref{fig:so-newsletter}). Prvá sekcia je rovnaká
+pre všetkých používateľov konkrétnej komunity a obsahuje zoznam najlepšie hodnotených nových otázok.
+Obsah nasledujúcich dvoch sekcií je náhodne generovaný. Tieto sekcie obsahujú najpopulárnejšie otázky z predchádzajúceho
+týždňa a náhodný výber nezodpovedaných otázok.
 
 Používatelia CQA systému Stack Exchange nie sú s takýmto generickým informačným bulletinom
 spokojní~\cite{so-meta-newsletter}. Generický informačný bulletin stráca pre používateľov informačnú hodnotu, pretože
@@ -101,15 +101,76 @@ otázok z akejkoľvek oblasti záujmu. Rovnako informačný newsletter neponúka
 \emph{Askalot}\footnote{\url{http://askalot.fiit.stuba.sk}} tiež v súčasnosti neponúka informačný newsletter,
 iba možnosť notifikácie používateľa prostredníctvom e-mailu o aktivite súvisiacej s jeho obsahom v rámci systému.
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \newpage
 \chapter{CQA systémy}
 
-    - Co to je
-    - Cim sa lisia od inych user-generated content sites
-    - Rozdelenie CQA systemov - Yahoo Answers-type vs SO-type
+CQA systémy sú jednou z výrazných skupín webových portálov, ktoré sú založené na princípe používateľsky vytváraného obsahu.
+Tieto systémy umožňujú používateľom položiť otázky, ktoré nie je možné zodpovedať použitím štandardných vyhľadávačov~\cite{Liu2012}
+a zároveň odpovedať na otázky iných používateľov.
+
+Napriek tomu, že väčšina CQA systémov sa spočiatku zameriava najmä na poskytnutie zmysluplnej odpovede na konkrétnu otázku,
+v súčasnosti je možné v prípade niektorých CQA systémov (napr. Stack Overflow) vnímať postupnú zmenu zamerania
+z jednorázových odpovedí na kolaboratívne vytváranie komplexnejších poznatkov s dlhodobou hodnotou~\cite{Anderson2012}.
+Za týmto účelom CQA systémy implementujú hlasovanie a princíp reputácie ako spôsob podpory komunitného aspektu označovania
+najlepších odpovedí na položené otázky.
+
+
+\section{Problémy CQA systémov}
+
+\subsection{Problém dlhého chvosta}
+Čím viac sa zvýrazňuje trend orientácie CQA systémov viac na poskytovanie obsahu s dlhodobou hodnotou ako na samotné
+poskytnutie odpovede na položenú otázku, tým viac sa prehlbuje problém \emph{dlhého chvosta} (angl. \emph{long tail}).
+Ide o štandardný problém všetkých stránok zameriavajúcich sa na používateľmi vytváraný obsah, kedy je veľká väčšina
+používateľov týchto stránok len pasívnymi čitateľmi (angl. \emph{lurkers}) a najväčšia časť obsahu je vytvorená len veľmi
+úzkou skupinou najaktívnejších používateľov.
+
+V prípade CQA systému Stack Overflow sa podiel aktívnych používateľov (takých, ktorí za sledovaný mesiac pridali
+do systému aspoň jednu otázku alebo odpoveď) za marec 2017 pohyboval na úrovni 3\% všetkých
+používateľov~\cite{Srba2016SOFail}\footnote{Výsledky za aktuálne obdobie boli získané prostredníctvom nástroja Stack
+Exchange Data Explorer.}.
+
+\subsection{Variabilita v kvalite obsahu}
+Ďalším problémom CQA systémov je variabilná kvalita otázok a odpovedí v týchto systémoch. Zvyšujúcou sa popularitou CQA
+systémov narastá aj podiel obsahu s nízkou kvalitou, či už vo forme veľmi jednoduchých otázok alebo nedostatočne
+podrobných odpovedí, ako aj množstvo duplicitných otázok -- otázok, ktoré už boli v systéme
+zodpovedané~\cite{Srba2016SOFail}\cite{Ponzanelli2014}.
+
+Jedným z riešení tohto problému, ktorý využíva aj CQA systém Stack Overflow, je komunitné zabezpečovanie kvality obsahu
+prostredníctvom moderátorov -- používateľov s oprávnením upravovať, označiť duplikát alebo vymazať obsah.
+
+
+\section{Druhy CQA systémov}
+
+CQA systémy možno kategorizovať do dvoch základných skupín podľa toho, na akú oblasť otázok sa tieto systémy zameriavajú.
+
+\subsection{Univerzálne CQA systémy}
+
+CQA systémy ako \emph{Yahoo! Answers}, \emph{Wiki Answers} alebo \emph{Quora} nie sú zamerané na konkrétne oblasti
+a umožňujú používateľom pokladať otázky na akékoľvek témy~\cite{Chua2014}.
+
+Tento druh CQA systémov má štandardne vyšší počet používateľov aj aktivity ako úzko špecializované CQA systémy,
+no tiež tu existuje väčšia pravdepodobnosť výskytu nekvalitných, jednoduchých alebo neužitočných otázok a odpovedí,
+ako aj veľký počet duplicitných otázok, ktoré už boli zodpovedané. Zároveň sú univerzálne CQA systémy zameriané viac
+na samotný proces kladenia otázok a odpovedania na ne, než na vytváranie dlhodobo hodnotného obsahu.
+
+\subsection{Úzko špecializované CQA systémy}
+
+Opakom univerzálnych CQA systémov sú CQA systémy, ktoré sú špecializované na konkrétne oblasti záujmu.
+Medzi takéto CQA systémy patria napríklad jednotlivé komunity v rámci siete Stack Exchange, ktorá zahŕňa rôzne druhy
+komunít, od všeobecnejších, ako je napr. komunita venujúca sa matematike\footnote{\url{https://math.stackexchange.com}},
+po veľmi úzko špecializované, akými sú napr. komunity \emph{Ask Ubuntu}\footnote{\url{https://askubuntu.com}} alebo
+\emph{Raspberry Pi}\footnote{\url{https://raspberrypi.stackexchange.com}} venujúce sa konkrétnym produktom.
+
+Tématicky zamerané CQA systémy majú väčší potenciál pre vznik dlhodobo hodnotného obsahu~\cite{Anderson2012}. V rámci
+týchto systémov tiež vzniká množstvo prepojení medzi obsahom \textit{(otázky podobného charakteru, riešenie problému
+v príbuznej oblasti)}, čo vedie k vzniku \emph{znalostných sietí}~(angl.~\emph{knowledge networks})~\cite{Li2016}.
+S cieľom zvýšiť hodnotu jednotlivých príspevkov tiež mnohé CQA systémy zavádzajú možnosť komunitnej úpravy
+otázok a odpovedí~\cite{Li2015}, čo vedie okrem zvýšenej aktivity aj k zvýšeniu vnímanej užitočnosti príspevku.
 
 
 
