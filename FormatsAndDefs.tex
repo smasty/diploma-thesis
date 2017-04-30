@@ -42,9 +42,6 @@
 	\renewcommand{\lstlistlistingname}{Zoznam ukážok}
 }
 
-% Section rules
-%\usepackage{sectsty}
-\usepackage{times}
 
 % Bookmarks
 
@@ -170,6 +167,11 @@
 \setcounter{tocdepth}{3}
 
 
+% Section rules
+\usepackage{sectsty}
+\usepackage{times}
+\allsectionsfont{\normalfont\sffamily\bfseries}
+
 % Paragraph format
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
@@ -178,5 +180,5 @@
 \usepackage{titlesec}
 
 \titleformat{\chapter}
-  {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+  {\normalfont\sffamily\LARGE\bfseries}{\thechapter}{1em}{}
 \titlespacing*{\chapter}{0pt}{0ex}{2.5ex}
