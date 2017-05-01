@@ -199,10 +199,32 @@ v hybridných odporúčacích systémoch.
 
 \subsection{Kolaboratívne filtrovanie}
 
+Odporúčacie systémy využívajúce kolaboratívne filtrovanie fungujú prostredníctvom získavania spätnej väzby používateľa
+vo forme hodnotení pre položky v danej doméne a využívajú podobnosti v hodnotení medzi viacerými používateľmi na určenie
+či určitý obsah odporučiť, alebo nie~\cite{Buhmann2011}. Metódy kolaboratívneho filtrovania možno ďalej rozdeliť
+na metódy založené na susednosti alebo na základe modelu.
+
+Kolaboratívne filtrovanie na základe susednosti (angl.~\emph{Neighborhood-based Collaborative filtering})
+vyberá skupinu používateľov podľa ich podobnosti k aktuálnemu používateľovi
+a použitím váženej kombinácie ich hodnotení vyberá odporúčaný obsah pre tohto používateľa.
+Techniky založené na modeli (angl.~\emph{Model-based Collaborative filtering}) poskytujú odporúčania prostedníctvom
+oceňovania parametrov štatistických modelov pre používateľské hodnotenia.
+
 \subsection{Filtrovanie na základe obsahu}
-- Odporucacie systemy celkovo - o co ide (len kratko)
-    - Content-based filtering
-    - Collaborative filtering
+
+Odporúčanie čisto prostedníctvom kolaboratívneho filtrovania využíva iba používateľské hodnotenia. Tieto prístupy berú
+všetkých používateľov a položky ako atomické jednotky a odporúčania sú vytvárané bez ohľadu na konkrétne špecifiká
+individuálnych používateľov alebo položiek.
+
+Metódy využívajúce filtrovanie na základe obsahu naopak vytvárajú
+odporúčania na základe porovnávania modelov reprezentujúcich obsah s modelmi reprezentujúcimi konkrétneho používateľa.
+Odporúčania v takýchto prístupoch vznikajú na základe prekryvu týchto dvoch modelov.
+
+
+\section{Odporúčanie v CQA systémoch}
+
+
+
 - Odporucanie v CQA systemoch
 - Question Routing, Question recommendation, retrieval... definitions...
 - Challenges:
