@@ -57,7 +57,7 @@ neponúkajú vôbec.
 
 \subsection{Informačné bulletiny v sieti Stack Exchange}
 
-Sieť Stack Exchange\footnote{\url{https://stackexchange.com}}, ktorá patrí medzi najpopulárnejšie CQA systémy súčasnosti,
+Sieť Stack Exchange\footnote{ \url{https://stackexchange.com}}, ktorá patrí medzi najpopulárnejšie CQA systémy súčasnosti,
 sa skladá z viac ako 160 samostatných komunít zameraných na rôzne oblasti. Stack Exchange ponúka používateľom všetkých
 komunít možnosť odoberať informačný bulletin, ktorý je doručovaný raz týždenne.
 
@@ -67,10 +67,17 @@ Obsah nasledujúcich dvoch sekcií je náhodne generovaný. Tieto sekcie obsahuj
 týždňa a náhodný výber nezodpovedaných otázok.
 
 Používatelia CQA systému Stack Exchange nie sú s takýmto generickým informačným bulletinom
-spokojní~\cite{so-meta-newsletter}. Generický informačný bulletin stráca pre používateľov informačnú hodnotu, pretože
-najmä v prípade väčších komunít, akou je napríklad Stack Overflow\footnote{\url{https://stackoverflow.com}}, často obsahuje
+spokojní~\footnote{ \url{https://meta.stackoverflow.com/q/336925}. Prevzaté 30.4.2017.}\footnote{
+\url{https://meta.stackexchange.com/q/247298}. Prevzaté 31.4.2017.}.
+Generický informačný bulletin stráca pre používateľov informačnú hodnotu, pretože
+najmä v prípade väčších komunít, akou je napríklad Stack Overflow\footnote{ \url{https://stackoverflow.com}}, často obsahuje
 otázky, ktoré nie sú z oblastí záujmu používateľa. Najviac sa tento problém prejavuje na sekcii nezodpovedaných otázok.
 Tie sú vyberané náhodne, takže pravdepodobnosť, že používateľ vie na niektorú z nich odpovedať, je malá.
+
+\textbf{TODO}
+Viac analyzovat SO newsletter, ABC casti, popisat - ako su robene tie sekcie
+Plus nazory ludi z Meta SO
+formulovat to ako motivaciu, ze ludia to chcu, ake problemy videli atd.
 
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.4]{so-newsletter}
@@ -141,7 +148,7 @@ Exchange Data Explorer.}.
 Ďalším problémom CQA systémov je variabilná kvalita otázok a odpovedí v týchto systémoch. Zvyšujúcou sa popularitou CQA
 systémov narastá aj podiel obsahu s nízkou kvalitou, či už vo forme veľmi jednoduchých otázok alebo nedostatočne
 podrobných odpovedí, ako aj množstvo duplicitných otázok -- otázok, ktoré už boli v systéme
-zodpovedané~\cite{Srba2016SOFail}\cite{Ponzanelli2014}.
+zodpovedané~\cite{Srba2016SOFail,Ponzanelli2014}.
 
 Jedným z riešení tohto problému, ktorý využíva aj CQA systém Stack Overflow, je komunitné zabezpečovanie kvality obsahu
 prostredníctvom moderátorov -- používateľov s oprávnením upravovať, označiť duplikát alebo vymazať obsah.
@@ -197,7 +204,7 @@ filtrovania} (angl.~\emph{Collaborative filtering}), alebo použitím \emph{filt
 (angl.~\emph{Content-based filtering})~\cite{Buhmann2011}. Tieto dva prístupy môžu byť tiež kombinované
 v hybridných odporúčacích systémoch.
 
-\subsection{Kolaboratívne filtrovanie}
+\subsection{Kolaboratívne filtrovanie}\label{rec:collab}
 
 Odporúčacie systémy využívajúce kolaboratívne filtrovanie fungujú prostredníctvom získavania spätnej väzby používateľa
 vo forme hodnotení pre položky v danej doméne a využívajú podobnosti v hodnotení medzi viacerými používateľmi na určenie
@@ -210,7 +217,7 @@ a použitím váženej kombinácie ich hodnotení vyberá odporúčaný obsah pr
 Techniky založené na modeli (angl.~\emph{Model-based Collaborative filtering}) poskytujú odporúčania prostedníctvom
 oceňovania parametrov štatistických modelov pre používateľské hodnotenia.
 
-\subsection{Filtrovanie na základe obsahu}
+\subsection{Filtrovanie na základe obsahu}\label{rec:content}
 
 Odporúčanie čisto prostedníctvom kolaboratívneho filtrovania využíva iba používateľské hodnotenia. Tieto prístupy berú
 všetkých používateľov a položky ako atomické jednotky a odporúčania sú vytvárané bez ohľadu na konkrétne špecifiká
@@ -223,10 +230,70 @@ Odporúčania v takýchto prístupoch vznikajú na základe prekryvu týchto dvo
 
 \section{Odporúčanie v CQA systémoch}
 
+V kontexte CQA systémov je problematika odporúčania a odporúčacích systémov častým objektom výskumu~\cite{Srba2016}.
+
+Jedným z hlavných cieľov CQA systémov je poskytnúť pýtajúcemu sa odpoveď na jeho otázku v čo možno najkratšom čase.
+Rovnako ako v prípade iných systémov založených na používateľmi vytváranom obsahu, aj v prípade CQA systémov miera
+nového obsahu -- nových otázok a odpovedí -- neustále narastá. Napriek tomu je tiež možné pozorovať stúpajúci trend
+nízkej miery zodpovedanosti otázok~\cite{Srba2016SOFail}. Jedným zo spôsobov, ako je možné riešiť túto situáciu,
+je práve využitie odporúčacích systémov.
+
+V súčasnosti jedným z trendov najmä v úzko zameraných CQA systémoch ako napr. Stack Overflow, je tiež postupný prechod
+od modelu jednoduchého odpovedania na položené otázky na model povzbudzujúci k vytváraniu dlhodobo hodnotného obsahu
+vo forme rozsiahlych komunitne spravovaných odpovedí~\cite{Anderson2012,Li2015} podnecujúcich diskusiu.
+V tomto prípade je možné využiť odporúčacie systémy ako prostriedok pre odhalenie a prezentovanie otázok a odpovedí,
+ktoré by mohli používateľa zaujímať a priniesť mu úžitok~\cite{Toba2014} aj v prípade, že práve nemá rovnaký problém,
+ako sa vyskytuje v danej otázke.
+
+Výskum v oblasti odporúčania v CQA systémoch sa v súčasnosti zameriava hlavne na oblasti odporúčania, smerovania
+a získavania otázok. Problémom súčasného výskumu v tejto oblasti je nejednoznačnosť a časté zamieňanie týchto výrazov,
+prípadne nerozlišovanie medzi odporúčaním a smerovaním otázok~\cite{Srba2016}.
+
+\subsection{Odporúčanie otázok}
+
+Odporúčanie otázok (angl.~\emph{Question recommendation}) využíva tzv. \emph{pull} prístup, teda na základe (explicitnej
+či implicitnej) požiadavky používateľa prezentuje zoznam odporúčaných relevantných otázok (alebo obsahu celkovo).
+Tento prístup využíva štandardnejší tok medzi použitými modelmi -- začína sa modelom používateľa, na ktorý sa odporúčací
+systém pokúša namapovať model relevantného obsahu.
+Relevancia otázok pre používateľa môže byť identifikovaná rôznymi prístupmi -- či už na základe kolaboratívneho
+filtrovania (\ref{rec:collab}) alebo filtrovania na základe obsahu (\ref{rec:content}).
+
+Forma prezentovania odporúčaných otázok sa tiež môže líšiť. Časté je napríklad zobrazenie príbuzných otázok v detaile
+konkrétnej otázky, ktorú moementálne používateľ číta. Odporúčanie otázok je však možné využiť aj ako prostriedok pre
+zvýšenie záujmu a angažovanosti používateľa o CQA systém.
+
+\textbf{TODO} vyskum v tejto oblasti - 3 clanky
+
+\subsection{Smerovanie otázok}
+
+Na rozdiel od pomerne štandardného odporúčania otázok, v prípade smerovania otázok (angl.~\emph{Question routing})
+je prístup k odporúčaniu presne opačný, a využíva tzv. \emph{push} prístup. V tomto prípade proces odporúčania začína
+modelom nezodpovedanej otázky, ktorú sa snaží odporúčací systém nasmerovať k používateľovi, ktorý má najväčší potenciál
+na túto otázku zodpovedať.
+
+Výskum smerovania nezodpovedaných otázok na konkrétnych používateľov -- odpovedajúcich -- síce ukazuje, že ide o dôležitý
+koncept aj z pohľadu používateľského zážitku~\cite{Li2010,Li2011}, no prináša so sebou aj problémy. Najvýraznejším z nich je zahltenie
+expertov, ktorí sú hlavnými terčmi takejto formy odporúčania, nakoľko ich reputácia a expertíza ich predurčuje ako vhodných
+kandidátov na zodpovedanie veľkého množstva otázok~\cite{Pal2015}.
+
+Pomerne novým prístupom k smerovaniu otázok je namiesto zamerania na konkrétnych používateľov smerovanie otázok na väčšie
+komunity používateľov~\cite{Liu2014}. Hlavnou ideou takéhoto smerovania je fakt, že kolektívne poznatky komunity sú vždy väčšie, ako
+poznatky konkrétneho používateľa, aj experta~\cite{Pal2013}. Navyše takéto smerovanie zvyšuje pravdepodobnosť rýchlejšieho zodpovedania
+otázky, ako aj zabraňuje zahlteniu expertov. Hlavným problémom smerovania na komunity je vytváranie kolektívneho modelu
+reprezentujúceho komunitu, kedy je potrebné brať do úvahy okrem iného fakt, že iba malá časť komunity sú \emph{tvorcovia
+poznatkov} a nie len ich konzumenti~\cite{Pal2015}.
+
+\textbf{TODO} vyskum v tejto oblasti - 3 clanky
+
+\subsection{Získavanie otázok}
+
+Tento pojem (angl.~\emph{Question retrieval}) v kontexte CQA systémov hovorí o procese vyberania podobných otázok pre
+rôzne formy dopytov~\cite{Zhang2014} na základe syntaktickej podobnosti otázok.
+Tento proces je možné využiť na hľadanie odpovedí alebo poznatkov vo veľkých množstvách už zodpovedaných otázok.
+
+\textbf{TODO} vyskum v tejto oblasti - 2 clanky
 
 
-- Odporucanie v CQA systemoch
-- Question Routing, Question recommendation, retrieval... definitions...
 - Challenges:
     - Cold start
     - Filter bubble
