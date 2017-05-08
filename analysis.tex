@@ -262,7 +262,6 @@ Forma prezentovania odporúčaných otázok sa tiež môže líšiť. Časté je
 konkrétnej otázky, ktorú moementálne používateľ číta. Odporúčanie otázok je však možné využiť aj ako prostriedok pre
 zvýšenie záujmu a angažovanosti používateľa o CQA systém.
 
-\textbf{TODO} vyskum v tejto oblasti - 3 clanky
 
 \subsection{Smerovanie otázok}
 
@@ -283,7 +282,6 @@ otázky, ako aj zabraňuje zahlteniu expertov. Hlavným problémom smerovania na
 reprezentujúceho komunitu, kedy je potrebné brať do úvahy okrem iného fakt, že iba malá časť komunity sú \emph{tvorcovia
 poznatkov} a nie len ich konzumenti~\cite{Pal2015}.
 
-\textbf{TODO} vyskum v tejto oblasti - 3 clanky
 
 \subsection{Získavanie otázok}
 
@@ -291,20 +289,170 @@ Tento pojem (angl.~\emph{Question retrieval}) v kontexte CQA systémov hovorí o
 rôzne formy dopytov~\cite{Zhang2014} na základe syntaktickej podobnosti otázok.
 Tento proces je možné využiť na hľadanie odpovedí alebo poznatkov vo veľkých množstvách už zodpovedaných otázok.
 
-\textbf{TODO} vyskum v tejto oblasti - 2 clanky
+
+\subsection{Problém studeného štartu}
+
+Častým problémom odporúčania je problém studeného štartu (angl.~\emph{Cold start}), kedy je na dosiahnutie primeranej
+miery presnosti odporúčania potrebné veľké množstvo informácií, ktoré ale napr. v prípade nových alebo menej aktívnych
+používateľov nemusia byť k dispozícii.
+
+Tento problém sa vyskytuje najmä v prípade systémov, ktoré obsah odporúčajú na základe
+podobnosti používateľov medzi sebou. Keďže je často na začiatok potrebné veľké množstvo informácií o daných používateľoch,
+nie je možné jednoducho odporúčať vhodný obsah pre používateľov, ktorí sú menej aktívni, alebo sú noví.
+V menšej miere týmto problémom trpia systémy, ktoré namiesto podobnosti používateľov využívajú pre zostavovanie odporúčaní
+podobnosť samotného obsahu na základe rôznych atribútov.
+
+\subsection{Segmentácia používateľov}
+
+Ďalším z problémov v oblasti personalizovaného odporúčania, veľmi výrazným aj v prípade informačných bulletinov,
+je rozdelenie používateľov zaujímajúcich sa o informačný bulletin do skupín podľa účelu, za ktorým chcú informačný bulletin dostávať.
+V prípade úzko zameraných CQA systémov, ako je napr. Stack Overflow, je možné používateľov rozdeliť do dvoch základných
+skupín -- producentov a konzumentov.
+
+Producenti sú používatelia, ktorí primárne odpovedajú na otázky. Takýto používatelia
+tvoria dôležitú časť komunity~\cite{Anderson2012}. Motiváciou pre odoberanie informačného bulletinu pre takýchto používateľov
+je hlavne potenciál identifikovať otázky, ktoré ešte neboli dostatočne alebo správne zodpovedané, prípadne záujem
+o diskusiu o zaujímavých a netriviálnych otázkach. Konzumenti sú zase používatelia, ktorí sú spravidla v rámci komunity
+používateľov menej aktívni a ich motiváciou je zbierať vedomosti~\cite{Anderson2012}. Pre týchto používateľov je potrebné
+identifikovať vysoko kvalitné odpovede na otázky~\cite{Toba2014}.
+
+Jednotlivé skupiny používateľov tak prirodzene očakávajú nie len iný druh otázok, ale aj celé odlišné súčasti informačných bulletinov.
 
 
-- Challenges:
-    - Cold start
-    - Filter bubble
+\subsection{Problém filtračnej bubliny}\label{rec:filterbubble}
 
+Ďalším problémom, ktorému sa však v oblasti odporúčania obsahu CQA systémov venuje menej pozornosti~\cite{Srba2016},
+je rôznorodosť odporúčaného obsahu. Hrozí tak výskyt problému tzv. filtračnej bubliny (angl.~\emph{Filter bubble}).
+
+Ak totiž systém používateľovi odporúča obsah len z oblastí používateľovho záujmu, dochádza k problému, kedy je používateľ
+do značnej miery uzatvorený v rámci jednej oblasti a nemá tak možnosť získavať zaujímavé poznatky z iných oblastí.
+Používateľ sa tak síce môže stať odborníkom na danú oblasť, no jeho povedomie o širšom kontexte celej problematiky
+je veľmi obmedzené.
+
+Riešením tohto problému je identifikácia oblastí, ktoré nie sú priamo oblasťami záujmu používateľa, no sú k týmto
+oblastiam v určitých aspektoch príbuzné. Používateľ má tak možnosť rozšíriť svoj okruh záujmu a vedomosti o širšom
+kontexte problémovej domény.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\chapter{Diverzifikácia a aktuálnosť}
+\chapter{Diverzita a aktuálnosť odporúčania}
 
-- Diverzifikacia v odporucacich systemoch -> riesenie filter bubble
-- Dopad aktualnosti na uspesnost odporucania
-- D and A v CQA
+Diverzitu možno všeobecne definovať ako opak podobnosti. V niektorých prípadoch však nemusí byť odporúčanie podobných
+položiek tým najlepším riešením pre používateľa~\cite{Handbook2011}. Dôvodom je práve náchylnosť takéhoto odporúčania na
+vyvolanie problému filtračnej bubliny (viď kapitola \ref{rec:filterbubble}).
+
+Okrem diverzifikácie odporúčaného obsahu má na celkovú úspešnosť vytvárania personalizovaných odporúčaní veľký vplyv aj
+aktuálnosť (angl.~\emph{freshness}, príp.~\emph{novelty}) odporúčaného obsahu~\cite{Liu2015}.
+
+\section{Diverzita v odporúčacích systémoch}
+
+Tématická diverzifikácia je metóda napomáhajúca vyváženosti a diverzite personalizovaného odporúčania s cieľom
+lepšie reflektovať kompletné spektrum používateľových záujmov. Napriek tomu, že môže mať negatívny vplyv na priemernú
+správnosť odporúčaní, dosahuje táto metdóda zvýšenú úroveň používateľskej spokojnosti~\cite{Zhang2009}.
+
+Ziegler a kol.~\cite{Ziegler2005} študovali diverzifikáciu v oblasti odporúčaní a navrhli prístup, ktorý vytvára
+zoznamy odporúčaní lepšie uspokojujúce používateľove záujmy prostredníctvom selekcie takých zoznamov, ktoré majú nízku
+vnútornú podobnosť. Autori v experimente demonštrovali, že reálny používatelia preferujú diverznejšie výsledky.
+
+Tradičný spôsob zavedenia diverzity do odporúčania je diverzifikácia na základe atribútov odporúčaného obsahu, teda
+zoskupenie výsledkov do skupín zdieľajúcich viaceré atribúty (ako napr. žáner hudby) a následný výber iba limitovaného
+množstva výsledkov z každej zo skupín. Autori v~\cite{Yu2009} prezentujú \emph{diverzifikáciu na základe dôvodu}.
+Táto metóda využíva pre diverzifikáciu výsledkov dôvod, prečo bola konkrétna položka odporučená
+(napr. \textit{tento album bol odporučený, pretože ste počúvali inú skladbu tohto autora}). Autori experimentálne ukázali,
+že takáto forma diverzifikácie je prinajmenšom rovnako účinná, ako diverzifikácia na základe atribútov položiek.
+
+Inú perspektívu volí metóda diverzity na báze proporcionality. Zoznam odporúčaní je možné považovať za najlepšie diverzifikovaný
+vzhľadom na relevanciu odporúčaní v takom prípade, keď počet výsledkov z určitej témy je úmerný popularite danej témy.
+Dang a kol. vo svojej práci~\cite{Dang2012} ponúkajú koncept optimalizácie proporčnosti pre diverzifikáciu výsledkov
+vyhľadávania.
+
+Napriek tomu, že sa táto práca nezaoberá priamo diverzitou v odporúčacích systémov, sú paralely s touto
+oblasťou výrazné. Motiváciou pre tákyto spôsob diverzifikácie je metóda obsadzovania kresiel v parlamente. Ich metóda
+postupne pre každú pozíciu v zozname výsledkov určuje tému, ktorá najlepšie zachováva celkovú proporčnosť. Následne
+na túto pozíciu z danej témy vyberie najlepší dokument.
+
+
+\section{Aktuálnosť v odporúčacích systémoch}
+
+Aktuálnosť v kontexte odporúčacích systémov môže predstavovať dva rôzne aspekty. Jedným z nich je \emph{novosť}
+(angl.~\emph{novelty}), teda pomerne priamočiara vlastnosť určujúca, či odporúčaný obsah už bol používateľovi prezentovaný,
+alebo nie. Jednoduchým spôsobom, ako zabezpečiť, aby používateľovi neboli stále dookola odporúčané tie isté položky,
+akokoľvek relevantné by pre neho mohli byť, je odfiltrovanie položiek, ktoré už používateľovi boli odporúčané v minulosti,
+a s ktorými už interagoval~\cite{Handbook2011}.
+
+Druhým aspektom aktuálnosti je \emph{čerstvosť} (angl.~\emph{freshness}). V tomto prípade ide o časovú aktuálnosť odporúčaného
+obsahu. Naivný prístup k aktuálnosti je odporúčanie iba obsahu z určitého obmedzeného časového úseku z blízkej minulosti,
+no takýto prístup nemusí vždy dosahovať najlepšie výsledky používateľskej spokojnosti~\cite{Szpektor2013}.
+
+Pri odporúčaní, ktoré berie do úvahy aktuálnosť odporúčaného obsahu je dôležitým aspektom detekcia časovo citlivej témy.
+Takýto systém by mal brať presadzovať aktuálny obsah iba v prípade, kedy je to vhodné. Na druhej strane, ak je v prípade
+aktívne sa vyvýjajúcej témy odporúčaný neaktuálny obsah, môže to výrazne degradovať úspešnosť odporúčania~\cite{Dong2010}.
+Ďalším faktorom pri posudzovaní aktuálnosti v odporúčaní je časová škála aktuálnosti pre danú tému.
+V prípade niektorých tém alebo oblastí je možné považovať za aktuálne položky z posledného roka, no v iných prípadoch
+môžu byť aj niekoľko týždňov staré položky považované za vysoko neaktuálne.
+
+Ďalším problémom vzhľadom na aktuálnosť v odporúčaní je tiež fakt, že pre novo vzniknutý obsah môže byť problémovejšie
+zostaviť model, ktorý by ho reprezentoval, nakoľko môže byť o tomto obsahu známych zatiaľ iba málo informácií~\cite{Dong2010TW}.
+Tento problém studeného štartu sa môže prejavovať rovnako v prípade modelovania obsahu, ako je tomu napríklad v prípade
+vytvárania modelov reprezentujúcich nových používateľov.
+
+Riešením v takomto prípade môže byť napríklad vytváranie modelu
+obsahu na základe čŕt, ktoré nie sú ovplyvnené časom (napr. nadpis, text alebo autor obsahu, na rozdiel od počtu hlasov
+alebo dátumu uverejnenia), alebo tiež upravenie hodnôt týchto čŕt vzhľadom na relatívnu aktuálnosť obsahu.
+
+
+\section{Diverzita a aktuálnosť v kontexte CQA systémov}
+
+Kým diverzita a aktuálnosť sú v oblasti odporúčania a celkovo vo vyhľadávaní informácií pomerne často analyzovanými aspektmi,
+v kontexte CQA systémov sa týmto hľadiskám doteraz venovala iba okrajová pozornosť~\cite{Srba2016}.
+
+Liu a kol. vo svojej práci~\cite{Liu2015} skúmajú aspekt aktuálnosti odporúčania v CQA systémoch prostredníctvom
+relatívne neštandardného návrhu CQA systému určeného pre odpovedanie v reálnom čase na \emph{hyper-lokálne} a časovo senzitívne
+otázky. Za týmto účelom využívajú prístupy predchádzajúcich prác a kombinujú aspekty relevancie, lokality a aktuálnosti
+v \emph{real-time} CQA systéme.
+
+
+Komplexnejší pohľad na aktuálnosť a diverzitu priamo v kontexte štandardných CQA systémov ponúka Szpektor a kol~\cite{Szpektor2013}.
+Autori experimentovali so zavedením diverzity a aktuálnosti do procesu vytvárania odporúčaní pre používateľov CQA
+systému Yahoo! Answers, pričom sa na rozdiel od väčšiny prác v tejto oblasti nezameriavali len na skupinu expertných používateľov.
+
+Pre odporúčanie využili profil otázok založený na kombinácii LDA, lexikálneho a kategorického modelu a profil používateľa
+odvodený od profilu otázok, s ktorými interagoval. Párovanie otázok a používateľov bolo vykonané prostredníctvom jednoduchého
+skalárneho súčinu vektorov reprezentujúcich profily používateľov a otázok.
+
+Samotná diverzifikácia odporúčaní bola vykonávaná prostredníctvom tématického výberu vzoriek (angl.~\emph{thematic sampling}),
+kedy je vygenerovaných viacero samostatných zoznamov odporúčaných otázok z viacerých tém, ktoré sú následne zmiešané dokopy
+proporcionálne k pravdepodobnostnému skóre jednotlivých tématických zoznamov.
+
+Prínos aktuálnosti do odporúčania v CQA systémoch bol skúmaný na základe odporúčania iba aktuálneho obsahu -- konkrétne
+iba nezodpovedaných otázok za posledné štyri hodiny.
+
+Dopad diverzifkácie a aktuálnosti na úspešnosť odporúčania bol testovaný v rámci online experimentu. Používatelia boli náhodne
+rozdelení do štyroch segmentov:
+
+\begin{myitemize}
+  \myitem{\textbf{1. Kontrolná vzorka} -- Týmto používateľom neboli ponúknuté žiadne odporúčania.}
+  \myitem{\textbf{2. Odporúčanie na základe relevancie} -- Používateľom boli ponúknuté odporúčania iba na základe relevancie
+        daných otázok, bez ohľadu na aktuálnosť alebo diverzitu.}
+  \myitem{\textbf{3. Odporúčanie s ohľadom na aktuálnosť} -- Používateľom boli odporúčané relevantné otázky, pričom 50\% z nich
+        pochádzalo z posledných štyroch hodín a 20\% bolo vybraných prostredníctvom tématického výberu vzoriek.}
+  \myitem{\textbf{4. Diverzifikované odporúčanie} -- Používateľom boli odporúčané relevantné otázky, pričom 50\% z nich
+        bolo vybraných na základe tématického výberu vzoriek ako prostriedku diverzifikácie, a 20\% pochádzalo z posledných
+        štyroch hodín.}
+\end{myitemize}
+
+Výsledky online experimentu potvrdili intuitívnu myšilienku, že iba samotná relevancia nie je dostatočná na úspešne
+odporúčanie otázok v CQA systéme. Práve naopak, vo vykonanom experimente dokonca samotné odporúčanie len na základe
+relevancie dosiahlo nižšie hodnoty zodpovedania otázok, ako kontrolná vzorka bez akýchkoľvek odporúčaní.
+
+Presadzovanie aktuálnych otázok dosiahlo zvýšenie miery zodpovedania otázok o 4\%, avšak najlepšie výsledky boli dosiahnuté
+prostredníctvom diverzifikácie odporúčaní aj za cenu zníženia aktuálnosti, pričom miera zodpovedania sa zvýšila o 17\%.
+
+\vspace*{1.5cm}
+
+Na základe tejto analýzy môžeme usúdiť, že napriek tomu, že problematika diverzifikácie a aktuálnosti odporúčania v kontexte
+CQA systémov v súčasnosti stále ostáva do veľkej miery nepreskúmaná, je očividné, že uvažovanie týchto aspektov v tomto
+kontexte má veľký vplyv na úspešnosť odporúčania, pričom informačné bulletiny sa javia ako prirodzená, požadovaná,
+no napriek tomu málo využívaná forma prinášania odporúčaného a potenciálne zaujímavého obsahu použivateľom.
