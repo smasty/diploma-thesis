@@ -1,3 +1,115 @@
 %!TEX root = main.tex
 \newpage
-\chapter{Návrh}
+\chapter{Návrh riešenia personalizovaného informačného bulletinu v CQA systéme}
+
+Cieľom našej práce je navrhnúť a overiť metódu zostavovania personalizovaných informačných bulletinov v CQA systémoch
+so zameraním na podporu diverzity a aktuálnosti odporúčaného obsahu.
+
+\section{Dáta v doméne CQA systémov}
+
+Experimenty s personalizáciou informačných bulletinov budeme realizovať na platforme Stack Exchange, ktorá patrí medzi
+najpopulárnejšie CQA systémy súčasnosti a tvorí ju viac ako 160 samostatných komunít zameraných na rôzne oblasti.
+
+Experimenty plánujeme vykonávať nad dátami z komunity \textit{Software Engineering}\footnote{\url{http://softwareengineering.stackexchange.com}},
+nakoľko je táto komunita zameraná na doménu, v ktorej máme hlbšie vedomosti a teda vieme lepšie posúdiť správnosť
+odporúčania v tejto doméne. Navrhnuté riešenie však nebude špecifické pre túto komunitu, našim cieľom je naopak vytvoriť
+metódu, ktorú bude možné nasadiť v rámci celej platformy Stack Exchange, rovnako ako na iných CQA systémoch s podobnou
+štruktúrou.
+
+Platforma Stack Exchange pravidelne zverejňuje kompletné archívne dáta zo všetkých komunít vo forme XML výstupov reflektujúcich
+entity systému. Tieto dáta plánujeme využiť v prvotnej fáze experimentov na vytvorenie základných modelov.
+Pre následné zdokonaľovanie modelov, ako aj zabezpečenie aktuálnosti použitých dát budeme využívať verejné API poskytované
+platformou Stack Exchange.
+
+\subsection{Charakteristika dát}
+
+\subsubsection{Archívne dáta}
+Dáta v dátovom archíve platformy Stack Exchange\footnote{\url{http://archive.org/details/stackexchange}} sú pravidelne
+aktualizované a obsahujú kompletné používateľmi vytvorené anonymizované dáta zo všetkých komunít platformy.
+Všetky tieto dáta sú verejne dostupné pod licenciou \emph{Creative Commons Attribution-ShareAlike 3.0 Unported}.
+
+Štruktúra dát v archívoch je nasledovná:
+
+\begin{my_itemize}
+  \item{\textit{Badges.xml} -- Obsahuje ID používateľov, názvy odznakov a čas, kedy používateľ daný odznak získal.}
+  \item{\textit{Comments.xml} -- Obsahuje všetky komentáre spolu s informáciou o ich autoroch a príspevkoch, ku ktorým sa viažu.}
+  \item{\textit{Posts.xml} -- Obsahuje informácie o všetkých príspevkoch (otázkach a odpovediach) a k nim prislúchajúce značky, ako aj aktuálne znenie príspevku}
+  \item{\textit{PostHistory.xml} -- Obsahuje históriu zmien jednotlivých príspevkov, ako napr. zmenu názvu, štítkov, označenie otázky za zodpovedanú a pod.}
+  \item{\textit{PostLinks.xml} -- Obsahuje informácie o prepojeniach medzi príspevkami, konkrétne o duplikátoch a príbuzných príspevkoch.}
+  \item{\textit{Users.xml} -- Obsahuje verejné údajé všetkých používateľov, ako sú meno, reputácia, webová stránka, počet hlasov a iné.}
+  \item{\textit{Votes.xml} -- Obsahuje anonymizované informácie o hlasoch príspevkov.}
+\end{my_itemize}
+
+
+\subsubsection{Stack Exchange API}
+
+API platformy Stack Exchange\footnote{\url{http://api.stackexchange.com}} poskytuje prístup ku všetkým verejným dátam
+platformy v reálnom čase. API podporuje dvojúrovňový prístup k dátam.
+
+\textbf{Obmedzenia požiadaviek}\\
+Menšie aplikácie môžu využiť základnú úroveň, ktorá na používanie nevyžaduje registráciu a autentifikáciu,
+no jej prístup podlieha obmedzovaniu v miere prístupu a môže z jednej IP adresy denne vykonať iba 10 000 požiadaviek na API.
+
+V prípade, že aplikácia využívajúca API vykoná autentifikáciu používateľa, je limit 10 000 požiadaviek denne špecifický
+pre každého používateľa zvlášť.
+
+Bez ohľadu na úroveň prístupu je tiež uplatňované limitovanie na 30 požiadaviek za sekundu z jednej IP adresy, ako aj
+dynamické limitovanie, ktoré spočíva v tom, že každá odpoveď API môže obsahovať parameter indikujúci počet sekúnd, koľko
+má aplikácia počkať pred vykonaním ďalšej požiadavky. Tento limit musí dodržiavať každá aplikácia.
+
+\textbf{Vlastné filtre}\\
+Stack Exchange API umožňuje flexibilne špecifikovať jednotlivé atribúty, ktoré majú byť vrátené v odpovedi na požiadavku.
+Táto podpora je implementovaná prostredníctvom filtrov, ktoré môže aplikácia využívajúca API vytvoriť. Každý filter môže
+obsahovať (1) zoznam atribútov, ktoré majú byť prítomné, (2) atribúty, ktoré nemajú byť súčasťou odpovede a (3) základný
+filter, od ktorého je daný filter odvodený.\\
+Použitie filtrov umožňuje aplikáciám pokladať efektívnejšie požiadavky, ktoré vrátia iba všetky aplikáciou požadované
+atribúty a nič navyše.
+
+\textbf{Autentifikácia}\\
+Autentifikácia používateľov pri použití API je implementovaná prostredníctvom otvoreného štandardu
+OAuth 2.0\footnote{\url{http://oauth.net}}. Pre využívanie autentifikovaných požiadaviek v API je nutné zaregistrovať
+aplikáciu v centrálnom zozname všetkých aplikácií využívajúcich API platformy Stack Exchange --
+\textit{Stack Apps}\footnote{\url{http://stackapps.com}}.
+
+\subsubsection{Rozsah dát}
+
+Komunita \textit{Software Engineering}, ktorú budeme využívať v experimentoch pri návrhu riešenia má nasledovný rozsah:
+
+\begin{my_itemize}
+    \item{Otázky - cca 45 tisíc}
+    \item{Odpovede - cca 138 tisíc}
+    \item{Používatelia - cca 221 tisíc}
+    \item{Pridelené odznaky - cca 405 tisíc}
+    \item{Komentáre - cca 397 tisíc}
+    \item{Značky - cca 1.6 tisíc}
+    \item{Miera zodpovedanosti otázok - cca 94\%}
+\end{my_itemize}
+
+
+\section{Návrh metódy personalizovaného odporúčania}
+
+Hypoteza
+
+Ako to bude fungovat
+
+Riesenie cold startu
+
+Ake crty chcem pouzit
+
+Ake metriky chcem pouzit
+
+\section{Návrh metódy diverzifikácie odporúčaní}
+
+Hypoteza
+
+Ako to bude fungovat - chcem porovnat dva pristupy.
+
+Ake crty chcem pouzit
+
+Ake metriky chcem pouzit
+
+\section{Návrh overenia metód}
+
+online nekontrolovany experiment, A/B testovanie.
+
+zalozny plan - offline kontrolovany experiment.
