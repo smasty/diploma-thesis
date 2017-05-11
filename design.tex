@@ -3,7 +3,7 @@
 \chapter{Návrh riešenia personalizovaného informačného bulletinu v CQA systéme}
 
 Cieľom našej práce je navrhnúť a overiť metódu zostavovania personalizovaných informačných bulletinov v CQA systémoch
-so zameraním na podporu diverzity a aktuálnosti odporúčaného obsahu.
+so zameraním na podporu diverzity a~aktuálnosti odporúčaného obsahu.
 
 \section{Dáta v doméne CQA systémov}
 
@@ -119,7 +119,7 @@ kapitola~\ref{features}. Tento model predstavuje prínos a hodnotu otázky pre k
 
 \subsection{Model používateľov}
 
-Model používateľa bude vytvorený prostredníctvom agregácie modelov otázok, s ktorými používateľ v minulosti interagoval
+Model používateľa bude vytvorený prostredníctvom agregácie modelov otázok, s~ktorými používateľ v minulosti interagoval
 -- či už ich pokladal, odpovedal na ne, alebo za otázku hlasoval, okomentoval ju alebo ju označil za obľúbenú.
 
 Druh interakcie používateľa s otázkou bude mať dopad na faktor, s akým bude daná interakcia agregovaná -- menšie interakcie
@@ -159,7 +159,7 @@ Metódu diverzifikácie prostredníctvom tematického vzorkovania sme navrhli na
 \begin{my_enumerate}
 \item{
   Pre každého používateľa vyberieme náhodne N rôznych tém, ktoré sú pre neho relevantné. Tieto témy sa vyberú zo zoznamu
-  kategórií a LDA tém z modelu používateľa.
+  kategórií a LDA tém z~modelu používateľa.
 }
 \item{
   Prostredníctvom vyššie opísaného mechanizmu (kapitola~\ref{rec-retrieval}) vyberieme pre každú takúto tému zoznam
@@ -175,7 +175,7 @@ Metódu diverzifikácie prostredníctvom tematického vzorkovania sme navrhli na
 }
 \end{my_enumerate}
 
-Proces tematického vzorkovania ilustruje Obrázok~\ref{fig:tematic-sampling}.
+Proces tematického vzorkovania ilustruje schéma na obrázku~\ref{fig:tematic-sampling}.
 
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.27]{diversity-diagram}
@@ -262,5 +262,5 @@ rozdelíme na tri skupiny:
 \end{my_enumerate}
 
 Dôležitým predpokladom pre úspešnosť online experimentu bude získať dostatočnú reprezentatívnu vzorku používateľov
-ochotných byť súčasťou experimentu. V prípade, že by sa nám nepodarilo osloviť dostatočný počet používateľov, plánujeme
+ochotných byť súčasťou experimentu. V~prípade, že by sa nám nepodarilo osloviť dostatočný počet používateľov, plánujeme
 vykonať kontrolovaný offline experiment na vzorke archívnych dát.

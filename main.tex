@@ -51,8 +51,11 @@
 \newcommand{\Year}{2017}
 \newcommand{\Month}{Máj }
 \newcommand{\FIIT}{FIIT-0000-72397}
-\newcommand{\Field}{9.2.1 Informatika}
-\newcommand{\Program}{Informatika}
+\newcommand{\Field}{9.2.6 Informačné systémy}
+\newcommand{\Program}{Informačné systémy}
+\newcommand{\TitleEN}{Improving Diversity and~Freshness of~Newsletters in~Community Question Answering Systems}
+\newcommand{\ProgramEN}{Information Systems}
+\newcommand{\MonthEN}{May }
 
 %%
 %% DON'T TOUCH
@@ -76,7 +79,7 @@ pdfkeywords={key words},%
 %% Anotation
 %%
 \pagenumbering{roman}\setcounter{page}{2}
-%	\input{anotation.tex}
+	\input{anotation.tex}
 
 %%
 %% Declaration
@@ -88,7 +91,9 @@ pdfkeywords={key words},%
 %%
 %\pagestyle{empty}
 \newpage
+\setlength{\parskip}{0em}
 \tableofcontents{}
+\setlength{\parskip}{1em}
 
 %%
 %% Lists
@@ -155,23 +160,24 @@ pdfkeywords={key words},%
 %%
 %% Appendix
 %%
+\newpage
 \ifthenelse {\boolean{bachelor}}
 {
 }
-% {
-% 	\ifthenelse {\boolean{english}}
-% 	{
-% 		\renewcommand{\appendixname}{Appendix}
-% 		\renewcommand{\appendixtocname}{Appendix}
-% 	}
-% 	{
-% 		\renewcommand{\appendixname}{Príloha}
-% 		\renewcommand{\appendixtocname}{Prílohy}
-% 	}
-% 	\pagenumbering{bychapter}
-% }
-% \appendix
-% \input{appendix.tex}
+{
+    \ifthenelse {\boolean{english}}
+    {
+        \renewcommand{\appendixname}{Appendix}
+        \renewcommand{\appendixtocname}{Appendix}
+    }
+    {
+        \renewcommand{\appendixname}{Príloha}
+        \renewcommand{\appendixtocname}{Prílohy}
+    }
+    \pagenumbering{bychapter}
+}
+\appendix
+\input{appendix.tex}
 
 \end{document}
 
