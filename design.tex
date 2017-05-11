@@ -88,28 +88,174 @@ Komunita \textit{Software Engineering}, ktorú budeme využívať v experimentoc
 
 \section{Návrh metódy personalizovaného odporúčania}
 
-Hypoteza
+\textbf{Hypotéza}\\
+\textit{Použitím personalizovaného odporúčania otázok v informačnom bulletine CQA systému zvýšime relevanciu obsahu informačného
+bulletinu, čo sa prejaví zvýšenou aktivitou používateľov CQA systému.}
 
-Ako to bude fungovat
+Pri vytváraní personalizovaného informačného bulletinu sa budeme zameriavať na odporúčanie relevantných otázok jednotlivým
+používateľom CQA systému prostredníctvom metódy filtrovania na základe obsahu (kapitola \ref{rec:content}). Za týmto účelom
+je potrebné zostaviť modely reprezentujúce otázky a používateľov systému.
 
-Riesenie cold startu
+\subsection{Model otázok}
 
-Ake crty chcem pouzit
+Model otázok bude zložený z troch nezávislých modelov, ktoré sa na otázky pozerajú z rôznych perspektív.
 
-Ake metriky chcem pouzit
+\begin{my_enumerate}
+\item{\textbf{Kategorický model otázok}\\
+Tento model reprezentuje otázku na najvyššej úrovni ako prislúchajúcu do určitých kategórií. Kategórie otázok sú v rámci
+platformy Stack Exchange reprezentované ako značky (angl.~\emph{tags}). Každá otázka môže obsahovať viacero značiek, pričom
+platforma identifikuje aj synonymické značky, ktoré možno chápať ako bližšie určenie kategórie.}
+
+\item{\textbf{LDA tématický model}\\
+Tento model využíva metódu latentnej Dirichletovej alokácie (angl.~\emph{Latent Dirichlet Allocation})~\cite{blei2003latent}
+na určenie témy, ktorej sa daná otázka venuje. LDA vektor je vypočítaný z nadpisu a samotného textu otázky.}
+
+\item{\textbf{Komunitný model}\\
+\textit{Komunitný model} je naše pomenovanie pre model reprezentujúci komunitný faktor danej otázky. Predstavuje ho vektor
+zložený z viacerých čŕt, ako napr. počet hlasov, počet odpovedí, atď. Presný zoznam použitých čŕt obsahuje
+kapitola~\ref{features}. Tento model predstavuje prínos a hodnotu otázky pre komunitu.}
+\end{my_enumerate}
+
+
+\subsection{Model používateľov}
+
+Model používateľa bude vytvorený prostredníctvom agregácie modelov otázok, s ktorými používateľ v minulosti interagoval
+-- či už ich pokladal, odpovedal na ne, alebo za otázku hlasoval, okomentoval ju alebo ju označil za obľúbenú.
+
+Druh interakcie používateľa s otázkou bude mať dopad na faktor, s akým bude daná interakcia agregovaná -- menšie interakcie
+(hlasovanie, komentár) budú brané do úvahy menej ako napr. odpovedanie alebo samotné položenie otázky.
+
+S cieľom reflektovať časom sa meniace preferencie používateľa bude tiež aplikovaný faktor zmeny (angl.~\emph{decaying factor}).
+
+
+\subsection{Výber odporúčaného obsahu}\label{rec-retrieval}
+
+Pre účely zostavovania zoznamu odporúčaných otázok použijeme prístup analogický štandardným nástrojom pre vyhľadávanie
+informácií (angl.~\emph{Information Retrieval Engines}). V našom prípade budú dokumentmi samotné otázky a dopytom bude
+model používateľa. Pre ohodnocovanie podobnosti modelov bude použitý skalárny súčin vektorov reprezentujúcich
+modely otázky a používateľa.
+
+
+\subsection{Riešenie problému studeného štartu}
+
+Pre eliminovanie problému studeného štartu (kapitola~\ref{cold-start}) z pohľadu prvotného odporúčania otázok využijeme
+offline natrénovanie našich metód na archívnych dátach platformy Stack Exchange.
+
+V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba nedostatočnú aktivitu, budeme zo začiatku vytvárať
+iba generický informačný bulletin podobný tomu, ktorý je používateľom k dispozícii aj v súčasnosti (kapitola~\ref{so-newsletter}).
+
 
 \section{Návrh metódy diverzifikácie odporúčaní}
 
-Hypoteza
+\textbf{Hypotéza}\\
+\textit{Výberom odporúčaných otázok zo širšieho okruhu záujmu používateľa a zohľadnením ich aktuálnosti predídeme výskytu problému
+filtračnej bubliny, čím dosiahneme vyššiu mieru záujmu používateľa a jeho aktivity.}
 
-Ako to bude fungovat - chcem porovnat dva pristupy.
+Pre účely diverzifikácie odporúčaných otázok budeme porovnávať výsledky dvoch rôznych metód diverzifikácie.
 
-Ake crty chcem pouzit
+\subsection{Tématické vzorkovanie}
+Metódu diverzifikácie prostredníctvom tématického vzorkovania sme navrhli nasledovne:
 
-Ake metriky chcem pouzit
+\begin{my_enumerate}
+\item{
+  Pre každého používateľa vyberieme náhodne N rôznych tém, ktoré sú pre neho relevantné. Tieto témy sa vyberú zo zoznamu
+  kategórií a LDA tém z modelu používateľa.
+}
+\item{
+  Prostredníctvom vyššie opísaného mechanizmu (kapitola~\ref{rec-retrieval}) vyberieme pre každú takúto tému zoznam
+  odporúčaní.
+}
+\item{
+  Následne sa budú z jednotlivých zoznamov vyberať samotné položky do výsledného zoznamu odporúčaní. Pravdepodobnosť výberu
+  otázky z konkrétneho zoznamu bude proporčná k relevancii tejto témy pre daného používateľa.
+}
+\item{
+  Pravidlá pre výber konkrétnych otázok z jednotlivých zoznamov zatiaľ nešpecifikujeme. Pre účely zvýšenia diverzity však
+  nepredpokladáme jednoduchý výber podľa poradia v rámci zoznamu, ale aplikovanie inej distribúcie, prípadne náhodný výber.
+}
+\end{my_enumerate}
+
+Proces tématického vzorkovania ilustruje Obrázok~\ref{fig:tematic-sampling}.
+
+
+\subsection{Proporčná diverzifikácia}
+Táto metóda diverzifikácie je vo svojej podstate jednoduchšia a priamočiarejšia ako tématické vzorkovanie. Spočíva
+vo výbere N najrelevantnejších tém, pričom témy sú definované rovnako, ako v prípade tématického vzorkovania.
+Samotné otázky zo zoznamov jednotlivých tém sú vyberané od vrchu podľa ich ohodnotenia.
+
+
+\section{Výber čŕt pre použitie v metódach}\label{features}
+
+\begin{my_itemize}
+  \item Črty otázok
+  \begin{my_itemize}
+    \item Nadpis otázky
+    \item Text otázky
+    \item Značky priradené k otázke
+    \item Dátum poslednej zmeny
+    \item Počet hlasov - skóre
+    \item Počet zobrazení
+    \item Počet označení za obľúbenú
+    \item Má/nemá akceptovanú odpoveď
+    \item Počet odpovedí
+    \item Súhrnný počet komentárov (počet komentárov na otázke aj odpovediach)
+    \item Počet zmien v otázke
+    \item Reputácia autora otázky
+    \item Reputácia autora akceptovanej odpovede
+  \end{my_itemize}
+  \item Črty používateľov
+  \begin{my_itemize}
+    \item Reputácia používateľa
+    \item Počet kladných hlasov
+    \item Počet záporných hlasov
+    \item Počet položených otázok
+    \item Počet komentárov
+    \item Počet poskytnutých odpovedí
+    \item Dátum registrácie
+    \item Dátum poslednej aktivity
+  \end{my_itemize}
+\end{my_itemize}
+
+\section{Metriky hodnotenia výsledkov}
+
+Pre overovanie výsledkov experimentov budeme používať tieto metriky:
+
+\textbf{Precision@N}\\
+Presnosť (angl.~\emph{Precision}), alebo tiež \textit{pozitívna predikčná hodnota} je metrika reprezentujúca pomer relevantných
+dokumentov z celkového zoznamu. Štandardne sa presnosť počíta ako pomer z celého zoznamu dokumentov, no v oblasti
+odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metrika \textit{Precision@N}, ktorá určuje, aká časť
+z prvých N dokumentov v zozname je relevantná.
+
+\textbf{nDCG}\\
+\textit{Normalized Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
+odporúčania. DCG meria užitočnosť dokumentov na základe ich pozície vo výslednom zozname. Užitočnosť dokumentov sa akumuluje
+od konca zoznamu, pričom najvyššiu užitočnosť majú dokumenty na začiatku zoznamu~\cite{Jrvelin2002}.
+
+\textbf{CTR}\\
+Miera preklikov (angl.~\emph{Click-through Rate}) je metrika často využívaná v spojitosti s informačnými bulletinmi.
+Táto metrika vyjadruje počet úspešných kliknutí na odkaz v informačnom bulletine.
+
+Okrem CTR plánujeme v súvislosti s interakciou používateľa s informačným bulletinom merať aj počet impresií,
+teda zobrazení informačného bulletinu, ako aj počet konverzií, teda podiel prípadov, kedy kliknutie na niektorú z otázok
+v informačnom bulletine viedlo k aktivite používateľa na tejto otázke -- či už hlasovanie, odpovedanie alebo pridanie komentáru.
+
 
 \section{Návrh overenia metód}
 
-online nekontrolovany experiment, A/B testovanie.
+Nami navrhnuté metódy personalizovaného odporúčania a diverzifikácie odporúčaného obsahu budeme overovať prostredníctvom
+online nekontrolovaného experimentu na používateľoch z komunity \textit{Software Engineering} platformy Stack Exchange.
 
-zalozny plan - offline kontrolovany experiment.
+Tento online experiment bude mať formu pravidelne rozposielaného informačného bulletinu, na ktorého odoberanie sa budú
+môcť prihlásiť všetci používatelia z tejto komunity.
+
+Účinnosť zvolených metód diverzifikácie odporúčaní budeme vyhodnocovať prostredníctvom A/B testovania, pričom používateľov
+rozdelíme na tri skupiny:
+\begin{my_enumerate}
+    \item{Kontrolná skupina -- odporúčania nebudú diverzifikované}
+    \item{Skupina A -- využitie metódy tématického vzorkovania}
+    \item{Skupina B -- využitie metódy proporčnej diverzifikácie}
+\end{my_enumerate}
+
+Dôležitým predpokladom pre úspešnosť online experimentu bude získať dostatočnú reprezentatívnu vzorku používateľov
+ochotných byť súčasťou experimentu. V prípade, že by sa nám nepodarilo osloviť dostatočný počet používateľov, plánujeme
+vykonať kontrolovaný offline experiment na vzorke archívnych dát.
