@@ -14,7 +14,7 @@ do schránok používateľov, ktorí o jeho doručovanie prejavili záujem.
 
 
 \section{Problémy informačných bulletinov}
-Hlavným problémom informačných bulletinov v súčasnosi je stále sa znižujúca miera interakcie používateľov
+Hlavným problémom informačných bulletinov je stále sa znižujúca miera interakcie používateľov
 s informačnými bulletinmi.
 
 Štúdia spoločnosti Silverpop z roku 2012~\cite{mailmarketing} na vzorke informačných bulletinov 1124 spoločností ukázala,
@@ -24,7 +24,7 @@ v oblasti technológií sa táto hodnota pohybuje len na 16,5\%. Ešte menšia j
 informačných bulletinov len 3,6\%. Napriek tomu sa miera odhlásení z odoberania (angl. \emph{unsubscribe rate}) pohybuje
 len na úrovni 2\%.
 
-Dôvodov, prečo používatelia prejavujú iba malý záujem o informačné bulletiny ktoré im sú doručované, môže byť niekoľko.
+Dôvodov, prečo používatelia prejavujú iba malý záujem o informačné bulletiny, ktoré im sú doručované, môže byť niekoľko.
 Jedným z takýchto dôvodov môže byť vysoká saturácia -- používateľom chodí priveľké množstvo informačných bulletinov,
 dôsledkom čoho používatelia rezignujú a tieto e-maily ani neotvárajú.
 Hlavným nedostatkom informačných bulletinov, a zároveň dôvodom, prečo iba 5\% používateľov klikne na obsah v informačnom
@@ -66,7 +66,7 @@ Obsah nasledujúcich dvoch sekcií je náhodne generovaný. Tieto sekcie obsahuj
 týždňa a náhodný výber nezodpovedaných otázok.
 
 Používatelia CQA systému Stack Exchange nie sú s takýmto generickým informačným bulletinom
-spokojní~\footnote{ \url{https://meta.stackoverflow.com/q/336925}. Prevzaté 30.4.2017.}\footnote{
+spokojní~\footnote{ \url{https://meta.stackoverflow.com/q/336925}. Prevzaté 30.4.2017.}~\footnote{
 \url{https://meta.stackexchange.com/q/247298}. Prevzaté 31.4.2017.}.
 Generický informačný bulletin stráca pre používateľov informačnú hodnotu, pretože
 najmä v prípade väčších komunít, akou je napríklad Stack Overflow\footnote{ \url{https://stackoverflow.com}}, často obsahuje
@@ -86,12 +86,11 @@ otázky z rôznych tém. Quora ponúka svojim používateľom týždenný inform
 ktorý obsahuje desať najzaujímavejšich otázok za posledný týždeň a zoznam ľudí, ktorých používateľ potenciálne pozná.
 
 Zoznam najzaujímavejších otázok pozostáva z editormi manuálne vybraného obsahu a algoritmicky vybraného obsahu,
-ktorý je personalizovaný pre každého používateľa zvlášť (Obr.~\ref{fig:quora-newsletter}).
+ktorý je personalizovaný pre každého používateľa zvlášť~\footnote{\url{http://businessinsider.com/quora-emails-2012-8}\label{fnote-bi}} (Obr.~\ref{fig:quora-newsletter}).
 
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.5]{quora-newsletter}
-\caption{Informačný bulletin portálu Quora. Prevzaté 30.4.2017,\newline\url{http://businessinsider.com/quora-emails-2012-8}
-\label{fig:quora-newsletter}}\end{center}
+\caption{Informačný bulletin portálu Quora. Prevzaté 30.4.2017,~[\ref{fnote-bi}] \label{fig:quora-newsletter}}\end{center}
 \end{figure}
 
 \subsection{CQA systémy bez informačných bulletinov}
@@ -100,7 +99,7 @@ Viaceré populárne CQA systémy svojim používateľom vôbec neponúkajú mož
 systémy patrí napr. portál \emph{Yahoo! Answers}\footnote{\url{https://answers.yahoo.com}}, ktorý je určený na pokladanie
 otázok z akejkoľvek oblasti záujmu. Rovnako informačný newsletter neponúka ani ďalší všeobecne zameraný CQA systém --
 \emph{Wiki Answers}\footnote{\url{https://answers.com}}. CQA systém zameraný na podporu výučby
-\emph{Askalot}\footnote{\url{http://askalot.fiit.stuba.sk}} tiež v súčasnosti neponúka informačný newsletter,
+\emph{Askalot}\footnote{\url{https://askalot.fiit.stuba.sk}} tiež v súčasnosti neponúka informačný newsletter,
 iba možnosť notifikácie používateľa prostredníctvom e-mailu o aktivite súvisiacej s jeho obsahom v rámci systému.
 
 
@@ -122,6 +121,33 @@ Za týmto účelom CQA systémy implementujú hlasovanie a princíp reputácie a
 najlepších odpovedí na položené otázky.
 
 
+\section{Druhy CQA systémov}
+
+CQA systémy možno kategorizovať do dvoch základných skupín podľa toho, na akú oblasť otázok sa tieto systémy zameriavajú.
+
+\textbf{Univerzálne CQA systémy}\\
+CQA systémy ako \emph{Yahoo! Answers}, \emph{Wiki Answers} alebo \emph{Quora} nie sú zamerané na konkrétne oblasti
+a umožňujú používateľom pokladať otázky na akékoľvek témy~\cite{Chua2014}.
+
+Tento druh CQA systémov má štandardne vyšší počet používateľov aj aktivity ako úzko špecializované CQA systémy,
+no tiež tu existuje väčšia pravdepodobnosť výskytu nekvalitných, jednoduchých alebo neužitočných otázok a odpovedí,
+ako aj veľký počet duplicitných otázok, ktoré už boli zodpovedané. Zároveň sú univerzálne CQA systémy zameriané viac
+na samotný proces kladenia otázok a~odpovedania na ne, než na vytváranie dlhodobo hodnotného obsahu.
+
+\textbf{Úzko špecializované CQA systémy}\\
+Opakom univerzálnych CQA systémov sú CQA systémy, ktoré sú špecializované na konkrétne oblasti záujmu.
+Medzi takéto CQA systémy patria napríklad jednotlivé komunity v rámci siete Stack Exchange, ktorá zahŕňa rôzne druhy
+komunít, od všeobecnejších, ako je napr. komunita venujúca sa matematike\footnote{\url{https://math.stackexchange.com}},
+po veľmi úzko špecializované, akými sú napr. komunity \emph{Ask Ubuntu}\footnote{\url{https://askubuntu.com}} alebo
+\emph{Raspberry Pi}\footnote{\url{https://raspberrypi.stackexchange.com}} venujúce sa konkrétnym produktom.
+
+Tématicky zamerané CQA systémy majú väčší potenciál pre vznik dlhodobo hodnotného obsahu~\cite{Anderson2012}. V rámci
+týchto systémov tiež vzniká množstvo prepojení medzi obsahom \textit{(otázky podobného charakteru, riešenie problému
+v príbuznej oblasti)}, čo vedie k vzniku \emph{znalostných sietí}~(angl.~\emph{knowledge networks})~\cite{Li2016}.
+S cieľom zvýšiť hodnotu jednotlivých príspevkov tiež mnohé CQA systémy zavádzajú možnosť komunitnej úpravy
+otázok a odpovedí~\cite{Li2015}, čo vedie okrem zvýšenej aktivity aj k zvýšeniu vnímanej užitočnosti príspevku.
+
+
 \section{Problémy CQA systémov}
 
 CQA systémy sa musia vysporiadavať s tými istými druhmi problémov, ako iné kategórie systémov založené na používateľmi
@@ -135,9 +161,9 @@ používateľov týchto stránok len pasívnymi čitateľmi (angl. \emph{lurkers
 úzkou skupinou najaktívnejších používateľov.
 
 V prípade CQA systému Stack Overflow sa podiel aktívnych používateľov (takých, ktorí za sledovaný mesiac pridali
-do systému aspoň jednu otázku alebo odpoveď) za marec 2017 pohyboval na úrovni 3\% všetkých
-používateľov~\cite{Srba2016SOFail}\footnote{Výsledky za aktuálne obdobie boli získané prostredníctvom nástroja Stack
-Exchange Data Explorer.}.
+do systému aspoň jednu otázku alebo odpoveď) za marec 2017\footnote{Výsledky za aktuálne obdobie boli získané prostredníctvom nástroja Stack
+Exchange Data Explorer - \url{https://data.stackexchange.com}} pohyboval na úrovni 3\% všetkých
+používateľov~\cite{Srba2016SOFail}.
 
 \subsection{Variabilita v kvalite obsahu}
 Ďalším problémom CQA systémov je variabilná kvalita otázok a odpovedí v týchto systémoch. Zvyšujúcou sa popularitou CQA
@@ -147,35 +173,6 @@ zodpovedané~\cite{Srba2016SOFail,Ponzanelli2014}.
 
 Jedným z riešení tohto problému, ktorý využíva aj CQA systém Stack Overflow, je komunitné zabezpečovanie kvality obsahu
 prostredníctvom moderátorov -- používateľov s oprávnením upravovať, označiť duplikáty alebo vymazať obsah.
-
-
-\section{Druhy CQA systémov}
-
-CQA systémy možno kategorizovať do dvoch základných skupín podľa toho, na akú oblasť otázok sa tieto systémy zameriavajú.
-
-\subsection{Univerzálne CQA systémy}
-
-CQA systémy ako \emph{Yahoo! Answers}, \emph{Wiki Answers} alebo \emph{Quora} nie sú zamerané na konkrétne oblasti
-a umožňujú používateľom pokladať otázky na akékoľvek témy~\cite{Chua2014}.
-
-Tento druh CQA systémov má štandardne vyšší počet používateľov aj aktivity ako úzko špecializované CQA systémy,
-no tiež tu existuje väčšia pravdepodobnosť výskytu nekvalitných, jednoduchých alebo neužitočných otázok a odpovedí,
-ako aj veľký počet duplicitných otázok, ktoré už boli zodpovedané. Zároveň sú univerzálne CQA systémy zameriané viac
-na samotný proces kladenia otázok a~odpovedania na ne, než na vytváranie dlhodobo hodnotného obsahu.
-
-\subsection{Úzko špecializované CQA systémy}
-
-Opakom univerzálnych CQA systémov sú CQA systémy, ktoré sú špecializované na konkrétne oblasti záujmu.
-Medzi takéto CQA systémy patria napríklad jednotlivé komunity v rámci siete Stack Exchange, ktorá zahŕňa rôzne druhy
-komunít, od všeobecnejších, ako je napr. komunita venujúca sa matematike\footnote{\url{https://math.stackexchange.com}},
-po veľmi úzko špecializované, akými sú napr. komunity \emph{Ask Ubuntu}\footnote{\url{https://askubuntu.com}} alebo
-\emph{Raspberry Pi}\footnote{\url{https://raspberrypi.stackexchange.com}} venujúce sa konkrétnym produktom.
-
-Tématicky zamerané CQA systémy majú väčší potenciál pre vznik dlhodobo hodnotného obsahu~\cite{Anderson2012}. V rámci
-týchto systémov tiež vzniká množstvo prepojení medzi obsahom \textit{(otázky podobného charakteru, riešenie problému
-v príbuznej oblasti)}, čo vedie k vzniku \emph{znalostných sietí}~(angl.~\emph{knowledge networks})~\cite{Li2016}.
-S cieľom zvýšiť hodnotu jednotlivých príspevkov tiež mnohé CQA systémy zavádzajú možnosť komunitnej úpravy
-otázok a odpovedí~\cite{Li2015}, čo vedie okrem zvýšenej aktivity aj k zvýšeniu vnímanej užitočnosti príspevku.
 
 
 
@@ -219,7 +216,7 @@ všetkých používateľov a položky ako atomické jednotky a odporúčania sú
 individuálnych používateľov alebo položiek.
 
 Metódy využívajúce filtrovanie na základe obsahu naopak vytvárajú
-odporúčania na základe porovnávania modelov reprezentujúcich obsah s modelmi reprezentujúcimi konkrétneho používateľa.
+odporúčania na základe porovnávania modelov reprezentujúcich obsah s modelmi reprezentujúcimi konkrétneho používateľa~\cite{Handbook2011}.
 Odporúčania v takýchto prístupoch vznikajú na základe prekryvu týchto dvoch modelov.
 
 
@@ -237,8 +234,8 @@ V súčasnosti jedným z trendov najmä v úzko zameraných CQA systémoch ako n
 od modelu jednoduchého odpovedania na položené otázky na model povzbudzujúci k vytváraniu dlhodobo hodnotného obsahu
 vo forme rozsiahlych komunitne spravovaných odpovedí~\cite{Anderson2012,Li2015} podnecujúcich diskusiu.
 V tomto prípade je možné využiť odporúčacie systémy ako prostriedok pre odhalenie a prezentovanie otázok a odpovedí,
-ktoré by mohli používateľa zaujímať a priniesť mu úžitok~\cite{Toba2014} aj v prípade, že práve nemá rovnaký problém,
-ako sa vyskytuje v danej otázke.
+ktoré by mohli používateľa zaujímať a priniesť mu úžitok aj v prípade, že práve nemá rovnaký problém,
+ako sa vyskytuje v danej otázke~\cite{Toba2014}.
 
 Výskum v oblasti odporúčania v CQA systémoch sa v súčasnosti zameriava hlavne na oblasti odporúčania, smerovania
 a získavania otázok. Problémom súčasného výskumu v tejto oblasti je nejednoznačnosť a časté zamieňanie týchto výrazov,
@@ -251,18 +248,18 @@ Odporúčanie otázok (angl.~\emph{Question recommendation}) využíva tzv. \emp
 Tento prístup využíva štandardnejší tok medzi použitými modelmi -- začína sa modelom používateľa, na ktorý sa odporúčací
 systém pokúša namapovať model relevantného obsahu.
 Relevancia otázok pre používateľa môže byť identifikovaná rôznymi prístupmi -- či už na základe kolaboratívneho
-filtrovania (\ref{rec:collab}) alebo filtrovania na základe obsahu (\ref{rec:content}).
+filtrovania (kap.~\ref{rec:collab}) alebo filtrovania na základe obsahu (kap.~\ref{rec:content}).
 
-Forma prezentovania odporúčaných otázok sa tiež môže líšiť. Časté je napríklad zobrazenie príbuzných otázok v detaile
-konkrétnej otázky, ktorú momentálne používateľ číta. Odporúčanie otázok je však možné využiť aj ako prostriedok pre
-zvýšenie záujmu a angažovanosti používateľa o CQA systém.
+Forma prezentovania odporúčaných otázok sa tiež môže líšiť. Časté je napríklad zobrazenie otázok, ktoré by používateľa
+mmohli zaujímať, v detaile konkrétnej otázky, ktorú momentálne používateľ číta. Odporúčanie otázok je však možné využiť
+aj ako prostriedok pre zvýšenie záujmu a angažovanosti používateľa o CQA systém.
 
 
 \subsection{Smerovanie otázok}
 
 Na rozdiel od pomerne štandardného odporúčania otázok, v prípade smerovania otázok (angl.~\emph{Question routing})
 je prístup k odporúčaniu presne opačný, a využíva tzv. \emph{push} prístup. V tomto prípade proces odporúčania začína
-modelom nezodpovedanej otázky, ktorú sa snaží odporúčací systém nasmerovať k používateľovi, ktorý má najväčší potenciál
+modelom nezodpovedanej otázky, ktorú sa snaží odporúčací systém nasmerovať k používateľom, ktorí majú najväčší potenciál
 na túto otázku zodpovedať.
 
 Výskum smerovania nezodpovedaných otázok na konkrétnych používateľov -- odpovedajúcich -- síce ukazuje, že ide o dôležitý
@@ -345,7 +342,7 @@ aktuálnosť (angl.~\emph{freshness}, príp.~\emph{novelty}) odporúčaného obs
 
 Tématická diverzifikácia je metóda napomáhajúca vyváženosti a diverzite personalizovaného odporúčania s cieľom
 lepšie reflektovať kompletné spektrum používateľových záujmov. Napriek tomu, že môže mať negatívny vplyv na priemernú
-správnosť odporúčaní, dosahuje táto metdóda zvýšenú úroveň používateľskej spokojnosti~\cite{Zhang2009}.
+správnosť odporúčaní, dosahuje táto metódda zvýšenú úroveň používateľskej spokojnosti~\cite{Zhang2009}.
 
 Ziegler a kol.~\cite{Ziegler2005} študovali diverzifikáciu v oblasti odporúčaní a navrhli prístup, ktorý vytvára
 zoznamy odporúčaní lepšie uspokojujúce používateľove záujmy prostredníctvom selekcie takých zoznamov, ktoré majú nízku
@@ -450,4 +447,4 @@ prostredníctvom diverzifikácie odporúčaní aj za cenu zníženia aktuálnost
 Na základe tejto analýzy môžeme usúdiť, že napriek tomu, že problematika diverzifikácie a aktuálnosti odporúčania v kontexte
 CQA systémov v súčasnosti stále ostáva do veľkej miery nepreskúmaná, je očividné, že uvažovanie týchto aspektov v tomto
 kontexte má veľký vplyv na úspešnosť odporúčania, pričom informačné bulletiny sa javia ako prirodzená, požadovaná,
-no napriek tomu málo využívaná forma prinášania odporúčaného a potenciálne zaujímavého obsahu použivateľom.
+no napriek tomu málo využívaná forma prinášania odporúčaného a potenciálne zaujímavého obsahu používateľom.
