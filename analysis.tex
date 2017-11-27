@@ -147,7 +147,7 @@ otázok a odpovedí~\cite{Li2015}, čo vedie okrem zvýšenej aktivity aj k zvý
 CQA systémy sa musia vysporiadavať s tými istými druhmi problémov, ako iné kategórie systémov založené na používateľmi
 vytvorenom obsahu.
 
-\subsection{Problém dlhého chvosta v aktivite používateľov}
+\subsection{Problém dlhého chvosta v aktivite používateľov}\label{cqa:tail}
 Čím viac sa zvýrazňuje trend orientácie CQA systémov skôr na poskytovanie obsahu s dlhodobou hodnotou ako na samotné
 poskytnutie odpovede na položenú otázku, tým viac sa prehlbuje problém \emph{dlhého chvosta} (angl. \emph{long tail}).
 Ide o štandardný problém všetkých stránok zameriavajúcich sa na používateľmi vytváraný obsah, kedy je veľká väčšina
@@ -323,7 +323,7 @@ Výskum v oblasti odporúčania v CQA systémoch sa v súčasnosti zameriava hla
 a získavania otázok. Problémom súčasného výskumu v tejto oblasti je nejednoznačnosť a časté zamieňanie týchto výrazov,
 prípadne nerozlišovanie medzi odporúčaním a smerovaním otázok~\cite{Srba2016}.
 
-\subsection{Odporúčanie otázok}
+\subsection{Odporúčanie otázok}\label{q:rec}
 
 Odporúčanie otázok (angl.~\emph{Question recommendation}) využíva tzv. \emph{pull} prístup, teda na základe (explicitnej
 či implicitnej) požiadavky používateľa prezentuje zoznam odporúčaných relevantných otázok (alebo obsahu celkovo).
@@ -337,7 +337,7 @@ mmohli zaujímať, v detaile konkrétnej otázky, ktorú momentálne používate
 aj ako prostriedok pre zvýšenie záujmu a angažovanosti používateľa o CQA systém.
 
 
-\subsection{Smerovanie otázok}
+\subsection{Smerovanie otázok}\label{q:routing}
 
 Na rozdiel od pomerne štandardného odporúčania otázok, v prípade smerovania otázok (angl.~\emph{Question routing})
 je prístup k odporúčaniu presne opačný, a využíva tzv. \emph{push} prístup. V tomto prípade proces odporúčania začína
@@ -357,11 +357,24 @@ reprezentujúceho komunitu, kedy je potrebné brať do úvahy okrem iného fakt,
 poznatkov} a nie len ich konzumenti~\cite{Pal2015}.
 
 
-\subsection{Získavanie otázok}
+\subsection{Získavanie otázok}\label{q:retr}
 
 Tento pojem (angl.~\emph{Question retrieval}) v kontexte CQA systémov hovorí o procese vyberania podobných otázok pre
 rôzne formy dopytov~\cite{Zhang2014} na základe syntaktickej podobnosti otázok.
 Tento proces je možné využiť na hľadanie odpovedí alebo poznatkov vo veľkých množstvách už zodpovedaných otázok.
+
+Výskum v oblasti získavania otázok v kontexte CQA ststémov sa zameriava hlavne na problém premostenia lexikálnej bariéry medzi
+obsahovo podobnými otázkami, ktoré sú však formulované použitím iných slov, synonymných výrazov a pod. Na prekonanie
+tohto problému sa štandardne využíva vytvorenie prekladových modelov medzi otázkami a odpoveďami~\cite{Cao2010}.
+Základnou myšlienkou za týmto postupom je predpoklad, že otázky a odpovede sú v podstate \emph{paralelnými textami}
+a vzťahy medzi nimi môžu byť určené na základe pravdepodobností medzislovných prekladov.
+
+Odlišný prístup k získavaniu otázok v CQA systémoch volia autori v~\cite{Zhang2014}. Argumentujú, že základný predpoklad
+paralelnosti medzi otázkami a odpoveďami je v praxi nesprávny, pričom problémové sú hlavne odpovede veľmi nízkej kvality.
+Autori preto navrhujú metódu tématicky-založeného jazykového modelu (angl.~\emph{Topic-based Language Model}), ktorá
+predpokladá, že napriek tomu, že otázky a odpovede sú rozdielne vo viacerých aspektoch, zdieľajú určité
+spoločne latentné faktory, ktoré predstavujú latentnú tému danej otázky a odpovede. Samotné získavanie otázok je následne
+postavené práve na modeli, ktorý okrem lexikálnej podobnosti a prekladu berie do úvahy tieto latentné témy.
 
 
 \subsection{Problém studeného štartu}\label{cold-start}
@@ -376,22 +389,11 @@ nie je možné jednoducho odporúčať vhodný obsah pre používateľov, ktorí
 V menšej miere týmto problémom trpia systémy, ktoré namiesto podobnosti používateľov využívajú pre zostavovanie odporúčaní
 podobnosť samotného obsahu na základe rôznych atribútov.
 
-\subsection{Segmentácia používateľov}
-
-Ďalším z problémov v oblasti personalizovaného odporúčania, veľmi výrazným aj v prípade informačných bulletinov,
-je rozdelenie používateľov zaujímajúcich sa o~informačný bulletin do skupín podľa účelu, za ktorým chcú informačný bulletin dostávať.
-V prípade úzko zameraných CQA systémov, ako je napr. Stack Overflow, je možné používateľov rozdeliť do dvoch základných
-skupín -- producentov a~konzumentov.
-
-Producenti sú používatelia, ktorí primárne odpovedajú na otázky. Takýto používatelia
-tvoria dôležitú časť komunity~\cite{Anderson2012}. Motiváciou pre odoberanie informačného bulletinu pre takýchto používateľov
-je hlavne potenciál identifikovať otázky, ktoré ešte neboli dostatočne alebo správne zodpovedané, prípadne záujem
-o~diskusiu o~zaujímavých a netriviálnych otázkach. Konzumenti sú zase používatelia, ktorí sú spravidla v rámci komunity
-používateľov menej aktívni a ich motiváciou je zbierať vedomosti~\cite{Anderson2012}. Pre týchto používateľov je potrebné
-identifikovať vysoko kvalitné odpovede na otázky~\cite{Toba2014}.
-
-Jednotlivé skupiny používateľov tak prirodzene očakávajú nie len iný druh otázok, ale aj celé odlišné súčasti informačných bulletinov.
-
+V kontexte odporúčania otázok v CQA systémoch je tento problém úzko previazaný s problémom dlhého chvosta v používateľskej aktivite (kapitola~\ref{cqa:tail}).
+Veľmi veľké percento používateľskej základne tvoria používatelia, ktorí sú noví, alebo nemajú žiadnu aktivitu.
+Pre odporúčanie otázok (kapitola~\ref{q:rec}) je tak problém zostaviť profil používateľa, na základe ktorého sa vykonáva
+mapovanie na model relevantného obsahu. V prípade smerovania otázok (kapitola~\ref{q:routing}) je zase problém zostaviť
+model reprezentujúci expertízu daného používateľa.
 
 \subsection{Problém filtračnej bubliny}\label{rec:filterbubble}
 
@@ -406,6 +408,30 @@ je veľmi obmedzené.
 Riešením tohto problému je identifikácia oblastí, ktoré nie sú priamo oblasťami záujmu používateľa, no sú k týmto
 oblastiam v určitých aspektoch príbuzné. Používateľ má tak možnosť rozšíriť svoj okruh záujmu a vedomosti o širšom
 kontexte problémovej domény.
+
+
+\section{Existujúce metódy pre odporúčanie otázok}
+
+\textbf{TODO}
+
+\subsection{Črty a algoritmy}
+
+Survey
+
+\subsection{Metodológie overenia}
+
+Survey
+
+\subsection{Problém studeného štartu}
+- Srba - Utilizing non-QA data to improve questions routing for users with low QA activity in CQA
+- Cold-Start Expert Finding in Community Question Answering via Graph Regularization
+
+\subsection{Problém filtračnej bubliny}
+- Survey
+- Szpektor - diverzifikacia
+
+\section{Diskusia}
+TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -424,7 +450,7 @@ aktuálnosť (angl.~\emph{freshness}, príp.~\emph{novelty}) odporúčaného obs
 
 Tématická diverzifikácia je metóda napomáhajúca vyváženosti a diverzite personalizovaného odporúčania s cieľom
 lepšie reflektovať kompletné spektrum používateľových záujmov. Napriek tomu, že môže mať negatívny vplyv na priemernú
-správnosť odporúčaní, dosahuje táto metódda zvýšenú úroveň používateľskej spokojnosti~\cite{Zhang2009}.
+správnosť odporúčaní, dosahuje táto metóda zvýšenú úroveň používateľskej spokojnosti~\cite{Zhang2009}.
 
 Ziegler a kol.~\cite{Ziegler2005} študovali diverzifikáciu v oblasti odporúčaní a navrhli prístup, ktorý vytvára
 zoznamy odporúčaní lepšie uspokojujúce používateľove záujmy prostredníctvom selekcie takých zoznamov, ktoré majú nízku
@@ -442,7 +468,7 @@ vzhľadom na relevanciu odporúčaní v takom prípade, keď počet výsledkov z
 Dang a kol. vo svojej práci~\cite{Dang2012} ponúkajú koncept optimalizácie proporčnosti pre diverzifikáciu výsledkov
 vyhľadávania.
 
-Napriek tomu, že sa táto práca nezaoberá priamo diverzitou v odporúčacích systémov, sú paralely s touto
+Napriek tomu, že sa práca~\cite{Dang2012} nezaoberá priamo diverzitou v odporúčacích systémov, sú paralely s touto
 oblasťou výrazné. Motiváciou pre tákyto spôsob diverzifikácie je metóda obsadzovania kresiel v parlamente. Ich metóda
 postupne pre každú pozíciu v zozname výsledkov určuje tému, ktorá najlepšie zachováva celkovú proporčnosť. Následne
 na túto pozíciu z danej témy vyberie najlepší dokument.
@@ -524,7 +550,7 @@ relevancie dosiahlo nižšie hodnoty zodpovedania otázok, ako kontrolná vzorka
 Presadzovanie aktuálnych otázok dosiahlo zvýšenie miery zodpovedania otázok o 4\%, avšak najlepšie výsledky boli dosiahnuté
 prostredníctvom diverzifikácie odporúčaní aj za cenu zníženia aktuálnosti, pričom miera zodpovedania sa zvýšila o 17\%.
 
-\vspace*{1.5cm}
+\section{Diskusia}
 
 Na základe tejto analýzy môžeme usúdiť, že napriek tomu, že problematika diverzifikácie a aktuálnosti odporúčania v kontexte
 CQA systémov v súčasnosti stále ostáva do veľkej miery nepreskúmaná, je očividné, že uvažovanie týchto aspektov v tomto
