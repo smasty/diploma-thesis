@@ -41,69 +41,6 @@ Riešením problému relevancie informačných bulletinov je vytváranie persona
 každému používateľovi ponúkajú len ten obsah, ktorý je pre neho najzaujímavejší a najrelevantnejší.
 
 
-\section{Informačné bulletiny v CQA systémoch}
-
-Význam informačných bulletinov značne narastá aj v rámci online komunít, ktoré produkujú veľké množstvo používateľmi
-vytváraného obsahu. Medzi prominentné druhy takýchto online komunít patria aj systémy pre odpovedanie na otázky.
-
-Súčasný výskum v oblasti CQA systémov~\cite{Srba2016} sa venuje predovšetkým oblastiam skúmania správania používateľov,
-smerovania a odporúčania otázok a kvality otázok a odpovedí v týchto systémoch. Problematike vytvárania informačných
-bulletinov v doméne CQA systémov zatiaľ nebola venovaná veľká pozornosť.
-
-Mnohé populárne CQA systémy aj v súčasnosti ponúkajú svojim používateľom informačné bulletiny majúce iba generický
-charakter a nijakým spôsobom neuvažujú relevantnosť obsahu pre konkrétnych používateľov, prípadne informačné bulletiny
-neponúkajú vôbec.
-
-\subsection{Informačné bulletiny v sieti Stack Exchange}\label{so-newsletter}
-
-Sieť Stack Exchange\footnote{ \url{https://stackexchange.com}}, ktorá patrí medzi najpopulárnejšie CQA systémy súčasnosti,
-sa skladá z viac ako 160 samostatných komunít zameraných na rôzne oblasti. Stack Exchange ponúka používateľom všetkých
-komunít možnosť odoberať informačný bulletin, ktorý je doručovaný raz týždenne.
-
-Informačné bulletiny komunít Stack Exchange obsahujú tri sekcie (Obr.~\ref{fig:so-newsletter}). Prvá sekcia je rovnaká
-pre všetkých používateľov konkrétnej komunity a obsahuje zoznam najlepšie hodnotených nových otázok.
-Obsah nasledujúcich dvoch sekcií je náhodne generovaný. Tieto sekcie obsahujú najpopulárnejšie otázky z predchádzajúceho
-týždňa a náhodný výber nezodpovedaných otázok.
-
-Používatelia CQA systému Stack Exchange nie sú s takýmto generickým informačným bulletinom
-spokojní~\footnote{ \url{https://meta.stackoverflow.com/q/336925}. Prevzaté 30.4.2017.}~\footnote{
-\url{https://meta.stackexchange.com/q/247298}. Prevzaté 31.4.2017.}.
-Generický informačný bulletin stráca pre používateľov informačnú hodnotu, pretože
-najmä v prípade väčších komunít, akou je napríklad Stack Overflow\footnote{ \url{https://stackoverflow.com}}, často obsahuje
-otázky, ktoré nie sú z oblastí záujmu používateľa. Najviac sa tento problém prejavuje na sekcii nezodpovedaných otázok.
-Tie sú vyberané náhodne, takže pravdepodobnosť, že používateľ vie na niektorú z nich odpovedať, je malá.
-
-
-\begin{figure}[H]\begin{center}
-\includegraphics[scale=0.4]{so-newsletter}
-\caption{Informačný bulletin komunity Stack Overflow, 25. apríl 2017.\label{fig:so-newsletter}}\end{center}
-\end{figure}
-
-\subsection{Informačný bulletin portálu Quora}
-
-Quora\footnote{\url{https://quora.com}} je CQA systém, ktorý nie je zameraný na konkrétnu oblasť záujmu, ale obsahuje
-otázky z rôznych tém. Quora ponúka svojim používateľom týždenný informačný bulletin (\emph{Quora Weekly Digest}),
-ktorý obsahuje desať najzaujímavejšich otázok za posledný týždeň a zoznam ľudí, ktorých používateľ potenciálne pozná.
-
-Zoznam najzaujímavejších otázok pozostáva z editormi manuálne vybraného obsahu a algoritmicky vybraného obsahu,
-ktorý je personalizovaný pre každého používateľa zvlášť~\footnote{\url{http://businessinsider.com/quora-emails-2012-8}\label{fnote-bi}} (Obr.~\ref{fig:quora-newsletter}).
-
-\begin{figure}[H]\begin{center}
-\includegraphics[scale=0.5]{quora-newsletter}
-\caption{Informačný bulletin portálu Quora. Prevzaté 30.4.2017,~[\ref{fnote-bi}] \label{fig:quora-newsletter}}\end{center}
-\end{figure}
-
-\subsection{CQA systémy bez informačných bulletinov}
-
-Viaceré populárne CQA systémy svojim používateľom vôbec neponúkajú možnosť odoberať informačný bulletin. Medzi takéto
-systémy patrí napr. portál \emph{Yahoo! Answers}\footnote{\url{https://answers.yahoo.com}}, ktorý je určený na pokladanie
-otázok z akejkoľvek oblasti záujmu. Rovnako informačný newsletter neponúka ani ďalší všeobecne zameraný CQA systém --
-\emph{Wiki Answers}\footnote{\url{https://answers.com}}. CQA systém zameraný na podporu výučby
-\emph{Askalot}\footnote{\url{https://askalot.fiit.stuba.sk}} tiež v súčasnosti neponúka informačný newsletter,
-iba možnosť notifikácie používateľa prostredníctvom e-mailu o aktivite súvisiacej s jeho obsahom v rámci systému.
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -175,11 +112,99 @@ Jedným z riešení tohto problému, ktorý využíva aj CQA systém Stack Overf
 prostredníctvom moderátorov -- používateľov s oprávnením upravovať, označiť duplikáty alebo vymazať obsah.
 
 
+\section{Informačné bulletiny v CQA systémoch}
+
+Význam informačných bulletinov narastá v rámci systémov pre odpovedanie na otázky, ktoré sú prominentným druhom
+online komunít produkujúcich veľké množstvo používateľmi vytváraného obsahu.
+
+Súčasný výskum v oblasti CQA systémov~\cite{Srba2016} sa venuje predovšetkým oblastiam skúmania správania používateľov,
+smerovania a odporúčania otázok a kvality otázok a odpovedí v týchto systémoch. Problematike vytvárania informačných
+bulletinov v doméne CQA systémov zatiaľ nebola venovaná veľká pozornosť.
+
+Mnohé populárne CQA systémy aj v súčasnosti ponúkajú svojim používateľom informačné bulletiny majúce iba generický
+charakter a nijakým spôsobom neuvažujú relevantnosť obsahu pre konkrétnych používateľov, prípadne informačné bulletiny
+neponúkajú vôbec.
+
+\subsection{Informačné bulletiny v sieti Stack Exchange}\label{so-newsletter}
+
+Sieť Stack Exchange\footnote{ \url{https://stackexchange.com}}, ktorá patrí medzi najpopulárnejšie CQA systémy súčasnosti,
+sa skladá z viac ako 160 samostatných komunít zameraných na rôzne oblasti. Stack Exchange ponúka používateľom všetkých
+komunít možnosť odoberať informačný bulletin, ktorý je doručovaný raz týždenne.
+
+Informačné bulletiny komunít Stack Exchange obsahujú tri sekcie (Obr.~\ref{fig:so-newsletter}). Prvá sekcia je rovnaká
+pre všetkých používateľov konkrétnej komunity a obsahuje zoznam najlepšie hodnotených nových otázok.
+Obsah nasledujúcich dvoch sekcií je náhodne generovaný. Tieto sekcie obsahujú najpopulárnejšie otázky z predchádzajúceho
+týždňa a náhodný výber nezodpovedaných otázok.
+
+Používatelia CQA systému Stack Exchange nie sú s takýmto generickým informačným bulletinom
+spokojní~\footnote{\url{https://meta.stackexchange.com/q/247298}. Prevzaté 31.4.2017.}. Medzi problémy, ktoré najčastejšie
+používatelia vytýkajú súčasnému informačnému bulletinu patria:
+
+\begin{my_itemize}
+  \item{\textbf{Náhodne generovaný obsah} -- Sekcia nezodpovedaných otázok obsahuje náhodný výber otázok bez odpovedí.
+        Pravdepodobnosť, že používateľ vie na niektorú z nich odpovedať, je tak veľmi malá~\footnote{\url{https://meta.stackexchange.com/q/96758}}.}
+  \item{\textbf{Absencia personalizácie} -- Otázky v jednotlivých sekciách nijakým spôsobom nezohľadňujú používateľove
+        obľúbené značky alebo jeho aktivitu. Dôsledkom hlavne pri väčších komunitách je tak nízka relevancia ponúkaného obsahu
+        \footnote{\url{https://meta.stackexchange.com/q/110902}}.}
+  \item{\textbf{Malá rôznorodosť obsahu} -- Hlavne pokročilejší a aktívnejší používatelia by chceli v informačnom bulletine vidieť
+        okrem rôznych otázok aj iný obsah, okrem iného napr. rôzne štatistiky aktivity komunity, zoznam ocenených používateľov
+        alebo príbuzný obsah z komunitných blogov~\footnote{\url{https://meta.stackexchange.com/q/247298}}.}
+  \item{\textbf{Aktuálnosť obsahu} -- Informačný bulletin niekedy obsahuje veľmi staré otázky, ktoré už nie sú relevantné\footnote{\url{https://meta.stackoverflow.com/q/319095}}.}
+\end{my_itemize}
+
+Na všetky tieto problémy používatelia upozorňujú už dlhšiu dobu, tieto otázky majú pomerne veľkú podporu komunity,
+no napriek tomu žiaden z týchto problémov zatiaľ nebol adresovaný, a informačný bulletin ostáva aj naďalej generický
+a z veľkej časti plný náhodného obsahu.
+
+Generický informačný bulletin stráca pre používateľov informačnú hodnotu, pretože
+najmä v prípade väčších komunít, akou je napríklad Stack Overflow\footnote{ \url{https://stackoverflow.com}}, často obsahuje
+otázky, ktoré nie sú z oblastí záujmu používateľa.
+
+
+\begin{figure}[H]\begin{center}
+\includegraphics[scale=0.4]{so-newsletter}
+\caption{Informačný bulletin komunity Stack Overflow, 25. apríl 2017.\label{fig:so-newsletter}}\end{center}
+\end{figure}
+
+\subsection{Informačný bulletin portálu Quora}
+
+Quora\footnote{\url{https://quora.com}} je CQA systém, ktorý nie je zameraný na konkrétnu oblasť záujmu, ale obsahuje
+otázky z rôznych tém. Quora ponúka svojim používateľom týždenný informačný bulletin (\emph{Quora Weekly Digest}),
+ktorý obsahuje desať najzaujímavejšich otázok za posledný týždeň a zoznam ľudí, ktorých používateľ potenciálne pozná.
+
+Zoznam najzaujímavejších otázok pozostáva z editormi manuálne vybraného obsahu a algoritmicky vybraného obsahu,
+ktorý je personalizovaný pre každého používateľa zvlášť~\footnote{\url{http://businessinsider.com/quora-emails-2012-8}\label{fnote-bi}} (Obr.~\ref{fig:quora-newsletter}).
+
+\begin{figure}[H]\begin{center}
+\includegraphics[scale=0.5]{quora-newsletter}
+\caption{Informačný bulletin portálu Quora. Prevzaté 30.4.2017,~[\ref{fnote-bi}] \label{fig:quora-newsletter}}\end{center}
+\end{figure}
+
+\subsection{CQA systémy bez informačných bulletinov}
+
+Viaceré populárne CQA systémy svojim používateľom vôbec neponúkajú možnosť odoberať informačný bulletin. Medzi takéto
+systémy patrí napr. portál \emph{Yahoo! Answers}\footnote{\url{https://answers.yahoo.com}}, ktorý je určený na pokladanie
+otázok z akejkoľvek oblasti záujmu. Rovnako informačný newsletter neponúka ani ďalší všeobecne zameraný CQA systém --
+\emph{Wiki Answers}\footnote{\url{https://answers.com}}. CQA systém zameraný na podporu výučby
+\emph{Askalot}\footnote{\url{https://askalot.fiit.stuba.sk}} tiež v súčasnosti neponúka informačný newsletter,
+iba možnosť notifikácie používateľa prostredníctvom e-mailu o aktivite súvisiacej s jeho obsahom v rámci systému.
+
+
+\section{Diskusia}
+
+CQA systémy patria medzi systémy s veľkým objemom používateľmi generovaného obsahu. Ako také sú vhodným kandidátom na
+implementáciu informačných bulletinov. Existujúce informačné bulletiny v skúmaných CQA systémoch, najmä v prípade
+platformy Stack Exchange, však majú veľké množstvo nedostatkov.
+
+Riešením týchto problémov je vytváranie personalizovaných informačných bulletinov pre tieto systémy. Vhodným spôsobom
+na personalizáciu je využitie metód odporúčania, ktorým sa venuje kapitola~\ref{rec}.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\chapter{Odporúčanie}
+\chapter{Odporúčanie}\label{rec}
 
 \section{Odporúčacie systémy}
 
