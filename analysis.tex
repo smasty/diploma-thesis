@@ -410,7 +410,7 @@ oblastiam v určitých aspektoch príbuzné. Používateľ má tak možnosť roz
 kontexte problémovej domény.
 
 
-\section{Existujúce metódy pre odporúčanie otázok}
+\section{Existujúce metódy pre odporúčanie otázok v CQA}
 
 \textbf{TODO}
 
@@ -452,17 +452,38 @@ Tématická diverzifikácia je metóda napomáhajúca vyváženosti a diverzite 
 lepšie reflektovať kompletné spektrum používateľových záujmov. Napriek tomu, že môže mať negatívny vplyv na priemernú
 správnosť odporúčaní, dosahuje táto metóda zvýšenú úroveň používateľskej spokojnosti~\cite{Zhang2009}.
 
+\textbf{Diverzita na základe nízkej vnútornej podobnosti zoznamu}\\
 Ziegler a kol.~\cite{Ziegler2005} študovali diverzifikáciu v oblasti odporúčaní a navrhli prístup, ktorý vytvára
 zoznamy odporúčaní lepšie uspokojujúce používateľove záujmy prostredníctvom selekcie takých zoznamov, ktoré majú nízku
-vnútornú podobnosť. Autori v experimente demonštrovali, že reálny používatelia preferujú diverznejšie výsledky.
+vnútornú podobnosť.
 
+Odporúčanie bolo navrhnuté s použitím kolaboratívneho filtrovania na základe položiek (kapitola~\ref{rec:collab}).
+Vnútorná miera podobnosti položiek zoznamov bola určovaná prostredníctvom metriky založenej na taxonomickej klasifikácií
+jednotlivých položiek. Samotná diverzifikácia spočívala v sekvenčnom výbere položiek z kandidátnych zoznamov odporúčaní tak,
+aby bola minimalizovaná vnútorná tématická podobnosť výsledného zoznamu odporúčaní.
+Autori v online experimente demonštrovali, že reálni používatelia preferujú diverznejšie výsledky.
+
+
+\textbf{Diverzita na základe dôvodu}\\
 Tradičný spôsob zavedenia diverzity do odporúčania je diverzifikácia na základe atribútov odporúčaného obsahu, teda
 zoskupenie výsledkov do skupín zdieľajúcich viaceré atribúty (ako napr. žáner hudby) a následný výber iba limitovaného
 množstva výsledkov z každej zo skupín. Autori v~\cite{Yu2009} prezentujú \emph{diverzifikáciu na základe dôvodu}.
 Táto metóda využíva pre diverzifikáciu výsledkov dôvod, prečo bola konkrétna položka odporučená
-(napr. \textit{tento album bol odporučený, pretože ste počúvali inú skladbu tohto autora}). Autori experimentálne ukázali,
-že takáto forma diverzifikácie je prinajmenšom rovnako účinná, ako diverzifikácia na základe atribútov položiek.
+(napr. \textit{tento album bol odporučený, pretože ste počúvali inú skladbu tohto autora}).
+V článku autori nekonkretizujú spôsob určenia dôvodov pre odporúčanie, len formálne definujú metriku pre výpočet diverznosti
+medzi odporúčanými položkami ako priemer kosínovej vzdialenosti medzi vektormi reprezentujúcimi tieto dôvody.
+Pre aplikovanie diverzifikácie v odporúčaní \emph{top-K} položiek využívajú nasledovný algoritmus:
 
+\begin{adjustwidth}{1cm}{}
+Pre daného používateľa $u$ a prah $\theta$ pre agregované skóre množiny odporúčaných položiek $\sigma$, nájdi množinu
+$S \subseteq \sigma$ takú, že $|S| = k, score(S) >= \theta$ a priemerná kosínová vzdialenosť diverzity položiek je maximalizovaná.
+\end{adjustwidth}
+
+Diverzifikáciu na základe dôvodu autori porovnávajú so štandardným prístupom diverzifikácie na základe atribútov odporúčaného obsahu.
+Autori experimentálne ukázali, že takáto forma diverzifikácie je prinajmenšom rovnako účinná, ako diverzifikácia na
+základe atribútov položiek, pričom z pohľadu výkonu ju výrazne presahuje.
+
+\textbf{Diverzita na báze proporcionality}\\
 Inú perspektívu volí metóda diverzity na báze proporcionality. Zoznam odporúčaní je možné považovať za najlepšie diverzifikovaný
 vzhľadom na relevanciu odporúčaní v takom prípade, keď počet výsledkov z určitej témy je úmerný popularite danej témy.
 Dang a kol. vo svojej práci~\cite{Dang2012} ponúkajú koncept optimalizácie proporčnosti pre diverzifikáciu výsledkov
