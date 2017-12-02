@@ -8,6 +8,8 @@ so zameraním sa na podporu diverzity a~aktuálnosti obsahu odporúčaného v in
 Naše riešenie je navrhnuté pre použitie vrámci platformy Stack Exchange, ktorá patrí medzi najpopulárnejšie CQA systémy
 v súčasnosti a tvorí ju viac ako 160 komunít zameraných na rôzne oblasti.
 
+\textbf{TODO} Treba sem dat overview celej metody aj s diverzifikaciou, plus nejaky flow diagram aby bolo jasne co sa robi.
+
 \section{Návrh metódy personalizovaného odporúčania}
 
 \textbf{Hypotéza}\\
@@ -58,3 +60,41 @@ stop slová.
 
 
 \subsection{Model používateľov}
+
+Pre každého používateľa budeme uvažovať dva nezávislé modely -- jeden bude modelovať záujem používateľa o určité témy a otázky,
+druhý bude modelovať jeho expertízu v určitej oblasti. Jeden bude použitý
+pri odporúčaní otázok, ktoré by používateľa mohli zaujímať, druhý pri odporúčaní otázok, ktoré by mohol vedieť zodpovedať.
+Oba modely budú z pohľadu svojej štruktúry presne rovnaké.
+
+Model používateľa bude zostavený na základe jeho aktivity a bude sa analogicky k modelu otázok skladať z troch vektorov:
+
+\begin{my_enumerate}
+\item{
+  Prvý vektor bude reprezentovať aktivitu používateľa naprieč značkami -- každý rozmer bude predstavovať jednu značku,
+  v ktorej má používateľ aktivitu. Hodnoty v jednotlivých rozmeroch budú predstavovať podiel aktivity v danej značke voči
+  celkovému množstvu aktivity používateľa.
+}
+\item{
+  Druhý vektor bude analogicky k prvému reprezentovať aktivitu používateľa naprieč LDA témami, v ktorých má používateľ aktivitu.
+}
+\item{
+  Tretí vektor bude reprezentovať zastúpenie jednotlivých výrazov v textoch otázok, v ktorých má používateľ aktivitu.
+}
+\end{my_enumerate}
+
+\textbf{Záujmový model}\\
+Model predstavujúci záujem používateľa bude zostavený zo všetkých otázok, ktoré používateľ položil, alebo ktoré označil
+za obľúbené. Každá takáto otázka bude do modelu prispievať rovnakou váhou.
+
+\textbf{Expertízny model}\\
+Model modelujúci expertízu používateľa sa bude skladať z otázok, na ktoré používateľ odpovedal, pričom ich dopad na model
+expertízy bude závislý od skóre jeho odpovede. Kladné skóre bude prisipevať do modelu pozitívne -- bude to teda signalizovať
+fakt, že používateľ danej téme rozumie. Odpoveď so záporným skóre bude naopak signalizovať, že používateľ danej téme nerozumie,
+čo bude reflektované aj v jeho expertíznom modeli. Odpovede označené za akceptované budú do modelu prispievať s koeficientom $k~=~1.5$.
+
+\textbf{Komentáre}\\
+Okrem pokladania otázok, odpovedania alebo označenia za obľúbené budú uvažované aj používateľove komentáre. Keďže však
+zo samotného faktu že používateľ niečo okomentoval nemožno jednoznačne určiť, či táto aktivita predstavuje jeho záujem
+alebo expertízu, budú otázky, ktoré používateľ okomentoval prispievať do oboch modelov -- záujmového aj expertízneho, avšak
+s~koeficientom $k~=~1/3$.
+
