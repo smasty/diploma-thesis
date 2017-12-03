@@ -130,9 +130,28 @@ iba generický informačný bulletin podobný tomu, ktorý je používateľom k 
 
 \subsection{Aktuálnosť / Freshness}
 
+\textbf{TODO} - exponencialny decay factor, zavisly od priemernej frekvencie userovej aktivity. Plus berieme len content
+za max 2x frekvencie odosielania newsletteru.
 
 \section{Návrh metód diverzifikácie odporúčaní}
 
 \textbf{Hypotéza}\\
 \textit{Výberom odporúčaných otázok zo širšieho okruhu záujmu používateľa a zohľadnením ich aktuálnosti predídeme výskytu problému
 filtračnej bubliny, čím dosiahneme vyššiu mieru záujmu používateľa a jeho aktivity.}
+
+Diverzifikácia obsahu personalizovaného informačného bulletinu sa bude vykonávať ešte pred samotným zostavovaním
+zoznamu odporúčaní formou pre-filteru. Diverzifikácia bude spočívať vo výbere \textit{značiek} a \textit{tém}, pričom
+následne v kroku zostavovania zoznamov odporúčaní sa bude pre každý zoznam uvažovať len obsah prislúchajúci do danej
+značky alebo témy. Okrem výberu značiek a tém bude diverzifikácia aplikovaná aj pri následnom výbere položiek z jednotlivých
+zoznamov do výsledného zoznamu odporúčaní.
+
+Tento prístup k diverzifikácii sme zvolili okrem jeho prirodzenosti aj z dôvodu jeho veľmi dobrej škálovateľnosti,
+nakoľko alternatívny prístup postavený na tvorbe odporúčaní nad všetkým obsahom daného CQA systému a až následnej
+diverzifikácií by v praxi nebol realizovateľný.
+
+Cieľom našej práce je vyhodnotiť dopad diverzifikácie odporúčaní na personalizované informačné bulletiny CQA systémov.
+Za týmto účelom sme navrhli dve metódy diverzifikácie odporúčaní: metódu proporčnej diverzifikácie a metódu tématického vzorkovania.
+
+\subsection{Metóda proporčnej diverzifikácie}
+
+\subsection{Metóda tématického vzorkovania}
