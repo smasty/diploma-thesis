@@ -8,7 +8,20 @@ so zameraním sa na podporu diverzity a~aktuálnosti obsahu odporúčaného v in
 Naše riešenie je navrhnuté pre použitie vrámci platformy Stack Exchange, ktorá patrí medzi najpopulárnejšie CQA systémy
 v súčasnosti a tvorí ju viac ako 160 komunít zameraných na rôzne oblasti.
 
-\textbf{TODO} Treba sem dat overview celej metody aj s diverzifikaciou, plus nejaky flow diagram aby bolo jasne co sa robi.
+\textbf{Prehľad navrhovanej metódy}\\
+Na začiatok uvádzame stručný súhrn navrhnutej metódy zostavovania personalizovaných informačných bulletinov.
+Celkový pohľad na metódu ilustruje obrázok~\ref{fig:overview}, Jednotlivé časti metódy sú podrobne opísané v nasledujúcich kapitolách.
+\begin{my_itemize}
+\item{Pre zostavenie personalizovaných informačných bulletinov využijeme odporúčaciu metódu filtrovania na základe obsahu.}
+\item{
+    Diverzifikáciu odporúčaného obsahu budeme zabezpečovať na úrovni tématického pre-filteru pred samotným procesom
+    odporúčania -- pre každú nezávislú tému sa bude vytvárať samostatný zoznam odporúčaní.
+}
+\item{Výsledný zoznam odporúčaného obsahu vznikne spojením jednotlivých zoznamov z kroku diverzifikácie.}
+\item{Pri odporúčaní sa okrem diverznosti a relevancie obsahu bude uvažovať aj jeho aktuálnosť.}
+\end{my_itemize}
+
+\textbf{TODO - sem pojde flow diagram znazorujuci cely proces zostavovania odporucani}\label{fig:overview}
 
 \section{Návrh metódy personalizovaného odporúčania}
 
@@ -98,3 +111,28 @@ zo samotného faktu že používateľ niečo okomentoval nemožno jednoznačne u
 alebo expertízu, budú otázky, ktoré používateľ okomentoval prispievať do oboch modelov -- záujmového aj expertízneho, avšak
 s~koeficientom $k~=~1/3$.
 
+\subsection{Výber odporúčaného obsahu}
+
+Pre účely zostavovania zoznamu odporúčaných otázok použijeme prístup analogický štandardným nástrojom pre vyhľadávanie
+informácií (angl.~\emph{Information Retrieval Engines}). V našom prípade budú dokumentmi samotné otázky a dopytom bude
+model používateľa. Pre ohodnocovanie podobnosti modelov bude použitý skalárny súčin vektorov reprezentujúcich
+modely otázky a používateľa.
+
+
+\subsection{Riešenie problému studeného štartu}
+
+Pre eliminovanie problému studeného štartu (kapitola~\ref{cold-start}) z pohľadu prvotného odporúčania otázok využijeme
+offline natrénovanie našich metód na archívnych dátach platformy Stack~Exchange.
+
+V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba nedostatočnú aktivitu, budeme zo začiatku vytvárať
+iba generický informačný bulletin podobný tomu, ktorý je používateľom k dispozícii aj v súčasnosti (kapitola~\ref{so-newsletter}).
+
+
+\subsection{Aktuálnosť / Freshness}
+
+
+\section{Návrh metód diverzifikácie odporúčaní}
+
+\textbf{Hypotéza}\\
+\textit{Výberom odporúčaných otázok zo širšieho okruhu záujmu používateľa a zohľadnením ich aktuálnosti predídeme výskytu problému
+filtračnej bubliny, čím dosiahneme vyššiu mieru záujmu používateľa a jeho aktivity.}
