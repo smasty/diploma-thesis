@@ -59,7 +59,7 @@ Pre optimalizáciu modelu a zanedbanie tém s veľmi nízkou distribúciou sa do
 \textbf{Nastavenie LDA}\\
 Pre určenie vhodného počtu LDA tém ($n$) využijeme metódu hierarchických Dirichletových procesov~\cite{Teh2006}.
 Pre trénovanie LDA modelu bude využitý online variačný Bayesov algoritmus. Parametre modelu budú nastavené nasledovne:\\
-$\alpha = 1/n; \kappa = 0.7; \tau_0 = 10; \eta = 1/n$.
+$$\alpha = \frac{1}{n}; \kappa = 0.7; \tau_0 = 10; \eta = \frac{1}{n}$$
 
 Nakoľko jednotlivé komunity vrámci platformy Stack Exchange sú pomerne úzko zamerané, predpokladáme, že bude dostačujúce
 natrénovať LDA model na vzorke archívnych dát a nebude potrebné postupné dotrénovanie modelu. Napriek tomu sme zvolili
@@ -109,9 +109,9 @@ fakt, že používateľ danej téme rozumie. Odpoveď so záporným skóre bude 
 Okrem pokladania otázok, odpovedania alebo označenia za obľúbené budú uvažované aj používateľove komentáre. Keďže však
 zo samotného faktu že používateľ niečo okomentoval nemožno jednoznačne určiť, či táto aktivita predstavuje jeho záujem
 alebo expertízu, budú otázky, ktoré používateľ okomentoval prispievať do oboch modelov -- záujmového aj expertízneho, avšak
-s~koeficientom $k~=~1/3$.
+s~koeficientom $k~=~\frac{1}{3}$.
 
-\subsection{Výber odporúčaného obsahu}
+\subsection{Výber odporúčaného obsahu}\label{design:rec-retrieval}
 
 Pre účely zostavovania zoznamu odporúčaných otázok použijeme prístup analogický štandardným nástrojom pre vyhľadávanie
 informácií (angl.~\emph{Information Retrieval Engines}). V našom prípade budú dokumentmi samotné otázky a dopytom bude
@@ -154,4 +154,55 @@ Za týmto účelom sme navrhli dve metódy diverzifikácie odporúčaní: metód
 
 \subsection{Metóda proporčnej diverzifikácie}
 
+Zostavenie výsledného zoznamu $n$ odporúčaní s použitím metódy proporčnej diverzifikácie je navrhnuté nasledovne:
+
+\begin{my_enumerate}
+\item{
+    Pre každého používateľa vyberieme z jeho záujmového alebo expertízneho modelu $k$~najvyššie hodnotených značiek
+    z~kategorického vektoru a $k$~najvyššie hodnotených tém z~tématického vektoru, pričom
+    $2 \times k = \left\lceil\frac{n}{2}\right\rceil$.
+}
+\item{
+    Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
+    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.
+}
+\item{
+    Následne sa z každého zoznamu vyberie vrchných $n_k$ odporúčaných položiek, pričom $n_k = \frac{n}{2k}$
+}
+\end{my_enumerate}
+
+Metóda proporčnej diverzifikácie tak v podstate používateľovi vyberie najrelevantnejšie položky z jeho najrelevantnejších
+tém a značiek. T'uto jednoduchú metódu diverzifikácie budeme následne porovnávať s metódou tématického vzorkovania.
+
+
 \subsection{Metóda tématického vzorkovania}
+
+Pri návrhu tejto metódy sme sa inšpirovali metódou rovnomennou metódou z~\cite{Szpektor2013}, ktorú sme prispôsobili
+podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilustruje schéma na obrázku~\ref{fig:tematic-sampling}.
+
+\begin{my_enumerate}
+\item{
+    Pre každého používateľa vyberieme z jeho modelu $k_1$~značiek a~$k_2$~tém. Pri výbere sa obmedzíme na značky a témy,
+    ktoré spadajú do druhého kvartilu -- mediánu. Potlačíme tak značky a témy, ktoré majú pre používateľa nízku relevanciu.\\
+    $k_1 + k_2 = \left\lceil\frac{n}{2}\right\rceil$; konkrétne hodnoty pre $k_1$ a $k_2$ nešpecifikujeme, $n$ je počet
+    odporúčaní vo~výslednom zozname.
+}
+\item{
+    Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
+    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.
+}
+\item{
+    Následne budeme náhodne vyberať vzorky z jednotlivých zoznamov do výsledného zoznamu odporúčaní, pričom pravdepodobnosť
+    výberu otázky z konkrétneho zoznamu $P_s(l_i)$ bude proporčná k relevancii tejto témy pre daného používateľa.
+}
+\item{
+    Výber konkrétnych otázok z jednotlivých zoznamov bude spočívať v náhodnom výbere z~$m$~najrelevantnejších otázok
+    daného zoznamu, kde $m = P_s(l_i)$.
+
+}
+\end{my_enumerate}
+
+\begin{figure}[H]\begin{center}
+\includegraphics[scale=0.27]{diversity-diagram}
+\caption{Schéma metódy diverzifikácie odporúčaní tématickým vzorkovaním.\label{fig:tematic-sampling}}\end{center}
+\end{figure}
