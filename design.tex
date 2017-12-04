@@ -196,8 +196,8 @@ podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilus
     výberu otázky z konkrétneho zoznamu $P_s(l_i)$ bude proporčná k relevancii tejto témy pre daného používateľa.
 }
 \item{
-    Výber konkrétnych otázok z jednotlivých zoznamov bude spočívať v náhodnom výbere z~$m$~najrelevantnejších otázok
-    daného zoznamu, kde $m = P_s(l_i)$.
+    Konkrétne otázky z jednotlivých zoznamov sa budú vyberať z~$m = P_s(l_i)$ najrelevantnejších otázok daného zoznamu
+    v náhodnom poradí.
 
 }
 \end{my_enumerate}
@@ -206,3 +206,53 @@ podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilus
 \includegraphics[scale=0.27]{diversity-diagram}
 \caption{Schéma metódy diverzifikácie odporúčaní tématickým vzorkovaním.\label{fig:tematic-sampling}}\end{center}
 \end{figure}
+
+
+\section{Metriky hodnotenia výsledkov}
+
+Pre overovanie výsledkov experimentov budeme používať tieto metriky:
+
+\textbf{TODO} pridat vzorce pre jednotlive metriky
+
+\textbf{Precision@N}\\
+Presnosť (angl.~\emph{Precision}), alebo tiež \textit{pozitívna predikčná hodnota} je metrika reprezentujúca pomer relevantných
+dokumentov z celkového zoznamu. Štandardne sa presnosť počíta ako pomer z celého zoznamu dokumentov, no v oblasti
+odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metrika \textit{Precision@N}, ktorá určuje, aká časť
+z prvých N dokumentov v zozname je relevantná.
+
+\textbf{nDCG}\\
+\textit{Normalized Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
+odporúčania. DCG meria užitočnosť dokumentov na základe ich pozície vo výslednom zozname. Užitočnosť dokumentov sa akumuluje
+od konca zoznamu, pričom najvyššiu užitočnosť majú dokumenty na začiatku zoznamu~\cite{Jrvelin2002}.
+
+\textbf{CTR}\\
+Miera preklikov (angl.~\emph{Click-through Rate}) je metrika často využívaná v spojitosti s informačnými bulletinmi.
+Táto metrika vyjadruje počet úspešných kliknutí na odkaz v informačnom bulletine.
+
+Okrem CTR plánujeme v súvislosti s interakciou používateľa s informačným bulletinom merať aj počet impresií,
+teda zobrazení informačného bulletinu, ako aj počet konverzií, teda podiel prípadov, kedy kliknutie na niektorú z otázok
+v informačnom bulletine viedlo k aktivite používateľa na tejto otázke -- či už označenie za obľúbenú,
+odpovedanie alebo pridanie komentáru. Ďalej tiež plánujeme merať počet odhlásení z informačného bulletinu.
+
+
+\section{Návrh overenia metód}
+
+Nami navrhnuté metódy personalizovaného odporúčania a diverzifikácie odporúčaného obsahu budeme overovať prostredníctvom
+online nekontrolovaného experimentu spoločne s kolegom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity \textit{Stack Overflow} platformy Stack Exchange.
+
+Tento online experiment bude mať formu pravidelne rozposielaného informačného bulletinu, na ktorého odoberanie sa budú
+môcť prihlásiť všetci používatelia z tejto komunity.
+
+Účinnosť zvolených metód diverzifikácie odporúčaní budeme vyhodnocovať prostredníctvom A/B testovania, pričom používateľov
+rozdelíme na tri skupiny:
+\begin{my_enumerate}
+    \item{Kontrolná skupina -- odporúčania nebudú diverzifikované}
+    \item{Skupina A -- využitie metódy tematického vzorkovania}
+    \item{Skupina B -- využitie metódy proporčnej diverzifikácie}
+\end{my_enumerate}
+
+Dôležitým predpokladom pre úspešnosť online experimentu bude získať dostatočnú reprezentatívnu vzorku používateľov
+ochotných byť súčasťou experimentu. V~prípade, že by sa nám nepodarilo osloviť dostatočný počet používateľov, plánujeme
+vykonať kontrolovaný offline experiment na vzorke archívnych dát.
+
+
