@@ -128,10 +128,21 @@ V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba
 iba generický informačný bulletin podobný tomu, ktorý je používateľom k dispozícii aj v súčasnosti (kapitola~\ref{so-newsletter}).
 
 
-\subsection{Aktuálnosť / Freshness}
+\subsection{Aktuálnosť odporúčaní}
 
-\textbf{TODO} - exponencialny decay factor, zavisly od priemernej frekvencie userovej aktivity. Plus berieme len content
-za max 2x frekvencie odosielania newsletteru.
+Pri zostavovaní odporúčaní do informačného bulletinu sa budú uvažovať len otázky, ktoré pochádzajú
+z obdobia od posledného zostavenia informačného bulletinu.
+
+Aby model používateľa reflektoval meniace sa záujmy používateľa v čase, zavedieme pri zostavovaní modelu z používateľovej
+aktivity exponenciálny \textit{faktor úpadku} (angl.~\textit{decay factor}):
+$$y_n_+_t = y_n (1 - d)^t$$
+
+\begin{adjustwidth}{1cm}{1cm}
+$y_n$ -- aktuálna váha danej veličiny v modeli používateľa\\
+$y_n_+_t$ -- váha danej veličiny po aplikovaní faktoru úpadku\\
+$t$ -- čas od pregenerovania modelu používateľa -- počet pregenerovaní modelu.\\
+$d$ -- percentuálny pokles danej veličiny; vypočíta sa ako podiel množstva používateľovej aktivity za čas $t$ a jeho celkového množstva aktivity.
+\end{adjustwidth}
 
 \section{Návrh metód diverzifikácie odporúčaní}
 
