@@ -223,18 +223,27 @@ podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilus
 
 Pre overovanie výsledkov experimentov budeme používať tieto metriky:
 
-\textbf{TODO} pridat vzorce pre jednotlive metriky
-
 \textbf{Precision@N}\\
 Presnosť (angl.~\emph{Precision}), alebo tiež \textit{pozitívna predikčná hodnota} je metrika reprezentujúca pomer relevantných
 dokumentov z celkového zoznamu. Štandardne sa presnosť počíta ako pomer z celého zoznamu dokumentov, no v oblasti
 odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metrika \textit{Precision@N}, ktorá určuje, aká časť
 z prvých N dokumentov v zozname je relevantná.
+$$\mbox{Precision@N}=\frac{|\{\mbox{relevantne otazky v top-N}\}\cap\{\mbox{top-N odporucenych otazok}\}|}{|\{\mbox{top-N odporucenych otazok}\}|}$$
 
 \textbf{nDCG}\\
 \textit{Normalized Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
 odporúčania. DCG meria užitočnosť dokumentov na základe ich pozície vo výslednom zozname. Užitočnosť dokumentov sa akumuluje
 od konca zoznamu, pričom najvyššiu užitočnosť majú dokumenty na začiatku zoznamu~\cite{Jrvelin2002}.
+
+nDCG položky na pozícii $p$ v zozname odporúčaní je definované ako:
+
+$$\mathrm{nDCG_{p}} = \frac{DCG_{p}}{IDCG_{p}}$$
+$$\mathrm{DCG_{p}} = \sum_{i=1}^{p} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
+$$\mathrm{IDCG_{p}} = \sum_{i=1}^{|REL|} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
+\begin{adjustwidth}{1cm}{1cm}
+$rel_i$ -- relevancia $i$-tej položky v zozname odporúčaní.\\
+$|REL|$ -- zoznam $p$ relevantných položiek zo zoznamu odporúčaní usporiadaných podľa relevancie.
+\end{adjustwidth}
 
 \textbf{CTR}\\
 Miera preklikov (angl.~\emph{Click-through Rate}) je metrika často využívaná v spojitosti s informačnými bulletinmi.
@@ -255,11 +264,12 @@ Tento online experiment bude mať formu pravidelne rozposielaného informačnéh
 môcť prihlásiť všetci používatelia z tejto komunity.
 
 Účinnosť zvolených metód diverzifikácie odporúčaní budeme vyhodnocovať prostredníctvom A/B testovania, pričom používateľov
-rozdelíme na tri skupiny:
+rozdelíme na štyri skupiny:
 \begin{my_enumerate}
-    \item{Kontrolná skupina -- odporúčania nebudú diverzifikované}
-    \item{Skupina A -- využitie metódy tematického vzorkovania}
-    \item{Skupina B -- využitie metódy proporčnej diverzifikácie}
+    \item{Kontrolná skupina -- generický informačný bulletin bez odporúčania;}
+    \item{Skupina A -- informačný bulletin s odporúčaním, bez diverzifikácie;}
+    \item{Skupina B -- informačný bulletin s odporúčaním, metóda proporčnej diverzifikácie;}
+    \item{Skupina C -- informačný bulletin s odporúčaním, metóda tématického vzorkovania;}
 \end{my_enumerate}
 
 Dôležitým predpokladom pre úspešnosť online experimentu bude získať dostatočnú reprezentatívnu vzorku používateľov
