@@ -135,11 +135,11 @@ z obdobia od posledného zostavenia informačného bulletinu.
 
 Aby model používateľa reflektoval meniace sa záujmy používateľa v čase, zavedieme pri zostavovaní modelu z používateľovej
 aktivity exponenciálny \textit{faktor úpadku} (angl.~\textit{decay factor}):
-$$y_n_+_t = y_n (1 - d)^t$$
+$$y_{n+t} = y_n (1 - d)^t$$
 
 \begin{adjustwidth}{1cm}{1cm}
 $y_n$ -- aktuálna váha danej veličiny v modeli používateľa\\
-$y_n_+_t$ -- váha danej veličiny po aplikovaní faktoru úpadku\\
+$y_{n+t}$ -- váha danej veličiny po aplikovaní faktoru úpadku\\
 $t$ -- čas od pregenerovania modelu používateľa -- počet pregenerovaní modelu.\\
 $d$ -- percentuálny pokles danej veličiny; vypočíta sa ako podiel množstva používateľovej aktivity za čas $t$ a jeho celkového množstva aktivity.
 \end{adjustwidth}
