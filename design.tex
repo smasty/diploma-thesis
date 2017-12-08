@@ -40,9 +40,9 @@ Model otázky sa bude skladať z troch nezávislých modelov, ktoré sa na samot
 
 \textbf{1. Kategorický model otázok}\\
 Tento model reprezentuje otázku na najvyššej úrovni ako prislúchajúcu do určitých kategórií. Kategórie otázok sú vrámci
-platformy Stack Exchange reprezentované ako značky (angl.\textit{tags}). Každá otázka môže obsahovať viacero značiek.
+platformy Stack Exchange reprezentované ako značky (angl.~\textit{tags}). Každá otázka môže obsahovať viacero značiek.
 
-Samotný kategorický model otázky bude reprezentovaný ako vektor v $n$-rozmernom priestore, kde každý rozmer $k$
+Samotný kategorický model otázky bude reprezentovaný ako vektor v $n$-rozmernom priestore, kde každý rozmer $n_i$
 predstavuje príslušnosť otázky k danej značke. Nakoľko značky netvoria hierarchickú štruktúru, bude vektor v jednotlivých
 rozmeroch nadobúdať iba hodnoty $0$~alebo~$1$.
 
@@ -66,7 +66,7 @@ natrénovať LDA model na vzorke archívnych dát a nebude potrebné postupné d
 online variačný Bayesov algoritmus, keďže je pri veľkom množstve dát efektívnejší ako dávková varianta tohto algoritmu.
 \end{adjustwidth}
 
-\textbf{3. Lexikálny model otázok}
+\textbf{3. Lexikálny model otázok}\\
 Lexikálny model otázky využíva TF-IDF vektor reprezentujúci zastúpenie jednotlivých výrazov v texte otázky. Rovnako ako
 LDA vektor bude zostavený z nadpisu a textu samotnej otázky. Pred výpočtom bude text lematizovaný a budú z neho odstránené
 stop slová.
@@ -183,12 +183,12 @@ Zostavenie výsledného zoznamu $n$ odporúčaní s použitím metódy proporčn
 \end{my_enumerate}
 
 Metóda proporčnej diverzifikácie tak v podstate používateľovi vyberie najrelevantnejšie položky z jeho najrelevantnejších
-tém a značiek. T'uto jednoduchú metódu diverzifikácie budeme následne porovnávať s metódou tématického vzorkovania.
+tém a značiek. Túto jednoduchú metódu diverzifikácie budeme následne porovnávať s metódou tématického vzorkovania.
 
 
 \subsection{Metóda tématického vzorkovania}
 
-Pri návrhu tejto metódy sme sa inšpirovali metódou rovnomennou metódou z~\cite{Szpektor2013}, ktorú sme prispôsobili
+Pri návrhu tejto metódy sme sa inšpirovali rovnomennou metódou z~\cite{Szpektor2013}, ktorú sme prispôsobili
 podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilustruje schéma na obrázku~\ref{fig:tematic-sampling}.
 
 \begin{my_enumerate}

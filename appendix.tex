@@ -53,7 +53,12 @@ vo fáze návrhu metódy riešenia problému, čím sa posunulo spísanie správ
 \end{tabular}
 \end{table}
 
+\textbf{Zhodnotenie}\\
+\textbf{TODO}
+
 \section{Plán práce na diplomovom projekte III}
+
+\textbf{TODO}
 
 \begin{table}[h]
 \centering
@@ -67,4 +72,47 @@ vo fáze návrhu metódy riešenia problému, čím sa posunulo spísanie správ
 \end{table}
 
 
-\section{Technická dokumentácia systému StackLetter}\label{tech-doc}
+\chapter{Technická dokumentácia systému}\label{tech-doc}
+
+\section{Modul pre registráciu nových používateľov}
+
+Tento modul predstavuje webovú aplikáciu určenú na registráciu nových používateľov systému StackLetter. Implementovaná je
+v jazyku PHP 7.1 s použitím MVC/MVP webového frameworku Nette 2.4. Ďalej popisujeme niektoré dôležité komponenty tohto modulu.
+
+\textbf{HomepagePresenter}\\
+Táto trieda zabezpečuje hlavnú funkcionalitu stránky -- autentifikáciu a registráciu používateľov, ako aj manažment
+používateľského konta. Autentifikácia používateľa sa vykonáva prostredníctvom Stack Exchange API s využitím protokolu OAuth 2.0.
+Zabezpečuje tiež funkcionalitu kontaktného formuláru.
+
+\textbf{SubscriptionPresenter}\\
+Spolu s príslušnou modelovou triedou \textit{SubscriptionModel} implementuje možnosť odhlásenia sa z odoberania
+informačného bulletinu, generovanie \textit{unsubscribe} odkazov pre jednotlivé informačné bulletiny, zbieranie spätnej
+väzby po odhlásení sa z odoberania a možnosť opätovného prihlásenia sa.
+
+\textbf{AsyncJobProcessor}\\
+Táto trieda zabezpečuje asynchrónne spracovanie dlhotrvajúcich úloh. Vďaka asynchrónnemu spracovaniu týchto úloh ostáva
+odozva používateľského rozhrania rýchla. Konkrétne vykonáva odoslanie uvítacieho e-mailu používateľovi po úspešnej
+registrácii prostredníctvom služby SendGrid s využitím protokolu SMTP, a následné stiahnutie používateľského profilu
+prostredníctvom Stack Exchange API.
+Samotná webová aplikácia zadáva tejto komponente úlohy na asynchrónne spracovanie prostredníctvom Redis fronty.
+
+
+\section{Modul pre generovanie a odosielanie informačných bulletinov}
+
+\textbf{TODO}
+
+\begin{figure}[H]\begin{center}
+\includegraphics[scale=0.355]{mailer-schema}
+\caption{Schéma modulu pre generovanie a odosielanie informačných bulletinov \label{fig:mailer-schema}}\end{center}
+\end{figure}
+
+\section{Modul pre spracovanie statickej zálohy databázy}
+
+\textbf{TODO}
+
+\section{Databázový model}
+\begin{figure}[H]\begin{center}
+\includegraphics[scale=0.355]{db-model}
+\caption{Databázový model systému StackLetter. Autor: Matúš Salát~\cite{Salat2018}. \label{fig:db-model}}\end{center}
+\end{figure}
+

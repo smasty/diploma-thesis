@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>240</y>
+      <w>150</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>/Model::BaseModel/
+--
++ get(id: int): Row
++ getAll(): Row[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>210</y>
+      <w>220</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Model
+--
+- db: Connection
+- models: BaseModel[]
+--
++ getModel(str): BaseModel
++ getDatabase: Connection</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>520</y>
+      <w>330</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Model::Answers
+--
++ get(id: int): Row
++ getByExternal(ext_id: int, site_id: int): Row
++ getAll(): Row[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>430</y>
+      <w>150</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Model::Questions
+--
++ get(id: int): Row
++ getAll(): Row[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>340</y>
+      <w>150</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Model::Sites
+--
++ get(id: int): Row
++ getAll(): Row[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>620</y>
+      <w>320</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Model::Tags
+--
++ get(id: int): Row
++ getAll(): Row[]
++ getQuestionTags(question_id: int): Row[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>720</y>
+      <w>260</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Model::Users
+--
++ get(id: int): Row
++ getAll(): Row[]
++ getRegistered(frequency): Row[]
++ isActive(id: int): bool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>310</y>
+      <w>170</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;150.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>310</y>
+      <w>170</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0;150.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>310</y>
+      <w>170</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0;150.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>310</y>
+      <w>170</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;320.0;150.0;320.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>310</y>
+      <w>170</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;420.0;150.0;420.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>310</y>
+      <w>50</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;30.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>310</y>
+      <w>50</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0;30.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>310</y>
+      <w>50</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;230.0;30.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>310</y>
+      <w>50</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;330.0;30.0;330.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>310</y>
+      <w>50</w>
+      <h>450</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;430.0;30.0;430.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>220</y>
+      <w>280</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>Newsletter
+--
+- model: Model
+- id: int
+- user: Row
+- site: Row
+- frequency: str
+--
++ getId(): int
++ getSite(): Row
++ getUser(): Row
++ getUnsubscribeLink(): str
++ getFrequency(): str
++ addSection(Section)
++ populateContent()
++ persist()
++ getContentIds(): int[]
++ getSections(): NewsletterSection[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>590</y>
+      <w>200</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>NewsletterSection
+--
+- newsletter: Newsletter
+- definition: JSON
+- contentIds: int[]
+--
++ getContentIds(): int[]
++ getDefinition(): JSON
++ addContent(Row)
++ getContent(): Row[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>500</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>20</y>
+      <w>250</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Renderer
+--
++ renderNewsletter(Newsletter)
+- registerFilters()
+- filterHandler()
+- filterUrl()
+- filterUnsubscribeUrl()
+- filterFeedbackUrl()
+- filterTrackingPixel()
+- constructEvaluationUrl()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>340</x>
+      <y>20</y>
+      <w>260</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Builder
+--
+- model: Model
+- logger: Logger
+- queue: RedisQueue
+- api: APIHelper
+- renderer: Renderer
+--
+- getUsers(): Row[]
+- build()
+- buildNewsletter(user: Row)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>60</x>
+      <y>20</y>
+      <w>250</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Mailer
+--
+- logger: Logger
+- queue: RedisQueue
+- mailer: SMTPMailer
+--
++ sendNewsletter(params: array)
++ run()
++ processJob()</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
