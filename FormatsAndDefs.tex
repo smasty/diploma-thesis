@@ -27,6 +27,14 @@
 \usepackage{libertine}
 \usepackage{array}
 \usepackage{changepage}
+\usepackage{setspace}
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
 
 %\usepackage{showframe}
 \usepackage[margin=1in]{geometry}
