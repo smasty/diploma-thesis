@@ -1,4 +1,5 @@
 %!TEX root = main.tex
+\afterpage{\blankpage}
 \newpage
 \chapter{Návrh riešenia personalizovaného informačného bulletinu v CQA systéme}
 
@@ -71,8 +72,8 @@ Pre optimalizáciu modelu a zanedbanie tém s veľmi nízkou distribúciou sa do
 
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.3]{lda-plate}
-\caption{Platňová notácia LDA modelu.\footnotemark}\end{center}
-\end{figure}
+\caption{Platňová notácia LDA modelu.\protect\footnote}
+\end{center}\end{figure}
 \footnotetext{Prevzaté 10.12.2017 z \url{https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation}}
 
 \begin{adjustwidth}{1cm}{1cm}
@@ -204,18 +205,12 @@ Za týmto účelom sme navrhli dve metódy diverzifikácie odporúčaní: metód
 Zostavenie výsledného zoznamu $n$ odporúčaní s použitím metódy proporčnej diverzifikácie je navrhnuté nasledovne:
 
 \begin{my_enumerate}
-\item{
-    Pre každého používateľa vyberieme z jeho záujmového alebo expertízneho modelu $k$~najvyššie hodnotených značiek
+\item{Pre každého používateľa vyberieme z jeho záujmového alebo expertízneho modelu $k$~najvyššie hodnotených značiek
     z~kategorického vektoru a $k$~najvyššie hodnotených tém z~tématického vektoru, pričom
-    $2 \times k = \left\lceil\frac{n}{2}\right\rceil$.
-}
-\item{
-    Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
-    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.
-}
-\item{
-    Následne sa z každého zoznamu vyberie vrchných $n_k$ odporúčaných položiek, pričom $n_k = \frac{n}{2k}$
-}
+    $2 \times k = \left\lceil\frac{n}{2}\right\rceil$.}
+\item{Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
+    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.}
+\item{Následne sa z každého zoznamu vyberie vrchných $n_k$ odporúčaných položiek, pričom $n_k = \frac{n}{2k}$}
 \end{my_enumerate}
 
 Metóda proporčnej diverzifikácie tak v podstate používateľovi vyberie najrelevantnejšie položky z jeho najrelevantnejších
@@ -223,30 +218,22 @@ tém a značiek. Túto jednoduchú metódu diverzifikácie budeme následne poro
 
 
 \subsection{Metóda tématického vzorkovania}
-
 Pri návrhu tejto metódy sme sa inšpirovali rovnomennou metódou z~\cite{Szpektor2013}, ktorú sme prispôsobili
 podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilustruje schéma na obrázku~\ref{fig:tematic-sampling}.
-
 \begin{my_enumerate}
-\item{
-    Pre každého používateľa vyberieme z jeho modelu $k_1$~značiek a~$k_2$~tém. Pri výbere sa obmedzíme na značky a témy,
+\item{Pre každého používateľa vyberieme z jeho modelu $k_1$~značiek a~$k_2$~tém. Pri výbere sa obmedzíme na značky a témy,
     ktoré spadajú do druhého kvartilu -- mediánu. Potlačíme tak značky a témy, ktoré majú pre používateľa nízku relevanciu.\\
     $k_1 + k_2 = \left\lceil\frac{n}{2}\right\rceil$; konkrétne hodnoty pre $k_1$ a $k_2$ nešpecifikujeme, $n$ je počet
-    odporúčaní vo~výslednom zozname.
-}
+    odporúčaní vo~výslednom zozname.}
 \item{
     Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
-    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.
-}
+    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.}
 \item{
     Následne budeme náhodne vyberať vzorky z jednotlivých zoznamov do výsledného zoznamu odporúčaní, pričom pravdepodobnosť
-    výberu otázky z konkrétneho zoznamu $P_s(l_i)$ bude proporčná k relevancii tejto témy pre daného používateľa.
-}
+    výberu otázky z konkrétneho zoznamu $P_s(l_i)$ bude proporčná k relevancii tejto témy pre daného používateľa.}
 \item{
     Konkrétne otázky z jednotlivých zoznamov sa budú vyberať z~$m = P_s(l_i)$ najrelevantnejších otázok daného zoznamu
-    v náhodnom poradí.
-
-}
+    v náhodnom poradí.}
 \end{my_enumerate}
 
 \begin{figure}[H]\begin{center}

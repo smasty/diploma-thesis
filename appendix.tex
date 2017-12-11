@@ -54,20 +54,30 @@ vo fáze návrhu metódy riešenia problému, čím sa posunulo spísanie správ
 \end{table}
 
 \textbf{Zhodnotenie}\\
-\textbf{TODO}
+Navrhnutý plán práce v rámci diplomového projektu I sa nám do značnej miery podarilo dodržať. Príprava a implementácia
+infraštruktúry systému StackLetter však zabrala viac času, ako sme predpokladali, takže došlo k určitému časovému sklzu.
+Voči verzii z DP1 sme tiež prepracovali návrh metódy diverzifikovaného odporúčania. Samotnú implementáciu
+odporúčania a diverzifikácie sme posunuli do nasledujúceho letného semestra. Celkovo sme s aktuálnym stavom spokojní,
+napriek tomu, že sme nedodržali predpokladaný plán, keďže sa implementácia infraštruktúry a kooperácia s externými
+systémami Stack Exchange ukázala náročnejšia, ako boli naše predpoklady.
 
-\section{Plán práce na diplomovom projekte III}
-
-\textbf{TODO}
+\newpage
+\section{Plán práce na diplomovom projekte III}\label{apx:dp3plan}
 
 \begin{table}[h]
 \centering
 \caption{Plán práce na diplomovom projekte III}
 \begin{tabular}{|m{2.3cm}|m{12cm}|}
 \hline
-1. mesiac & Pokračovanie v experimentoch, nasadzovanie systému na väčšom množstve dát. \\ \hline
-2. mesiac & Analýza výsledkov experimentov, vyhodnotenie úspešnosti projektu. \\ \hline
-3. mesiac & Dokončenie diplomovej práce.\\ \hline
+1-2.~týždeň semestra & -- Pokračovanie online nekontrolovaného experimentu.
+			  \newline -- Spracovanie dát, vytvorenie modelov používateľov a otázok. \\ \hline
+3-4.~týždeň semestra & -- Príprava metódy proporčnej diverzifikácie odporúčaní
+			  \newline -- Vyhodnotenie úspechu/neúspechu online experimentu \\ \hline
+5-6.~týždeň semestra & -- Príprava metódy diverzifikácie prostedníctvom tématického vzorkovania
+              \newline -- V prípade neúspechu online experimentu, príprava kontrolovaného experimentu \\ \hline
+7-8.~týždeň semestra & -- Vyhodnocovanie výsledkov experimentov
+			  \newline -- Písanie diplomovej práce \\ \hline
+9-10.~týždeň semestra & -- Písanie diplomovej práce \\ \hline
 \end{tabular}
 \end{table}
 
@@ -94,12 +104,42 @@ Táto trieda zabezpečuje asynchrónne spracovanie dlhotrvajúcich úloh. Vďaka
 odozva používateľského rozhrania rýchla. Konkrétne vykonáva odoslanie uvítacieho e-mailu používateľovi po úspešnej
 registrácii prostredníctvom služby SendGrid s využitím protokolu SMTP, a následné stiahnutie používateľského profilu
 prostredníctvom Stack Exchange API.
-Samotná webová aplikácia zadáva tejto komponente úlohy na asynchrónne spracovanie prostredníctvom Redis fronty.
+Samotná webová aplikácia zadáva tomuto komponentu úlohy na asynchrónne spracovanie prostredníctvom Redis fronty.
 
 
 \section{Modul pre generovanie a odosielanie informačných bulletinov}
 
-\textbf{TODO}
+Tento modul je zodpovedný za samotné zostavovanie a odosielanie informačných bulletinov jednotlivým zaregistrovaným
+používateľom. Skladá sa z dvoch samostatných častí -- komponentu na zostavovanie informačných bulletinov a komponentu
+na odosielanie informačného bulletinu. Oba komponenty medzi sebou asynchrónne komunikujú prostredníctvom Redis fronty.
+
+Modul je navrhnutý genericky, aby neoblo potrebné do neho zasahovať v prípade pridania nových sekcií informačných bulletinov,
+prípadne nových typov obsahu. Pre každý typ obsahu je potrebné iba definovať HTML šablónu.
+
+Všetky hypertextové odkazy, ktoré sa nachádzajú v informačnom bulletine, smerujú na evaluačný modul, ktorý prostredníctvom
+kliknutí na odkazy zaznamenáva používateľovu implicitnú a explicitnú spätnú väzbu a následne je používateľ presmerovaný
+na reálny cieľ odkazu. Každý informačný bulleitn tiež obsahuje tzv. sledovací pixel (angl.~\textit{tracking pixel}), čo je
+transparentný obrázok veľkosti 1x1 pixelov, načítavaný externe z evaluačného modulu, ktorý nám umožňuje detekovať otvorenie informačného
+bulletinu používateľom.
+
+\textbf{Builder -- komponent pre zostavovanie informačného bulletinu}
+\begin{my_enumerate}
+\item{Prostredníctvom \textit{cronu} sa tento komponent spúšťa každý deň pre vygenerovanie denných informačných bulletinov,
+ako aj raz za týždeň pre generovanie týždenných bulletinov.}
+\item{Na základe zvolenej frekvencie sa vyberie zoznam používateľov, pre ktorých sa budú generovať bulletiny.}
+\item{Prostredníctvom REST API si komponent vyžiada štruktúru bulletinu pre daného používateľa. Odpoveď obsahuje zoznam
+sekcií, ich nadpis a popis, ako aj URL adresu REST API koncového bodu, ktorý má pre danú sekciu vrátiť obsah.}
+\item{Prostredníctvom REST API si komponent vyžiada zoznam otázok (alebo iného obsahu) pre jednotlivé sekcie
+informačného bulletinu.}
+\item{Následne komponent zostaví kompletnú štruktúru celého informačného bulletinu so všetkými sekciami a ich obsahom,
+a túto štruktúru odovzdá šablónovaciemu komponentu, ktorý zostaví výsledný HTML kód informačného bulletinu.}
+\item{Informácia o vygenerovaní nového informačného bulletinu sa vloží do Redis fronty, kde čaká na odoslanie.}
+\end{my_enumerate}
+
+\textbf{Mailer -- komponent pre odosielanie informačného bulletinu}\\
+Tento komponent postupne vyberá z Redis fronty zoznam vygenerovaných informačných bulletinov, a využívajúc SMTP API služby
+SendGrid odosiela používateľom jednotlivé informačné bulletiny, na ktorých odoberanie sa prihlásili.
+Tento komponent je spustený na serveri ako služba, a je k dispozícii neustále.
 
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.355]{mailer-schema}
@@ -108,11 +148,44 @@ Samotná webová aplikácia zadáva tejto komponente úlohy na asynchrónne spra
 
 \section{Modul pre spracovanie statickej zálohy databázy}
 
-\textbf{TODO}
+Tento modul číta \textit{XML dump} Stack Exchange databázy a generuje príkazy SQL dialektu PostgreSQL pre uloženie dát
+do databázového modelu systému StackLetter (príloha~\ref{apx:dbmodel}). Zároveň tiež vykonáva konverziu mapovania jednotlivých
+entít zo Stack Exchange reprezentácie.
 
-\section{Databázový model}
+Import dát je vykonávaný dávkovo a v poradí podľa závislostí jednotlivých entít -- najprv sa importujú používatelia,
+následne otázky, odpovede, komentáre, značky a nakoniec odznaky.
+
+
+\section{Databázový model}\label{apx:dbmodel}
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.355]{db-model}
 \caption{Databázový model systému StackLetter. Autor: Matúš Salát~\cite{Salat2018}. \label{fig:db-model}}\end{center}
 \end{figure}
 
+
+
+\chapter{Elektronické médium}
+
+Elektronické médium priložené k dokumentu má nasledovnú štruktúru:
+\begin{my_itemize}
+\emptyitem /code
+	\begin{my_itemize}
+	\myitem Zdrojové kódy samotných implementovaných modulov
+	\end{my_itemize}
+\emptyitem /doc
+	\begin{my_itemize}
+	\myitem Priebežná správa o riešení DP2u s~anotáciami v~slovenskom a~anglickom jazyku
+	\end{my_itemize}
+\emptyitem /doc/latex
+	\begin{my_itemize}
+	\myitem \LaTeX~zdrojové súbory dokumentácie
+	\end{my_itemize}
+\emptyitem /doc/bibtex
+	\begin{my_itemize}
+	\myitem BibTeX súbor s~použitými referenciami
+	\end{my_itemize}
+\emptyitem readme.txt
+  \begin{my_itemize}
+  \myitem popis obsahu elektronického média
+  \end{my_itemize}
+\end{my_itemize}

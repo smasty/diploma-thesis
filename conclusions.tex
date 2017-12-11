@@ -1,14 +1,29 @@
 %!TEX root = main.tex
 \newpage
-\ifthenelse {\boolean{bachelor}}
-{
-	\section{Conslusions}
-	%\section{Záver}
-}
-{
-	\chapter{Conclusions}
-	%\chapter{Záver}
-}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi sit amet arcu. Fusce pharetra dapibus elit. Duis malesuada. Proin at elit vitae quam cursus tristique. Quisque fermentum. Praesent dictum. Nullam vehicula. Nunc pharetra dolor ut velit. Sed pulvinar, est sed congue tempor, nibh arcu cursus enim, quis consequat magna lacus sed pede. In sagittis. Etiam volutpat, velit id tincidunt egestas, augue ligula auctor eros, sit amet viverra sapien tortor at odio. In diam libero, fringilla ut, adipiscing condimentum, ultricies at, dui. Phasellus vitae risus.
 
-Pellentesque vulputate ante ut diam. Sed adipiscing malesuada odio. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam a leo. Praesent velit. Aenean vehicula accumsan quam. Nulla dolor lorem, imperdiet a, ullamcorper hendrerit, ultrices at, urna. Integer placerat ligula id purus. Sed id nisl. Pellentesque tincidunt neque in lacus. In non quam et felis suscipit viverra.
+\chapter{Zhodnotenie}
+
+V súčasnosti je systém StackLetter nasadení v testovacej prevádzke. Zatiaľ používateľom umožňuje nechať si odosielať
+informačné bulletiny pre komunity \textit{Stack Overflow} a \textit{Software Engineering} buď raz denne, alebo raz týždenne.
+
+\begin{table}[h]
+\centering
+\caption{Používanosť systému StackLetter}
+\begin{tabular}{|m{10cm}|m{1.5cm}|}
+\hline
+Počet odoberateľov informačného bulletinu & 24 \\ \hline
+Počet odoslaných informačných bulletinovu & 493 \\ \hline
+Počet používateľmi otvorených informačných bulletinov & 119\footnotemark \\ \hline
+Počet otvorených položiek informačných bulletinov & 145 \\ \hline
+Počet explicitných hodnotení informačných bulletinov & 114 \\ \hline
+\end{tabular}
+\end{table}
+
+\footnotetext{Počet otvorení môže byť skreslený, nakoľko viaceré klienty blokujú zobrazenie obrázkov použitých na vyhodnotenie otvorenia e-mailu.}
+
+Obsah informačného bulletinu je zatiaľ personalizovaný len jednoduchou metódou na základe značiek, v ktorých má používateľ aktivitu.
+Návrh metód odporúčania s podporou diverzity a aktuálnosti je v tejto fáze práce už finalizovaný.
+
+V nasledujúcom semestri plánujeme implementovať metódy odporúčania s podporou diverzity a aktuálnosti a ďalej pokračovať
+v online nekontrolovanom experimente. V prípade vyhodnotenia tohto experimentu ako neúspešného máme v pláne vykonať
+online konktrolovaný experiment. Podrobnejší plán práce v ďalšom semestri obsahuje príloha~\ref{apx:dp3plan}.

@@ -1,24 +1,61 @@
 %!TEX root = main.tex
 \newpage
-\ifthenelse {\boolean{bachelor}}
-{
-	\section{Results}
-	%\section{Výsledky}
-}
-{
-	\chapter{Results}
-	%\chapter{Výsledky}
-}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+\chapter{Experimentálne overenie}
 
-\ifthenelse {\boolean{bachelor}}
-{
-	\subsection{Subsection}
-	%\subsection{Podčasť}
-}
-{
-	\section{Subsection}
-	%\section{Podčasť}
-}
-\label{label}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
+
+\section{Návrh overenia metód}
+
+Nami navrhnuté metódy personalizovaného odporúčania a diverzifikácie odporúčaného obsahu budeme overovať prostredníctvom
+online nekontrolovaného experimentu spoločne s kolegom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity \textit{Stack Overflow} platformy Stack Exchange.
+
+Tento online experiment bude mať formu pravidelne rozposielaného informačného bulletinu, na ktorého odoberanie sa budú
+môcť prihlásiť všetci používatelia z tejto komunity.
+
+Účinnosť zvolených metód diverzifikácie odporúčaní budeme vyhodnocovať prostredníctvom A/B testovania, pričom používateľov
+rozdelíme na štyri skupiny:
+\begin{my_enumerate}
+    \item{Kontrolná skupina -- generický informačný bulletin bez odporúčania;}
+    \item{Skupina A -- informačný bulletin s odporúčaním, bez diverzifikácie;}
+    \item{Skupina B -- informačný bulletin s odporúčaním, metóda proporčnej diverzifikácie;}
+    \item{Skupina C -- informačný bulletin s odporúčaním, metóda tématického vzorkovania;}
+\end{my_enumerate}
+
+Dôležitým predpokladom pre úspešnosť online experimentu bude získať dostatočnú reprezentatívnu vzorku používateľov
+ochotných byť súčasťou experimentu. V~prípade, že by sa nám nepodarilo osloviť dostatočný počet používateľov, plánujeme
+vykonať kontrolovaný offline experiment na vzorke archívnych dát.
+
+
+\section{Metriky hodnotenia výsledkov}
+
+Pre overovanie výsledkov experimentov budeme používať nasledovné metriky:
+
+\textbf{Precision@N}\\
+Presnosť (angl.~\emph{Precision}), alebo tiež \textit{pozitívna predikčná hodnota} je metrika reprezentujúca pomer relevantných
+dokumentov z celkového zoznamu. Štandardne sa presnosť počíta ako pomer z celého zoznamu dokumentov, no v oblasti
+odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metrika \textit{Precision@N}, ktorá určuje, aká časť
+z prvých N dokumentov v zozname odporúčaní je pre používateľa relevantná.
+$$\mbox{Precision@N}=\frac{|\{\mbox{relevantne otazky v top-N}\}\cap\{\mbox{top-N odporucenych otazok}\}|}{|\{\mbox{top-N odporucenych otazok}\}|}$$
+
+\textbf{nDCG}\\
+\textit{Normalized Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
+odporúčania. DCG meria užitočnosť dokumentov na základe ich pozície vo výslednom zozname. Užitočnosť dokumentov sa akumuluje
+od konca zoznamu, pričom najvyššiu užitočnosť majú dokumenty na začiatku zoznamu~\cite{Jrvelin2002}.
+
+nDCG položky na pozícii $p$ v zozname odporúčaní je definované ako:
+
+$$\mathrm{nDCG_{p}} = \frac{DCG_{p}}{IDCG_{p}}$$
+$$\mathrm{DCG_{p}} = \sum_{i=1}^{p} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
+$$\mathrm{IDCG_{p}} = \sum_{i=1}^{|REL|} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
+\begin{adjustwidth}{1cm}{1cm}
+$rel_i$ -- relevancia $i$-tej položky v zozname odporúčaní.\\
+$|REL|$ -- zoznam $p$ relevantných položiek zo zoznamu odporúčaní usporiadaných podľa relevancie.
+\end{adjustwidth}
+
+\textbf{CTR}\\
+Miera preklikov (angl.~\emph{Click-through Rate}) je metrika často využívaná v spojitosti s informačnými bulletinmi.
+Táto metrika vyjadruje počet úspešných kliknutí na odkaz v informačnom bulletine.
+
+Okrem CTR plánujeme v súvislosti s interakciou používateľa s informačným bulletinom merať aj počet impresií,
+teda zobrazení informačného bulletinu, ako aj počet konverzií, teda podiel prípadov, kedy kliknutie na niektorú z otázok
+v informačnom bulletine viedlo k aktivite používateľa na tejto otázke -- či už označenie za obľúbenú,
+odpovedanie alebo pridanie komentáru. Ďalej tiež plánujeme merať počet odhlásení z informačného bulletinu.
