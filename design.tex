@@ -33,10 +33,14 @@ Celkový pohľad na metódu ilustruje obrázok~\ref{fig:overview}, Jednotlivé �
 \item{
     Diverzifikáciu odporúčaného obsahu budeme zabezpečovať na úrovni tématického pre-filteru pred samotným procesom
     odporúčania -- pre každú nezávislú tému sa bude vytvárať samostatný zoznam odporúčaní.
-    Pri návrhu tejto metódy sme sa vychádzali z~\cite{Szpektor2013}.
+    Pri návrhu tejto metódy sme vychádzali z~\cite{Szpektor2013}.
 }
 \item{Výsledný zoznam odporúčaného obsahu vznikne spojením jednotlivých zoznamov z~kroku diverzifikácie.}
 \item{Pri odporúčaní sa okrem diverznosti a relevancie obsahu bude uvažovať aj jeho aktuálnosť.}
+\item{
+    Navrhnutá metóda bude reflektovať implicitnú aj explicitnú spätnú väzbu používateľa vo forme interakcie
+    s informačným bulletinom a model používateľa sa bude na jej základe aktualizovať.
+}
 \end{my_itemize}
 
 \begin{figure}[H]\begin{center}
@@ -139,17 +143,38 @@ Model predstavujúci záujem používateľa bude zostavený zo všetkých otázo
 za obľúbené. Každá takáto otázka bude do modelu prispievať rovnakou váhou.
 
 \textbf{Expertízny model}\\
-Model modelujúci expertízu používateľa sa bude skladať z otázok, na ktoré používateľ odpovedal, pričom ich dopad na model
-expertízy bude závislý od skóre jeho odpovede. Kladné skóre bude prisipevať do modelu pozitívne -- bude to teda signalizovať
+Model modelujúci expertízu používateľa sa bude skladať z otázok, ktoré používateľ označil za obľúbené alebo
+na ktoré používateľ odpovedal, pričom ich dopad na model expertízy bude závislý od skóre jeho odpovede.
+Nezáporné skóre bude prispievať do modelu pozitívne -- bude to teda signalizovať
 fakt, že používateľ danej téme rozumie. Odpoveď so záporným skóre bude naopak signalizovať, že používateľ danej téme nerozumie,
 čo bude reflektované aj v jeho expertíznom modeli. Odpovede označené za akceptované budú do modelu prispievať
-s~koeficientom, ktorého hodnota bola empiricky stanovená na $1.5$.
+s~koeficientom $1.75$, čo je priemerný počet odpovedí na otázky s akceptovanou odpoveďou.
 
 \textbf{Komentáre}\\
 Okrem pokladania otázok, odpovedania alebo označenia za obľúbené budú uvažované aj používateľove komentáre. Keďže však
 zo samotného faktu že používateľ niečo okomentoval nemožno jednoznačne určiť, či táto aktivita predstavuje jeho záujem
 alebo expertízu, budú otázky, ktoré používateľ okomentoval prispievať do oboch modelov -- záujmového aj expertízneho, avšak
-s~koeficientom, ktorého hodnota bola empiricky stanovená na $\frac{1}{3}$.
+s~koeficientom $0.3$. Tento koeficient vychádza z faktu, že vrámci platformy Stack Exchange pripadajú na jednu
+komentovanú otázku alebo odpoveď priemerne tri komentáre.
+
+\textbf{Spätná väzba}\\
+Do oboch modelov budú využitím rovnakého princípu prispievať aj implicitná a explicitná spätná väzba používateľa --
+teda jeho kliknutie na konkrétnu otázku v informačnom bulletine, alebo jej explicitné kladné alebo záporné ohodnotenie.
+Implicitná spätna väzba bude prispievať s koeficientom $0.3$, explicitná s koeficientom $\pm1$.
+
+\textbf{Vzorce pre zostavenie záujmového a expertízneho modelu používateľa}\\
+$$\mathbf{UP_{interest}} = \sum_{q \in Qa, Qf}T_q + \sum_{q \in Qc, Qif}0.3 \times T_q + \sum_{q \in Qef}\pm1 \times T_q$$
+$$\mathbf{UP_{expertise}} = \sum_{q \in Qw, Qf}T_q + \sum_{q \in Qac}1.75 \times T_q + \sum_{q \in Qc, Qif}0.3 \times T_q + \sum_{q \in Qef}\pm1 \times T_q$$
+\begin{adjustwidth}{1cm}{1cm}
+$T_q$ -- model otázky $q$.\\
+$Qa$ -- množina položených otázok\\
+$Qf$ -- množina otázok označených za obľubené\\
+$Qc$ -- množina komentovaných otázok\\
+$Qw$ -- množina zodpovedaných otázok\\
+$Qac$ -- množina zodpovedaných otázok s označením akceptovanej odpovede\\
+$Qif$ -- množina otázok s implicitnou spätnou väzbou\\
+$Qef$ -- množina otázok s explicitnou spätnou väzbou\\
+\end{adjustwidth}
 
 \subsection{Výber odporúčaného obsahu}\label{design:rec-retrieval}
 
@@ -166,8 +191,9 @@ $$\mathbf{a}\cdot\mathbf{b}=\sum_{i=1}^n a_ib_i=a_1b_1+a_2b_2+\cdots+a_nb_n$$
 Pre eliminovanie problému studeného štartu (kapitola~\ref{cold-start}) z pohľadu prvotného odporúčania otázok využijeme
 offline natrénovanie našich metód na archívnych dátach platformy Stack~Exchange.
 
-V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba nedostatočnú aktivitu, budeme zo začiatku vytvárať
-iba generický informačný bulletin podobný tomu, ktorý je používateľom k dispozícii aj v súčasnosti (kapitola~\ref{so-newsletter}).
+V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba nedostatočnú aktivitu, sa zo začiatku namiesto modelu
+konkrétneho používateľa použije komunitný model, ktorý je zostavený analogicky k modelu používateľa, no pozostáva
+z celkovej aktivity v systéme.
 
 
 \subsection{Aktuálnosť odporúčaní}
@@ -186,7 +212,7 @@ $t$ -- čas od pregenerovania modelu používateľa -- počet pregenerovaní mod
 $d$ -- percentuálny pokles danej veličiny; vypočíta sa ako podiel množstva používateľovej aktivity za čas $t$ a jeho celkového množstva aktivity.
 \end{adjustwidth}
 
-\section{Návrh metód diverzifikácie odporúčaní}
+\section{Návrh metódy diverzifikácie odporúčaní}
 
 Diverzifikácia obsahu personalizovaného informačného bulletinu sa bude vykonávať ešte pred samotným zostavovaním
 zoznamu odporúčaní formou pre-filteru. Diverzifikácia bude spočívať vo výbere \textit{značiek} a \textit{tém}, pričom
@@ -201,42 +227,24 @@ cca 8000-9000 nových otázok, čo by v prípade generovania týždenného infor
 až cca 60000 modelov otázok s modelom každého používateľa.
 
 Cieľom našej práce je vyhodnotiť dopad diverzifikácie odporúčaní na personalizované informačné bulletiny CQA systémov.
-Za týmto účelom sme navrhli dve metódy diverzifikácie odporúčaní: metódu proporčnej diverzifikácie a metódu tématického vzorkovania.
-
-\subsection{Metóda proporčnej diverzifikácie}
-
-Zostavenie výsledného zoznamu $n$ odporúčaní s použitím metódy proporčnej diverzifikácie je navrhnuté nasledovne:
-
-\begin{my_enumerate}
-\item{Pre každého používateľa vyberieme z jeho záujmového alebo expertízneho modelu $k$~najvyššie hodnotených značiek
-    z~kategorického vektoru a $k$~najvyššie hodnotených tém z~tématického vektoru, pričom
-    $2 \times k = \left\lceil\frac{n}{2}\right\rceil$.}
-\item{Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
-    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.}
-\item{Následne sa z každého zoznamu vyberie vrchných $n_k$ odporúčaných položiek, pričom $n_k = \frac{n}{2k}$}
-\end{my_enumerate}
-
-Metóda proporčnej diverzifikácie tak v podstate používateľovi vyberie najrelevantnejšie položky z jeho najrelevantnejších
-tém a značiek. Túto jednoduchú metódu diverzifikácie budeme následne porovnávať s metódou tématického vzorkovania.
-
+Za týmto účelom sme navrhli metódu tématického vzorkovania \textit{(angl. Thematic sampling)}.
 
 \subsection{Metóda tématického vzorkovania}
-Pri návrhu tejto metódy sme sa inšpirovali rovnomennou metódou \textit{Thematic sampling} z~\cite{Szpektor2013}, ktorú sme prispôsobili
+Pri návrhu tejto metódy sme sa inšpirovali rovnomennou metódou z~\cite{Szpektor2013}, ktorú sme prispôsobili
 podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilustruje schéma na obrázku~\ref{fig:tematic-sampling}.
 \begin{my_enumerate}
-\item{Pre každého používateľa vyberieme z jeho modelu $k_1$~značiek a~$k_2$~tém. Pri výbere sa obmedzíme na značky a témy,
-    ktoré spadajú do druhého kvartilu -- mediánu. Potlačíme tak značky a témy, ktoré majú pre používateľa nízku relevanciu.\\
-    $k_1 + k_2 = \left\lceil\frac{n}{2}\right\rceil$; konkrétne hodnoty pre $k_1$ a $k_2$ nešpecifikujeme, $n$ je počet
-    odporúčaní vo~výslednom zozname.}
+\item{Pre každého používateľa vyberieme náhodne z jeho modelu $\left\lceil\frac{n}{2}\right\rceil$~značiek
+    a~$\left\lfloor\frac{n}{2}\right\rfloor$~tém, kde $n$ je počet položiek vo výslednom zozname. Pri výbere sa obmedzíme na značky a témy,
+    ktoré spadajú do štvrtého kvartilu, najmenej však vyberáme z piatich. Potlačíme tak značky a témy, ktoré majú pre používateľa nízku relevanciu.}
 \item{
     Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
     následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.}
 \item{
-    Následne budeme náhodne vyberať vzorky z jednotlivých zoznamov do výsledného zoznamu odporúčaní, pričom pravdepodobnosť
-    výberu otázky z konkrétneho zoznamu $P_s(l_i)$ bude proporčná k relevancii tejto témy pre daného používateľa.}
+    Následne náhodne vyberáme vzorky z jednotlivých zoznamov do výsledného zoznamu odporúčaní, pričom pravdepodobnosť
+    výberu otázky z určitého zoznamu je proporčná k relevancii tohto zoznamu pre daného používateľa.}
 \item{
-    Konkrétne otázky z jednotlivých zoznamov sa budú vyberať z~$m = P_s(l_i)$ najrelevantnejších otázok daného zoznamu
-    v náhodnom poradí.}
+    Konkrétne otázky do výsledného zoznamu odporúčaní z jednotlivých zoznamov sa budú vyberať z~$m$ najrelevantnejších otázok daného zoznamu,
+    pričom $m$ je relatívna relevancia tohto zoznamu.}
 \end{my_enumerate}
 
 \begin{figure}[H]\begin{center}
