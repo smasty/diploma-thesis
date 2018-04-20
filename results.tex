@@ -7,7 +7,7 @@
 \section{Návrh overenia metód}
 
 Nami navrhnuté metódy personalizovaného odporúčania a diverzifikácie odporúčaného obsahu budeme overovať prostredníctvom
-online nekontrolovaného experimentu spoločne s kolegom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity \textit{Stack Overflow} platformy Stack Exchange.
+online nekontrolovaného experimentu spoločne so spolužiakom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity \textit{Stack Overflow} platformy Stack Exchange.
 
 Tento online experiment bude mať formu pravidelne rozposielaného informačného bulletinu, na ktorého odoberanie sa budú
 môcť prihlásiť všetci používatelia z tejto komunity.
@@ -37,19 +37,16 @@ odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metr
 z prvých N dokumentov v~zozname odporúčaní je pre používateľa relevantná.
 $$\mbox{Precision@N}=\frac{|\{\mbox{relevantne otazky v top-N}\}\cap\{\mbox{top-N odporucenych otazok}\}|}{|\{\mbox{top-N odporucenych otazok}\}|}$$
 
-\textbf{nDCG}\\
-\textit{Normalized Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
+\textbf{DCG}\\
+\textit{Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
 odporúčania. DCG meria užitočnosť dokumentov na základe ich pozície vo výslednom zozname. Užitočnosť dokumentov sa akumuluje
 od konca zoznamu, pričom najvyššiu užitočnosť majú dokumenty na začiatku zoznamu~\cite{Jrvelin2002}.
 
-nDCG položky na pozícii $p$ v zozname odporúčaní je definované ako:
+DCG položky na pozícii $p$ v zozname odporúčaní je definované ako:
 
-$$\mathrm{nDCG_{p}} = \frac{DCG_{p}}{IDCG_{p}}$$
 $$\mathrm{DCG_{p}} = \sum_{i=1}^{p} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
-$$\mathrm{IDCG_{p}} = \sum_{i=1}^{|REL|} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
 \begin{adjustwidth}{1cm}{1cm}
 $rel_i$ -- relevancia $i$-tej položky v zozname odporúčaní.\\
-$|REL|$ -- zoznam $p$ relevantných položiek zo zoznamu odporúčaní usporiadaných podľa relevancie.
 \end{adjustwidth}
 
 \textbf{CTR}\\
