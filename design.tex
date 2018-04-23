@@ -85,6 +85,7 @@ Pre optimalizáciu modelu a zanedbanie tém s veľmi nízkou distribúciou sa do
 
 \begin{adjustwidth}{1cm}{1cm}
 \textbf{Nastavenie LDA}\\
+\label{design:lda-setup}
 Pre určenie vhodného počtu LDA tém ($n$) využijeme metódu hierarchických Dirichletových procesov~\cite{Teh2006}.
 Pre trénovanie LDA modelu bude využitý online variačný Bayesov algoritmus. Parametre modelu budú nastavené nasledovne:\\
 $$\alpha = \frac{1}{n}; \kappa = 0.7; \tau_0 = 10; \eta = \frac{1}{n}$$
@@ -197,7 +198,7 @@ z celkovej aktivity v systéme.
 
 
 \subsection{Aktuálnosť odporúčaní}
-
+\label{design:freshness}
 Pri zostavovaní odporúčaní do informačného bulletinu sa budú uvažovať len otázky, ktoré pochádzajú
 z obdobia od posledného zostavenia informačného bulletinu.
 
