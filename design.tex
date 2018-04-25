@@ -39,7 +39,7 @@ Celkový pohľad na metódu ilustruje obrázok~\ref{fig:overview}, Jednotlivé �
 \item{Pri odporúčaní sa okrem diverznosti a relevancie obsahu bude uvažovať aj jeho aktuálnosť.}
 \item{
     Navrhnutá metóda bude reflektovať implicitnú aj explicitnú spätnú väzbu používateľa vo forme interakcie
-    s informačným bulletinom a model používateľa sa bude na jej základe aktualizovať.
+    s informačným bulletinom a profil používateľa sa bude na jej základe aktualizovať.
 }
 \end{my_itemize}
 
@@ -53,12 +53,12 @@ Celkový pohľad na metódu ilustruje obrázok~\ref{fig:overview}, Jednotlivé �
 
 Pri vytváraní personalizovaného informačného bulletinu sa budeme zameriavať na odporúčanie relevantných otázok jednotlivým
 používateľom CQA systému prostredníctvom aplikovania metódy filtrovania na základe obsahu (kapitola~\ref{rec:content}).
-Pre účely filtrovania na základe obsahu je potrebné definovať a zostaviť modely reprezentujúce jednak otázky, a tiež
+Pre účely filtrovania na základe obsahu je potrebné definovať a zostaviť profily reprezentujúce jednak otázky, a tiež
 používateľov CQA systému.
 
-\subsection{Model otázok}
+\subsection{Profil otázok}
 
-Model otázky sa bude skladať z troch nezávislých modelov, ktoré sa na samotnú otázku pozerajú z rôznych perspektív.
+Profil otázky sa bude skladať z troch nezávislých modelov, ktoré sa na samotnú otázku pozerajú z rôznych perspektív.
 
 \textbf{1. Kategorický model otázok}\\
 Tento model reprezentuje otázku na najvyššej úrovni ako prislúchajúcu do určitých kategórií. Kategórie otázok sú vrámci
@@ -113,17 +113,17 @@ stop slová.
 
 $$\textrm{tf-idf}(t, d) = \textrm{tf}(t, d) \times \log\frac{n_d}{1+\textrm{df}(d, t)}$$
 
-\subsection{Model používateľov}
+\subsection{Profil používateľov}
 
-Pre každého používateľa budeme uvažovať dva nezávislé modely -- jeden bude modelovať záujem používateľa o určité témy a otázky,
-druhý bude modelovať jeho expertízu v určitej oblasti. Jeden bude použitý
+Pre každého používateľa budeme uvažovať dva nezávislé podprofily -- jeden bude profilovať záujem používateľa o určité témy a otázky,
+druhý bude profilovať jeho expertízu v určitej oblasti. Jeden bude použitý
 pri odporúčaní otázok, ktoré by používateľa mohli zaujímať, druhý pri odporúčaní otázok, ktoré by mohol vedieť zodpovedať.
-Oba modely budú z pohľadu svojej štruktúry presne rovnaké.
+Oba podprofily budú z pohľadu svojej štruktúry presne rovnaké.
 
-Takýto prístup k rozdeleniu modelu používateľa podľa záujmu a expertízy je vo svojej podstate unikátny, nakoľko ho využíva
+Takýto prístup k rozdeleniu profilu používateľa podľa záujmu a expertízy je vo svojej podstate unikátny, nakoľko ho využíva
 iba práca~\cite{Xu2012}. V ostatný prácach autori buď modelujú len jeden z týchto aspektov, alebo ich vôbec nerozlišujú~\cite{Srba2016}.
 
-Model používateľa bude zostavený na základe jeho aktivity a bude sa analogicky k modelu otázok skladať z troch vektorov:
+Profil používateľa bude zostavený na základe jeho aktivity a bude sa analogicky k profilu otázok skladať z troch vektorov:
 
 \begin{my_enumerate}
 \item{
@@ -139,35 +139,35 @@ Model používateľa bude zostavený na základe jeho aktivity a bude sa analogi
 }
 \end{my_enumerate}
 
-\textbf{Záujmový model}\\
-Model predstavujúci záujem používateľa bude zostavený zo všetkých otázok, ktoré používateľ položil, alebo ktoré označil
-za obľúbené. Každá takáto otázka bude do modelu prispievať rovnakou váhou.
+\textbf{Záujmový podprofil}\\
+Podprofil predstavujúci záujem používateľa bude zostavený zo všetkých otázok, ktoré používateľ položil, alebo ktoré označil
+za obľúbené. Každá takáto otázka bude do podprofilu prispievať rovnakou váhou.
 
-\textbf{Expertízny model}\\
-Model modelujúci expertízu používateľa sa bude skladať z otázok, ktoré používateľ označil za obľúbené alebo
-na ktoré používateľ odpovedal, pričom ich dopad na model expertízy bude závislý od skóre jeho odpovede.
-Nezáporné skóre bude prispievať do modelu pozitívne -- bude to teda signalizovať
+\textbf{Expertízny podprofil}\\
+Podprofil modelujúci expertízu používateľa sa bude skladať z otázok, ktoré používateľ označil za obľúbené alebo
+na ktoré používateľ odpovedal, pričom ich dopad na podprofil expertízy bude závislý od skóre jeho odpovede.
+Nezáporné skóre bude prispievať do podprofilu pozitívne -- bude to teda signalizovať
 fakt, že používateľ danej téme rozumie. Odpoveď so záporným skóre bude naopak signalizovať, že používateľ danej téme nerozumie,
-čo bude reflektované aj v jeho expertíznom modeli. Odpovede označené za akceptované budú do modelu prispievať
+čo bude reflektované aj v jeho expertíznom podprofile. Odpovede označené za akceptované budú do podprofilu prispievať
 s~koeficientom $1.75$, čo je priemerný počet odpovedí na otázky s akceptovanou odpoveďou.
 
 \textbf{Komentáre}\\
 Okrem pokladania otázok, odpovedania alebo označenia za obľúbené budú uvažované aj používateľove komentáre. Keďže však
 zo samotného faktu že používateľ niečo okomentoval nemožno jednoznačne určiť, či táto aktivita predstavuje jeho záujem
-alebo expertízu, budú otázky, ktoré používateľ okomentoval prispievať do oboch modelov -- záujmového aj expertízneho, avšak
+alebo expertízu, budú otázky, ktoré používateľ okomentoval prispievať do celého profilu -- záujmového aj expertízneho, avšak
 s~koeficientom $0.3$. Tento koeficient vychádza z faktu, že vrámci platformy Stack Exchange pripadajú na jednu
 komentovanú otázku alebo odpoveď priemerne tri komentáre.
 
 \textbf{Spätná väzba}\\
-Do oboch modelov budú využitím rovnakého princípu prispievať aj implicitná a explicitná spätná väzba používateľa --
+Do oboch podprofilov budú využitím rovnakého princípu prispievať aj implicitná a explicitná spätná väzba používateľa --
 teda jeho kliknutie na konkrétnu otázku v informačnom bulletine, alebo jej explicitné kladné alebo záporné ohodnotenie.
 Implicitná spätna väzba bude prispievať s koeficientom $0.3$, explicitná s koeficientom $\pm1$.
 
-\textbf{Vzorce pre zostavenie záujmového a expertízneho modelu používateľa}\\
+\textbf{Vzorce pre zostavenie záujmového a expertízneho podprofilu používateľa}\\
 $$\mathbf{UP_{interest}} = \sum_{q \in Qa, Qf}T_q + \sum_{q \in Qc, Qif}0.3 \times T_q + \sum_{q \in Qef}\pm1 \times T_q$$
 $$\mathbf{UP_{expertise}} = \sum_{q \in Qw, Qf}T_q + \sum_{q \in Qac}1.75 \times T_q + \sum_{q \in Qc, Qif}0.3 \times T_q + \sum_{q \in Qef}\pm1 \times T_q$$
 \begin{adjustwidth}{1cm}{1cm}
-$T_q$ -- model otázky $q$.\\
+$T_q$ -- profil otázky $q$.\\
 $Qa$ -- množina položených otázok\\
 $Qf$ -- množina otázok označených za obľubené\\
 $Qc$ -- množina komentovaných otázok\\
@@ -181,8 +181,8 @@ $Qef$ -- množina otázok s explicitnou spätnou väzbou\\
 
 Pre účely zostavovania zoznamu odporúčaných otázok použijeme prístup analogický štandardným nástrojom pre vyhľadávanie
 informácií (angl.~\emph{Information Retrieval Engines}). V našom prípade budú dokumentmi samotné otázky a dopytom bude
-model používateľa. Pre ohodnocovanie podobnosti modelov bude použitý skalárny súčin vektorov reprezentujúcich
-modely otázky a používateľa.
+príslušný profil používateľa. Pre ohodnocovanie podobnosti profilov bude použitý skalárny súčin vektorov reprezentujúcich
+profily otázky a používateľa.
 
 \textbf{Skalárny súčin (angl.~\textit{dot product}) vektorov $\mathbf{a}$ a $\mathbf{b}$.}\\
 $$\mathbf{a}\cdot\mathbf{b}=\sum_{i=1}^n a_ib_i=a_1b_1+a_2b_2+\cdots+a_nb_n$$
@@ -192,8 +192,8 @@ $$\mathbf{a}\cdot\mathbf{b}=\sum_{i=1}^n a_ib_i=a_1b_1+a_2b_2+\cdots+a_nb_n$$
 Pre eliminovanie problému studeného štartu (kapitola~\ref{cold-start}) z pohľadu prvotného odporúčania otázok využijeme
 offline natrénovanie našich metód na archívnych dátach platformy Stack~Exchange.
 
-V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba nedostatočnú aktivitu, sa zo začiatku namiesto modelu
-konkrétneho používateľa použije komunitný model, ktorý je zostavený analogicky k modelu používateľa, no pozostáva
+V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba nedostatočnú aktivitu, sa zo začiatku namiesto profilu
+konkrétneho používateľa použije komunitný profil, ktorý je zostavený analogicky k profilu používateľa, no pozostáva
 z celkovej aktivity v systéme.
 
 
@@ -202,7 +202,7 @@ z celkovej aktivity v systéme.
 Pri zostavovaní odporúčaní do informačného bulletinu sa budú uvažovať len otázky, ktoré pochádzajú
 z obdobia od posledného zostavenia informačného bulletinu.
 
-Aby model používateľa reflektoval meniace sa záujmy používateľa v čase, zavedieme pri zostavovaní modelu z používateľovej
+Aby profil používateľa reflektoval meniace sa záujmy používateľa v čase, zavedieme pri zostavovaní profilu z používateľovej
 aktivity exponenciálny \textit{faktor úpadku} (angl.~\textit{decay factor}):
 $$y_{n+t} = y_n (1 - d)^t$$
 
@@ -225,7 +225,7 @@ Tento prístup k diverzifikácii sme zvolili okrem jeho prirodzenosti aj z dôvo
 nakoľko alternatívny prístup postavený na tvorbe odporúčaní nad všetkým obsahom daného CQA systému a až následnej
 diverzifikácií by v praxi nebol realizovateľný. Ako príklad môžeme uviesť systém Stack Overflow, kde denne pribudne
 cca 8000-9000 nových otázok, čo by v prípade generovania týždenného informačného bulletinu znamenalo vypočítať podobnosť
-až cca 60000 modelov otázok s modelom každého používateľa.
+až cca 60000 profilov otázok s profilom každého používateľa.
 
 Cieľom našej práce je vyhodnotiť dopad diverzifikácie odporúčaní na personalizované informačné bulletiny CQA systémov.
 Za týmto účelom sme navrhli metódu tématického vzorkovania \textit{(angl. Thematic sampling)}.
@@ -234,7 +234,7 @@ Za týmto účelom sme navrhli metódu tématického vzorkovania \textit{(angl. 
 Pri návrhu tejto metódy sme sa inšpirovali rovnomennou metódou z~\cite{Szpektor2013}, ktorú sme prispôsobili
 podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilustruje schéma na obrázku~\ref{fig:tematic-sampling}.
 \begin{my_enumerate}
-\item{Pre každého používateľa vyberieme náhodne z jeho modelu $\left\lceil\frac{n}{2}\right\rceil$~značiek
+\item{Pre každého používateľa vyberieme náhodne z jeho profilu $\left\lceil\frac{n}{2}\right\rceil$~značiek
     a~$\left\lfloor\frac{n}{2}\right\rfloor$~tém, kde $n$ je počet položiek vo výslednom zozname. Pri výbere sa obmedzíme na značky a témy,
     ktoré spadajú do štvrtého kvartilu, najmenej však vyberáme z piatich. Potlačíme tak značky a témy, ktoré majú pre používateľa nízku relevanciu.}
 \item{

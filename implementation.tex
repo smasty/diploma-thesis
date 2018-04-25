@@ -73,14 +73,14 @@ tento modul iným modulom bez potreby výrazných zásahov do existujúcich čas
 \textbf{Slovník}\\
 Pre LDA a TF-IDF modely využívané v navrhnutej metóde sme vytvorili slovnú zásobu pozostávajúcu z 500 tisíc náhodne vybraných
 otázok z komunity Stack Overflow. Texty prešli predspracovaním v podobe odstránenia formátovania (HTML tagov), diakritiky,
-anglických stop slov. Minimálna dokumentová frekvencia bola stanovená na $5$ a maximálna dokumentová frekvencia na $99\%$.
+anglických stop slov a lematizáciou. Minimálna dokumentová frekvencia bola stanovená na $5$ a maximálna dokumentová frekvencia na $99\%$.
 Okrem toho bola maximálna veľkosť slovníka stanovená na 150 tisíc výrazov, pričom skutočný počet výrazov bol cca 152 tisíc.
 Na vytvorenie slovníku bol použitý \textit{CountVectorizer} z~knižnice \textit{scikit-learn}.
 
 \textbf{Nastavenie a trénovanie LDA modelu}\\
-Pravdepodobne najdôležitejším parametrom pri Latentnej Dirichletovej Alokácii je určenie počtu LDA tém. Pre určenie počtu sme
-na testovacie dáta (náhodne vybraných stotisíc otázok) opakovane aplikovali klastrovanie prostredníctvom metódy K-Means, pričom
-hodnotu $k$ sme vyberali z intervalu $<20,100>$. Pre každú hodnotu $k$ sme následne vypočítali priemerný siluetový koeficient
+Pravdepodobne najdôležitejším parametrom pri latentnej Dirichletovej alokácii je určenie počtu LDA tém. Pre určenie počtu sme
+na testovacie dáta (náhodne vybraných stotisíc otázok) opakovane aplikovali zhlukovanie prostredníctvom metódy K-Means, pričom
+hodnotu $k$ (počet zhlukov) sme vyberali z intervalu $<20,100>$. Pre každú hodnotu $k$ sme následne vypočítali priemerný siluetový koeficient
 (viď.~Obr.~\ref{fig:silhouette}). Na základe tejto analýzy sme stanovili počet LDA tém na 50.
 
 \begin{figure}[H]\begin{center}
@@ -94,49 +94,49 @@ Bola použitá implementácia LDA z~knižnice \textit{scikit-learn}.
 
 \textbf{TF-IDF model}\\
 TF-IDF model zostavujeme zvlášť pre každého používateľa z otázok, s ktorými interagoval, a to pri každom pretrénovaní používateľských
-modelov, ktoré sa vykonáva raz denne pre používateľov s denným informačným bulletinom a raz týždenne pre používateľov s týždenným
+profilov, ktoré sa vykonáva raz denne pre používateľov s denným informačným bulletinom a raz týždenne pre používateľov s týždenným
 bulletinom. Využíva sa implementácia \textit{TfidfTransformer} z~knižnice \textit{scikit-learn}.
 
 
-\subsection{Vytváranie modelov otázok a používateľov}
+\subsection{Vytváranie profilov otázok a používateľov}
 
-\textbf{Model otázky}\\
-Model otázky sa skladá z troch vektorov: 1) vektor značiek (tagov), ktorými je otázka označená, 2) vektor reprezentujúci
+\textbf{Profil otázky}\\
+Profil otázky sa skladá z troch vektorov: 1) vektor značiek (tagov), ktorými je otázka označená, 2) vektor reprezentujúci
 distribúciu otázky vrámci LDA tém a 3) TF vektor. Vektor značiek sa vytvára za behu priamo požiadavkou do databázy. TF vektor
 sa tiež vytvára až za behu z textu otázky, nakoľko sa jedná o veľmi rýchlu operáciu. Vektor distribúcie LDA tém sa vytvára
 vždy pri vzniku novej otázky, alebo po interakcii používateľa s otázkou, pre ktorú ešte nebol vytvorený. Tento vektor
-sa po vytvorení ukladá do databázy. Vytváranie modelov pre novo vzniknuté otázky sa vykonáva raz denne.
+sa po vytvorení ukladá do databázy. Vytváranie profilov pre novo vzniknuté otázky sa vykonáva raz denne.
 
-\textbf{Model používateľa}\\
-Model používateľa sa nevytvára za behu, ale sa perzistuje v binarizovanej podobe do súboru, odkiaľ sa v prípade použitia
-načítava. Model používateľa sa delí na model záujmu a model expertízy, pričom tie sa vytvárajú z modelov otázok, s ktorými
+\textbf{Profil používateľa}\\
+Profil používateľa sa nevytvára za behu, ale sa perzistuje v binarizovanej podobe do súboru, odkiaľ sa v prípade použitia
+načítava. Profil používateľa sa delí na podporfily záujmu a expertízy, pričom tie sa vytvárajú z profilov otázok, s ktorými
 používateľ interagoval.
 
-Každý model sa skladá z vektoru značiek, ktorý predstavuje relatívne zastúpenie značiek v otázkach, s ktorými používateľ interagoval,
+Každý podprofil sa skladá z vektoru značiek, ktorý predstavuje relatívne zastúpenie značiek v otázkach, s ktorými používateľ interagoval,
 normalizovaných do intervalu $<0,1>$; vektoru LDA tém, ktorý je vytvorený analogicky a tiež normalizovaný do intervalu $<0,1>$,
-a matice TF vektorov z modelov príslušných otázok. Z tejto matice sa následne predpočíta aj matica TF-IDF.
+a matice TF vektorov z profilov príslušných otázok. Z tejto matice sa následne predpočíta aj matica TF-IDF.
 
-\textbf{Aktualizácia modelov používateľov}\\
-Model používateľa sa aktualizuje v pravidelných intervaloch na základe jeho preferencie prijímania informačných bulletinov, teda
+\textbf{Aktualizácia profilov používateľov}\\
+Profil používateľa sa aktualizuje v pravidelných intervaloch na základe jeho preferencie prijímania informačných bulletinov, teda
 denne alebo týždenne. Pre zachytenie meniacich sa záujmov používateľa v čase (viď kapitola~\ref{design:freshness}) sa využíva
 faktor úpadku, ktorý sa počíta na základe relatívneho počtu aktivity za obdobie od poslednej aktualizácie modelu voči
 celkovému množstvu používateľovej aktivity.
 
-Pri aktualizácii modelu používateľa sa najprv týmto faktorom úpadku prenásobia vektory reprezentujúce doterajšiu aktivitu
+Pri aktualizácii profilu používateľa sa najprv týmto faktorom úpadku prenásobia vektory reprezentujúce doterajšiu aktivitu
 a následne sa k nim prirátajú hodnoty z obdobia od poslednej aktualizácie. Vektory značiek a LDA tém sa následne nanovo
 normalizujú a z TF matice sa nanovo predpočíta matica TF-IDF.
 
-\textbf{Použitie modelov používateľov v sekciách informačného bulletinu}\\
+\textbf{Použitie podprofilov používateľov v sekciách informačného bulletinu}\\
 Na základe sekcie informačného bulletinu, pre ktorú sa vytvára zoznam odporúčaní sa využíva buď záujmový alebo
-expertízny model používateľa, alebo oba, ako popisuje tabuľka~\ref{tab:sections}.
+expertízny podprofil používateľa, alebo oba, ako popisuje tabuľka~\ref{tab:sections}.
 
 \begin{table}[h]
 \label{tab:sections}
 \centering
-\caption{Sekcie informačného bulletinu a k nim prislúchajúce modely používateľa}
+\caption{Sekcie informačného bulletinu a k nim prislúchajúce podprofily používateľa}
 \begin{tabular}{|m{7cm}|>{\centering\arraybackslash}m{2.5cm}|>{\centering\arraybackslash}m{2.6cm}|}
 \hline
-\textbf{Sekcia} & \textbf{Záujmový model} & \textbf{Expertízny model} \\\hline
+\textbf{Sekcia} & \textbf{Záujmový podprofil} & \textbf{Expertízny podprofil} \\\hline
 Najnovšie otázky               & ×  & -- \\\hline
 Užitočné otázky                & ×  & -- \\\hline
 Otázky čakajúce na odpoveď     & -- & ×  \\\hline
@@ -147,8 +147,8 @@ Zaujímavé odpovede             & ×  & ×  \\\hline
 \end{tabular}
 \end{table}
 
-\textbf{Komunitný model používateľov}\\
-V prípade, že používateľský model neobsahuje dostatočné množstvo aktivity pre zostavenie relevantných odporúčaní,
-sa použije tzv. \textit{Komunitný model používateľov}. Ten je presne analogický so štandardným modelom používateľa,
+\textbf{Komunitný profil používateľov}\\
+V prípade, že používateľský profil neobsahuje dostatočné množstvo aktivity pre zostavenie relevantných odporúčaní,
+sa použije tzv. \textit{Komunitný profil používateľov}. Ten je presne analogický so štandardným profilom používateľa,
 no skladá sa nie z aktivity konkrétneho používateľa, ale zo všetkých položených otázok a odpovedí v celom CQA systéme.
-Rovnako ako štandardné používateľské modely sa aj komunitný model aktualizuje denne aj s aplikáciou faktoru úpadku.
+Rovnako ako štandardné používateľské profily sa aj komunitný profil aktualizuje denne a s aplikáciou faktoru úpadku.
