@@ -152,3 +152,81 @@ V prípade, že používateľský profil neobsahuje dostatočné množstvo aktiv
 sa použije tzv. \textit{Komunitný profil používateľov}. Ten je presne analogický so štandardným profilom používateľa,
 no skladá sa nie z aktivity konkrétneho používateľa, ale zo všetkých položených otázok a odpovedí v celom CQA systéme.
 Rovnako ako štandardné používateľské profily sa aj komunitný profil aktualizuje denne a s aplikáciou faktoru úpadku.
+
+
+\subsection{Zostavenie zoznamu odporúčaní}
+
+Modul pre personalizované odporúčanie podporuje dve metódy pre zostavenie zoznamu odporúčaní -- štandardné personalizované
+odporúčanie a personalizované odporúčanie s diverzifikačnou metódou tématického vzorkovania. Tieto dve metódy sme využili
+pri overení našich hypotéz prostredníctvom A/B testu (viď kapitola~\ref{sec:experiment}).
+
+\textbf{Personalizované odporúčanie}\\
+Pri personalizovanom odporúčaní $n$ položiek je proces pomerne priamočiary: na základe sekcie informačného bulletinu
+sa vyberie príslušný podprofil používateľa, z ktorého sa následne vyberie $n$ najrelevantnejších značiek
+a $\left\lceil\frac{n}{2}\right\rceil$ najrelevantnejších LDA tém. Potom sa z databázy vyberú všetky otázky, položené
+od odoslania predošlého informačného bulletinu, ktoré patria do týchto LDA tém alebo značiek.
+
+Prostredníctvom skalárneho súčinu nad TF-IDF maticou vybraných otázok a maticou z profilu používateľa sa potom vytvorí
+usporiadaný zoznam otázok, z ktorých je prvých $n$ prezentovaných používateľovi.
+
+\textbf{Personalizované odporúčanie s diverzifikačnou metódou tématického vzorkovania}\\
+Podobne ako pri štandardnom personalizovanom odporúčaní sa najprv vyberie určitá množina značiek a LDA tém z
+príslušného používateľského podprofilu. Pre každú z nich sa následne rovnakou metódou zostaví zoznam odporúčaní.
+Tieto jednotlivé zoznamy sa potom spoja do jedného výsledného zoznamu $n$ odporúčaní. Podrobnosti metódy tématického
+vzorkovania sú uvedené v kapitole~\ref{sec:thematic-sampling}.
+
+V prípade, že metóda odporúčania s diverzifikáciou nevráti dostatočne početný zoznam odporúčaní, doplní sa zoznam
+o položky získané z metódy personalizovaného odporúčania. Tento prípad môže nastať hlavne v prípade denného informačného
+bulletinu, ak sa vyberú značky s veľmi malým počtom nových otázok.
+
+Obe metódy tiež zabezpečujú, aby používateľovi neboli v jednom informačnom bulletine prezentované tie isté otázky
+viackrát.
+
+
+\section{Charakteristika dát}
+
+Našu prácu sme sa rozhodli overiť nad dátami z komunity \textit{Stack Overflow},
+nakoľko je táto komunita zameraná na doménu, v ktorej máme hlbšie vedomosti a teda vieme lepšie posúdiť správnosť
+odporúčania v tejto doméne. Navrhnuté riešenie však nie je špecifické pre túto komunitu a je možné ho nasadiť v rámci
+celej platformy Stack Exchange, prípadne na iných CQA systémoch s podobnou štruktúrou.
+
+Komunita Stack Overflow, ktorej dáta sme použili, je jednoznačne najväčšou a najaktívnejšou zo všetkých komunít
+platformy Stack Exchange a má nasledovný rozsah \emph{(údaje sú zaokrúhlené)}:
+
+\begin{my_itemize}
+    \item{Otázky -- 16 miliónov}
+    \item{Odpovede -- 24 miliónov}
+    \item{Používatelia -- 9 milíonov}
+    \item{Komentáre -- 66 milíonov}
+    \item{Značky -- 52 tisíc}
+    \item{Priemerný denný prírastok otázok -- 7 tisíc}
+    \item{Priemerný denný prírastok odpovedí -- 7.5 tisíc}
+    \item{Priemerný denný prírastok komentárov -- 26 tisíc}
+\end{my_itemize}
+
+\subsection{Archívne dáta}
+Platforma Stack Exchange zverejňuje archív všetkých komunít vo forme XML výstupov. Dáta v tomto
+archíve\footnote{\url{http://archive.org/details/stackexchange}} sú pravidelne aktualizované a obsahujú kompletné
+používateľmi vytvorené anonymizované dáta zo všetkých komunít platformy. Všetky tieto dáta sú verejne dostupné pod
+licenciou \emph{Creative Commons Attribution-ShareAlike 3.0 Unported}.
+
+Tieto dáta sme využili v prvotnej fáze na vytvorenie základných modelov. Následne sa využívali dáta získané
+prostedníctvom verejného API poskytovaného platformou Stack Exchange.
+
+Štruktúra dát v archívoch je nasledovná:
+
+\begin{my_itemize}
+  \item{\textit{Badges.xml} -- Obsahuje ID používateľov, názvy odznakov a čas, kedy používateľ daný odznak získal.}
+  \item{\textit{Comments.xml} -- Obsahuje všetky komentáre spolu s informáciou o ich autoroch a príspevkoch, ku ktorým sa viažu.}
+  \item{\textit{Posts.xml} -- Obsahuje informácie o všetkých príspevkoch (otázkach a odpovediach) a k nim prislúchajúce značky, ako aj aktuálne znenie príspevku}
+  \item{\textit{PostHistory.xml} -- Obsahuje históriu zmien jednotlivých príspevkov, ako napr. zmenu názvu, štítkov, označenie otázky za zodpovedanú a pod.}
+  \item{\textit{PostLinks.xml} -- Obsahuje informácie o prepojeniach medzi príspevkami, konkrétne o duplikátoch a príbuzných príspevkoch.}
+  \item{\textit{Users.xml} -- Obsahuje verejné údajé všetkých používateľov, ako sú meno, reputácia, webová stránka, počet hlasov a iné.}
+  \item{\textit{Votes.xml} -- Obsahuje anonymizované informácie o hlasoch príspevkov.}
+\end{my_itemize}
+
+Nakoľko dátový archív komunity Stack Overflow má pre naše možnosti neúnosnú veľkosť (cca 200GB dát vo formáte XML),
+rozhodli sme sa použiť len obmedzené množstvo archívnych dát, konkrétne len príspevky od 1.6.2017.
+Okrem nich boli tiež stiahnuté všetky príspevky, s ktorými v minulosti prišli do kontaktu odoberatelia nášho informačného
+bulletinu. Keďže informačné bulletiny majú charakter periodického média s veľkým dôrazom na aktuálnosť obsahu, toto
+obmedzenie sa len na určitú podmnožinu dát nemá na výsledky žiaden signifikantný vplyv.
