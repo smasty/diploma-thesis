@@ -207,10 +207,10 @@ aktivity exponenciálny \textit{faktor úpadku} (angl.~\textit{decay factor}):
 $$y_{n+t} = y_n (1 - d)^t$$
 
 \begin{adjustwidth}{1cm}{1cm}
-$y_n$ -- aktuálna váha danej veličiny v modeli používateľa\\
-$y_{n+t}$ -- váha danej veličiny po aplikovaní faktoru úpadku\\
-$t$ -- čas od pregenerovania modelu používateľa -- počet pregenerovaní modelu.\\
-$d$ -- percentuálny pokles danej veličiny; vypočíta sa ako podiel množstva používateľovej aktivity za čas $t$ a jeho celkového množstva aktivity.
+$y_n$ -- aktuálna váha danej hodnoty vo vektore profilu používateľa\\
+$y_{n+t}$ -- váha danej hodnoty po aplikovaní faktoru úpadku\\
+$t$ -- čas od aktualizácie profilu používateľa -- počet aktualizácií profilu.\\
+$d$ -- percentuálny pokles danej hodnoty; vypočíta sa ako podiel množstva používateľovej aktivity za čas $t$ a jeho celkového množstva aktivity.
 \end{adjustwidth}
 
 \section{Návrh metódy diverzifikácie odporúčaní}
@@ -224,11 +224,13 @@ zoznamov do výsledného zoznamu odporúčaní.
 Tento prístup k diverzifikácii sme zvolili okrem jeho prirodzenosti aj z dôvodu jeho veľmi dobrej škálovateľnosti,
 nakoľko alternatívny prístup postavený na tvorbe odporúčaní nad všetkým obsahom daného CQA systému a až následnej
 diverzifikácií by v praxi nebol realizovateľný. Ako príklad môžeme uviesť systém Stack Overflow, kde denne pribudne
-cca 8000-9000 nových otázok, čo by v prípade generovania týždenného informačného bulletinu znamenalo vypočítať podobnosť
-až cca 60000 profilov otázok s profilom každého používateľa.
+cca 7000 nových otázok, čo by v prípade generovania týždenného informačného bulletinu znamenalo vypočítať podobnosť
+až cca 50000 profilov otázok s profilom každého používateľa.
 
 Cieľom našej práce je vyhodnotiť dopad diverzifikácie odporúčaní na personalizované informačné bulletiny CQA systémov.
 Za týmto účelom sme navrhli metódu tématického vzorkovania \textit{(angl. Thematic sampling)}.
+
+\textbf{TODO} Preco som si vybral zrovna tuto metodu (prirodzena, rozumna, dobre skalovatelna)
 
 \subsection{Metóda tématického vzorkovania}
 \label{sec:thematic-sampling}
@@ -250,6 +252,11 @@ podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilus
 \end{my_enumerate}
 
 \begin{figure}[H]\begin{center}
-\includegraphics[scale=0.27]{diversity-diagram}
+\includegraphics[scale=0.32]{diversity-diagram}
 \caption{Schéma metódy diverzifikácie odporúčaní tématickým vzorkovaním.\label{fig:tematic-sampling}}\end{center}
 \end{figure}
+
+\subsection{Zhrnutie}
+
+\textbf{TODO} zhrnutie navrhu - treba vyzdvihnut cim je unikatna metoda. (Personalizovany newsletter pre CQA,
+zameranie na div a akt, odporucanie otazok v CQA (nie routing), expertiza aj interest, komunitny profil).
