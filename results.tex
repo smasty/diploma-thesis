@@ -4,60 +4,107 @@
 \chapter{Experimentálne overenie}
 \label{sec:experiment}
 
-\section{Návrh overenia metód}
+Navrhnutú metódu vytvárania personalizovaných informačných bulletinov sme sa rozhodli overiť prostredníctvom
+nekontrolovaného online experimentu. Väčšina prác venujúcich sa odporúčaniu v doméne CQA systémov overuje
+svoje hypotézy v offline experimentoch na kontrolovaných vzorkách dát. Pre účely realistického overenia našej metódy, hlavne
+z pohľadu faktorov špecifických pre informačné bulletiny, však overovanie v offline experimente nie je dostačujúce.
+Online nekontrolované experimenty samozrejme vyžadujú oveľa viac námahy a ich výsledky nie sú garantované, no v prípade,
+že je takýto experiment úspešný, má oveľa väčší potenciál priniesť relevantné výsledky.
 
-Nami navrhnuté metódy personalizovaného odporúčania a diverzifikácie odporúčaného obsahu budeme overovať prostredníctvom
-online nekontrolovaného experimentu spoločne so spolužiakom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity
-\textit{Stack Overflow} platformy Stack Exchange.
+Experiment sme vykonávali na používateľoch z komunity Stack Overflow platformy Stack Exchange.
+Komunitu Stack Overflow sme pre náš experiment zvolili z viacerých dôvodov, hlavne však preto,
+že sa jedná o jednoznačne najaktívnejšiu komunitu z celej platformy, v ktorej bol najväčší potenciál získať čo najviac
+používateľov do nášho experimentu. Okrem toho zohrával úlohu v rozhodovaní aj fakt, že táto komunita sa venuje doménovej
+oblasti, v ktorej máme určité vedomosti, čo nám umožňilo jednoduchšie odhadnúť úroveň relevancie odporúčaného obsahu.
 
-\textbf{TODO} - vysvetlit preco zrovna SO.
+Do experimentu sa mohli prihlásiť všetci používatelia, ktorí majú konto na portáli Stack Overflow, prostredníctvom
+registračného formuláru systému StackLetter. Celkovo sa nám podarilo získať pomerne diverznú vzorku používateľov,
+medzi ktorými boli prítomní okrem iných aj úplni nováčikovia bez akejkoľvek predošlej aktivity, ale aj mimoriadne aktívni
+a dlhodobo rešpektovaní členovia komunity. Používatelia mali pri registrácii možnosť vybrať si buď denný alebo týždenný
+informačný bulletin. Túto voľbu tiež mohli kedykoľvek počas experimentu zmeniť.
 
-Tento online experiment bude mať formu pravidelne rozposielaného informačného bulletinu, na ktorého odoberanie sa budú
-môcť prihlásiť všetci používatelia z tejto komunity.
+\textbf{TODO} -- GRAF - podiel daily/weekly subscriberov.
 
-Účinnosť zvolených metód diverzifikácie odporúčaní budeme vyhodnocovať prostredníctvom A/B testovania, pričom používateľov
-rozdelíme na štyri skupiny:
-\begin{my_enumerate}
-    \item{Kontrolná skupina -- generický informačný bulletin bez odporúčania;}
-    \item{Skupina A -- informačný bulletin s odporúčaním, bez diverzifikácie;}
-    \item{Skupina B -- informačný bulletin s odporúčaním, metóda proporčnej diverzifikácie;}
-    \item{Skupina C -- informačný bulletin s odporúčaním, metóda tématického vzorkovania;}
-\end{my_enumerate}
+\section{Metodológia experimentu}
+Experiment prebiehal formou A/B testovania. Na rozdiel od štandardného A/B testovania, v ktorom sa používatelia rozdelia
+do dvoch alebo viacerých skupín, sme náš test vykonávali na báze striedania použitých metód v časových intervaloch:
 
-Dôležitým predpokladom pre úspešnosť online experimentu bude získať dostatočnú reprezentatívnu vzorku používateľov
-ochotných byť súčasťou experimentu. V~prípade, že by sa nám nepodarilo osloviť dostatočný počet používateľov, plánujeme
-vykonať kontrolovaný offline experiment na vzorke archívnych dát.
-
-
-\section{Metriky hodnotenia výsledkov}
-
-Pre overovanie výsledkov experimentov budeme používať nasledovné metriky:
-
-\textbf{Precision@N}\\
-Presnosť (angl.~\emph{Precision}), alebo tiež \textit{pozitívna predikčná hodnota} je metrika reprezentujúca pomer relevantných
-dokumentov z celkového zoznamu. Štandardne sa presnosť počíta ako pomer z celého zoznamu dokumentov, no v oblasti
-odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metrika \textit{Precision@N}, ktorá určuje, aká časť
-z prvých N dokumentov v~zozname odporúčaní je pre používateľa relevantná.
-$$\mbox{Precision@N}=\frac{|\{\mbox{relevantne otazky v top-N}\}\cap\{\mbox{top-N odporucenych otazok}\}|}
-{|\{\mbox{top-N odporucenych otazok}\}|}$$
-
-\textbf{DCG}\\
-\textit{Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
-odporúčania. DCG meria užitočnosť dokumentov na základe ich pozície vo výslednom zozname. Užitočnosť dokumentov sa akumuluje
-od konca zoznamu, pričom najvyššiu užitočnosť majú dokumenty na začiatku zoznamu~\cite{Jrvelin2002}.
-
-DCG položky na pozícii $p$ v zozname odporúčaní je definované ako:
-
-$$\mathrm{DCG_{p}} = \sum_{i=1}^{p} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
 \begin{adjustwidth}{1cm}{1cm}
-$rel_i$ -- relevancia $i$-tej položky v zozname odporúčaní.\\
+\textbf{1. Kontrolná vzorka}\\
+V prvej fáze experimentu, od 9. novembra 2017 do 11. marca 2018, sme používateľom generovali informačný bulletin len
+prostredníctvom triviálnej metódy odporúčania, ktorá vyberala otázky označené značkami, v ktorých v minulosti používateľ
+položil otázku, ponúkol odpoveď alebo okomentoval príspevok. Dáta z tejto skupiny slúžili ako počiatočné dáta pre porovnanie
+s ostatnými metódami.
+
+Od 12. marca 2018 sme nasadili metódy vytvárania odporúčaní opisované v tejto práci. Metódy generovania informačných bulletinov
+sa striedali na týždennej báze.
+
+\textbf{2. Metóda A -- Personalizované odporúčanie}\\
+Využívala sa metóda personalizovaného odporúčania opísaná v kapitole~\ref{impl:pers-method}, pričom sa aplikovala
+metóda pre zabezpečenie aktuálnosti odporúčaného obsahu. V tomto prípade sa nevykonávala žiadna diverzifikácia odporúčaní.
+
+\textbf{3. Metóda B -- Personalizované odporúčanie s diverzifikáciou}\\
+V tomto prípade sa zostavovali personalizované informačné bulletiny s využitím diverzifikačnej metódy tématického
+vzorkovania, ako aj metódy pre zabezpečenie aktuálnosti odporúčaného obsahu.
 \end{adjustwidth}
 
-\textbf{CTR}\\
-Miera preklikov (angl.~\emph{Click-through Rate}) je metrika často využívaná v spojitosti s informačnými bulletinmi.
-Táto metrika vyjadruje počet úspešných kliknutí na odkaz v informačnom bulletine.
+Bla bla bla.
 
-Okrem CTR plánujeme v súvislosti s interakciou používateľa s informačným bulletinom merať aj počet impresií,
-teda zobrazení informačného bulletinu, ako aj počet konverzií, teda podiel prípadov, kedy kliknutie na niektorú z otázok
-v informačnom bulletine viedlo k aktivite používateľa na tejto otázke -- či už označenie za obľúbenú,
-odpovedanie alebo pridanie komentáru. Ďalej tiež plánujeme merať počet odhlásení z informačného bulletinu.
+
+% \section{Návrh overenia metód}
+
+% Nami navrhnuté metódy personalizovaného odporúčania a diverzifikácie odporúčaného obsahu budeme overovať prostredníctvom
+% online nekontrolovaného experimentu spoločne so spolužiakom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity
+% \textit{Stack Overflow} platformy Stack Exchange.
+
+% \textbf{TODO} - vysvetlit preco zrovna SO.
+
+% Tento online experiment bude mať formu pravidelne rozposielaného informačného bulletinu, na ktorého odoberanie sa budú
+% môcť prihlásiť všetci používatelia z tejto komunity.
+
+% Účinnosť zvolených metód diverzifikácie odporúčaní budeme vyhodnocovať prostredníctvom A/B testovania, pričom používateľov
+% rozdelíme na štyri skupiny:
+% \begin{my_enumerate}
+%     \item{Kontrolná skupina -- generický informačný bulletin bez odporúčania;}
+%     \item{Skupina A -- informačný bulletin s odporúčaním, bez diverzifikácie;}
+%     \item{Skupina B -- informačný bulletin s odporúčaním, metóda proporčnej diverzifikácie;}
+%     \item{Skupina C -- informačný bulletin s odporúčaním, metóda tématického vzorkovania;}
+% \end{my_enumerate}
+
+% Dôležitým predpokladom pre úspešnosť online experimentu bude získať dostatočnú reprezentatívnu vzorku používateľov
+% ochotných byť súčasťou experimentu. V~prípade, že by sa nám nepodarilo osloviť dostatočný počet používateľov, plánujeme
+% vykonať kontrolovaný offline experiment na vzorke archívnych dát.
+
+
+% \section{Metriky hodnotenia výsledkov}
+
+% Pre overovanie výsledkov experimentov budeme používať nasledovné metriky:
+
+% \textbf{Precision@N}\\
+% Presnosť (angl.~\emph{Precision}), alebo tiež \textit{pozitívna predikčná hodnota} je metrika reprezentujúca pomer relevantných
+% dokumentov z celkového zoznamu. Štandardne sa presnosť počíta ako pomer z celého zoznamu dokumentov, no v oblasti
+% odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metrika \textit{Precision@N}, ktorá určuje, aká časť
+% z prvých N dokumentov v~zozname odporúčaní je pre používateľa relevantná.
+% $$\mbox{Precision@N}=\frac{|\{\mbox{relevantne otazky v top-N}\}\cap\{\mbox{top-N odporucenych otazok}\}|}
+% {|\{\mbox{top-N odporucenych otazok}\}|}$$
+
+% \textbf{DCG}\\
+% \textit{Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
+% odporúčania. DCG meria užitočnosť dokumentov na základe ich pozície vo výslednom zozname. Užitočnosť dokumentov sa akumuluje
+% od konca zoznamu, pričom najvyššiu užitočnosť majú dokumenty na začiatku zoznamu~\cite{Jrvelin2002}.
+
+% DCG položky na pozícii $p$ v zozname odporúčaní je definované ako:
+
+% $$\mathrm{DCG_{p}} = \sum_{i=1}^{p} \frac{ 2^{rel_{i}} - 1 }{ \log_{2}(i+1)}$$
+% \begin{adjustwidth}{1cm}{1cm}
+% $rel_i$ -- relevancia $i$-tej položky v zozname odporúčaní.\\
+% \end{adjustwidth}
+
+% \textbf{CTR}\\
+% Miera preklikov (angl.~\emph{Click-through Rate}) je metrika často využívaná v spojitosti s informačnými bulletinmi.
+% Táto metrika vyjadruje počet úspešných kliknutí na odkaz v informačnom bulletine.
+
+% Okrem CTR plánujeme v súvislosti s interakciou používateľa s informačným bulletinom merať aj počet impresií,
+% teda zobrazení informačného bulletinu, ako aj počet konverzií, teda podiel prípadov, kedy kliknutie na niektorú z otázok
+% v informačnom bulletine viedlo k aktivite používateľa na tejto otázke -- či už označenie za obľúbenú,
+% odpovedanie alebo pridanie komentáru. Ďalej tiež plánujeme merať počet odhlásení z informačného bulletinu.
