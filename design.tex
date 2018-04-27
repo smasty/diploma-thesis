@@ -230,7 +230,6 @@ až cca 50000 profilov otázok s profilom každého používateľa.
 Cieľom našej práce je vyhodnotiť dopad diverzifikácie odporúčaní na personalizované informačné bulletiny CQA systémov.
 Za týmto účelom sme navrhli metódu tématického vzorkovania \textit{(angl. Thematic sampling)}.
 
-\textbf{TODO} Preco som si vybral zrovna tuto metodu (prirodzena, rozumna, dobre skalovatelna)
 
 \subsection{Metóda tématického vzorkovania}
 \label{sec:thematic-sampling}
@@ -256,7 +255,23 @@ podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilus
 \caption{Schéma metódy diverzifikácie odporúčaní tématickým vzorkovaním.\label{fig:tematic-sampling}}\end{center}
 \end{figure}
 
-\subsection{Zhrnutie}
+Pre použitie práve takto navrhnutej metódy diverzifikácie sme sa rozhodli z viacerých dôvodov. Dôležitým faktorom bola
+jej veľmi dobrá škálovateľnosť, nakoľko umožňuje už v prvom kroku obmedziť množinu otázok, z ktorých sa budú vyberať odporúčania.
+To je veľmi dôležité najmä v prípade systémov s veľkým množstvom obsahu, akými je aj platforma Stack Exchange.
+V~súvislosti s možnosťou škálovania nám tiež z preštudovaných metód diverzifikácie príde metóda tématického vzorkovania
+najprirodzenejším prístupom k diverzifikácii odporúčaní. V~neposlednom rade zavážil aj fakt, že pôvodná metóda,
+ktoru je naša metóda inšpirovaná, bola v minulosti úspešne otestovaná v nekontrolovanom online experimente
+v CQA systéme Yahoo! Answers.
 
-\textbf{TODO} zhrnutie navrhu - treba vyzdvihnut cim je unikatna metoda. (Personalizovany newsletter pre CQA,
-zameranie na div a akt, odporucanie otazok v CQA (nie routing), expertiza aj interest, komunitny profil).
+\section{Zhrnutie}
+
+Navrhli sme metódu personalizovaného odporúčania v informačných bulletinoch, ktorá kladie dôraz na diverzifikáciu
+a aktuálnosť odporúčaného obsahu. Už samotné zameranie sa práve na informačné bulletiny je v oblasti CQA systémov
+v podstate unikátne. Na rozdiel od väčšiny výskumu v oblasti odporúčania v CQA systémoch naša metóda využíva
+princíp odporúčania otázok, a nie ich smerovania.
+
+V profile používateľa rozlišujeme jeho záujmy od jeho expertízy,
+a odporúčame mu relevantný obsah podľa toho, o akú sekciu informačného bulletinu sa jedná.
+Používateľský profil sa časom vyvíja tak, aby vždy reflektoval aktuálne zameranie používateľa, prostredníctvom
+exponenciálneho úpadkového faktoru. Ako riešenie problému studeného štartu sme navrhli tzv. komunitný profil,
+ktorý reprezentuje agregované záujmy a expertízu všetkých používateľov CQA systému.

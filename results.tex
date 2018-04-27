@@ -7,7 +7,8 @@
 \section{Návrh overenia metód}
 
 Nami navrhnuté metódy personalizovaného odporúčania a diverzifikácie odporúčaného obsahu budeme overovať prostredníctvom
-online nekontrolovaného experimentu spoločne so spolužiakom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity \textit{Stack Overflow} platformy Stack Exchange.
+online nekontrolovaného experimentu spoločne so spolužiakom Matúšom Salátom~\cite{Salat2018} na používateľoch z komunity
+\textit{Stack Overflow} platformy Stack Exchange.
 
 \textbf{TODO} - vysvetlit preco zrovna SO.
 
@@ -37,7 +38,8 @@ Presnosť (angl.~\emph{Precision}), alebo tiež \textit{pozitívna predikčná h
 dokumentov z celkového zoznamu. Štandardne sa presnosť počíta ako pomer z celého zoznamu dokumentov, no v oblasti
 odporúčania a vyhľadávania informácií je často vhodnejšou odvodená metrika \textit{Precision@N}, ktorá určuje, aká časť
 z prvých N dokumentov v~zozname odporúčaní je pre používateľa relevantná.
-$$\mbox{Precision@N}=\frac{|\{\mbox{relevantne otazky v top-N}\}\cap\{\mbox{top-N odporucenych otazok}\}|}{|\{\mbox{top-N odporucenych otazok}\}|}$$
+$$\mbox{Precision@N}=\frac{|\{\mbox{relevantne otazky v top-N}\}\cap\{\mbox{top-N odporucenych otazok}\}|}
+{|\{\mbox{top-N odporucenych otazok}\}|}$$
 
 \textbf{DCG}\\
 \textit{Discounted Cumulative Gain} je metrika kvality ohodnocovania často používaná na meranie efektívnosti
