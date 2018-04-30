@@ -1,45 +1,35 @@
 %!TEX root = main.tex
+\afterpage{\blankpage}
 \newpage
-
 \chapter{Zhodnotenie}
 
-\textbf{TODO}\\
--- zhodnotenie vysledkov - jedna hypoteza vysla, druha nie.\\
--- online experiment bol unikatny, tazko realizovatelny, napriek tomu priniesol zaujimave vysledky\\
--- to ze ludia chcu filter bubble je mozno este zaujimavejsie ako keby to nechceli\\
--- diverzitu prirodzene skor vnimaju ako negativum, su zvyknuti ze kazdy im chce co najviac personalizovat, hlavne ak
-to tvrdi nadpis newslettera.\\
--- historicka stigma okolo nwsletterov, ludia ich moc nechcu odoberat, casto vnimaju ako len dalsi spam, a ak sa prihlasia
-tak po case velmi rychlo prestanu byt aktivni.
+Cieľom našej práce bolo analyzovať súčasný stav výskumu odporúčania otázok v~doméne CQA systémov a navrhnúť riešenie pre
+tvorbu personalizovaných informačných bulletinov v systémoch pre odpovedanie na otázky. Zamerali sme sa predovšetkým na
+skúmanie vplyvu zavedenia diverzity a podpory aktuálnosti na úspešnosť personalizovaného odporúčania.
 
--- \textbf{Future work}\\
--- explorovat \textit{stigmu} okolo newsletterov, ine metody "ozivenia" standardnej personalizacie,
-aj ked sa momentalne zda ze pouzivatelia chcu hlavne cisto personalizovane veci.\\
--- ine vyuzitie newsletterov v CQA, aj mimo personalizacie.
+Navrhli sme metódu personalizovaného odporúčania obsahu v doméne CQA systémov vo forme informačných bulletinov so zameraním
+sa na podporu aktuálnosti odporúčaní, ktorú sme doplnili o diverzifikačnú metódu tématického vzorkovania.
+
+Pre účely overenia navrhnutých metód sme pripravili experimentálnu infraštruktúru StackLetter, ktorá umožňuje jendoduché
+vytváranie a rozosielanie personalizovaných informačných bulletinov pre používateľov platformy Stack Exchange.
+Navrhnuté metódy sme overili prostredníctvom online nekontrolovaného experimentu na používateľoch komunity Stack Overflow.
+
+Výsledky experimentu ukázali, že personalizácia obsahu informačných bulletinov prostredníctvom odporúčacích metód
+a s dôrazom na aktuálnosť odporúčaného obsahu má pozitívny vplyv na záujem používateľov o informačné bulletiny, ako
+aj na mieru ich celkovej aktivity v systéme. Experiment nepotvrdil hypotézu, že používatelia budú pozitívne vnímať
+aj diverzifikáciu prezentovaných odporúčaní. Naopak sa ukázalo, že používatelia nevnímajú prítomnosť filtračnej bubliny
+ako problém, ale ako žiadaný jav.
+V online experimente sa tiež prejavili zakorenené predsudky voči informačným bulletinom ako takým, čo spôsobilo náročné
+získavanie používateľov do realizovaného online nekontrolovaného experimentu.
+
+Celkovo hodnotíme prácu ako úspešnú, nakoľko ukázala, aký vplyv má personalizácia obsahu informačných bulletinov v CQA systémoch,
+jeho aktuálnosť a tiež diverzita na odoberateľov a ich spokojnosť, záujem a aktivitu.
 
 
-
-% V súčasnosti je systém StackLetter nasadení v testovacej prevádzke. Zatiaľ používateľom umožňuje nechať si odosielať
-% informačné bulletiny pre komunity \textit{Stack Overflow} a \textit{Software Engineering} buď raz denne, alebo raz týždenne.
-
-% \begin{table}[h]
-% \centering
-% \caption{Používanosť systému StackLetter}
-% \begin{tabular}{|m{10cm}|m{1.5cm}|}
-% \hline
-% Počet odoberateľov informačného bulletinu & 24 \\ \hline
-% Počet odoslaných informačných bulletinovu & 493 \\ \hline
-% Počet používateľmi otvorených informačných bulletinov & 119\footnotemark \\ \hline
-% Počet otvorených položiek informačných bulletinov & 145 \\ \hline
-% Počet explicitných hodnotení informačných bulletinov & 114 \\ \hline
-% \end{tabular}
-% \end{table}
-
-% \footnotetext{Počet otvorení môže byť skreslený, nakoľko viaceré klienty blokujú zobrazenie obrázkov použitých na vyhodnotenie otvorenia e-mailu.}
-
-% Obsah informačného bulletinu je zatiaľ personalizovaný len jednoduchou metódou na základe značiek, v ktorých má používateľ aktivitu.
-% Návrh metód odporúčania s~podporou diverzity a~aktuálnosti je v tejto fáze práce už finalizovaný.
-
-% V nasledujúcom semestri plánujeme implementovať metódy odporúčania s~podporou diverzity a~aktuálnosti a ďalej pokračovať
-% v online nekontrolovanom experimente. V prípade vyhodnotenia tohto experimentu ako neúspešného máme v pláne vykonať
-% online kontrolovaný experiment. Podrobnejší plán práce v ďalšom semestri obsahuje príloha~\ref{apx:dp3plan}.
+\textbf{Možný výskum v budúcnosti}\\
+Zaujímavou oblasťou potenciálneho výskumu v doméne informačných bulletinov CQA systémov, ale aj informačných bulletinov
+všeobecne, sa javí práve skúmanie spomínaných zakorenených predsudkov voči nim, a vnímanie informačných bulletinov ako spamu.
+Môže tiež byť zaujímavé skúmať aj ďalšie metódy \textit{oživenia} klasických personalizačných metód,
+aj keď realizovaný experiment naznačuje, že používatelia sú zvyknutí práve na štandardnú personalizáciu.
+Okrem samotného zamerania sa na personalizáciu v informačných bulletinoch CQA systémov je možné skúmať nové možnosti využitia
+informačných bulletinov v týchto systémoch.

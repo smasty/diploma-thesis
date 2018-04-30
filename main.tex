@@ -77,16 +77,21 @@ pdfkeywords={personalization, diversity, freshness, CQA, newsletters},%
 %%
 \input{titlepage.tex}
 
-%%
-%% Anotation
-%%
-\pagenumbering{roman}\setcounter{page}{2}
-	\input{anotation.tex}
+
+% zadanie
+\includepdf[pages={1,2,3,4},pagecommand={}]{figures/zadania.pdf}
+
 
 %%
 %% Declaration
 %%
 \input{declaration.tex}
+
+%%
+%% Anotation
+%%
+\pagenumbering{roman}\setcounter{page}{2}
+	\input{anotation.tex}
 
 %%
 %% Contents

@@ -118,7 +118,7 @@ Tento modul je zodpovedný za samotné zostavovanie a odosielanie informačných
 používateľom. Skladá sa z dvoch samostatných častí -- komponentu na zostavovanie informačných bulletinov a komponentu
 na odosielanie informačného bulletinu. Oba komponenty medzi sebou asynchrónne komunikujú prostredníctvom Redis fronty.
 
-Modul je navrhnutý genericky, aby neoblo potrebné do neho zasahovať v prípade pridania nových sekcií informačných bulletinov,
+Modul je navrhnutý genericky, aby nebolo potrebné do neho zasahovať v prípade pridania nových sekcií informačných bulletinov,
 prípadne nových typov obsahu. Pre každý typ obsahu je potrebné iba definovať HTML šablónu.
 
 Všetky hypertextové odkazy, ktoré sa nachádzajú v informačnom bulletine, smerujú na evaluačný modul, ktorý prostredníctvom
@@ -161,21 +161,97 @@ Import dát je vykonávaný dávkovo a v poradí podľa závislostí jednotlivý
 následne otázky, odpovede, komentáre, značky a nakoniec odznaky.
 
 
+\section{Modul pre personalizované odporúčanie}
+Tento modul je zodpovedný za vytváranie zoznamov odporúčaní pre jednotlivé sekcie personalizovaného informačného bulletinu.
+Je implementovaný v jazyku Python 3, a poskytuje REST API pre modul pre generovanie a odosielanie informačných bulletinov.
+Modul sa skladá z troch základných komponentov -- \textit{recommender, profiles, train} -- a viacerých pomocných komponentov
+-- \textit{db, queries, utils}.
+
+\textbf{Komponent Profiles}\\
+Tento komponent obsahuje implementácie profilu otázok a používateľského profilu, ako aj odvodený komunitný profil.
+Jednotlivé profily sú implementované v samostatných triedach.
+
+\textbf{Komponent Recommender}\\
+Komponent obsahuje implementáciu oboch odporúčacích metód v samostatných triedach -- personalizované odporúčanie,
+aj odporúčanie s diverzifikačnou metódou tématického vzorkovania.
+
+\textbf{Kompontent Train}\\
+Obsahuje implementáciu funkcionality pre aktualizáciu používateľských modelov, ktorá sa vykonáva pravidelne prostredníctom
+nástroja \textit{cron}.
+
+Ostatné komponenty obsahujú podporné funkcie a funkcie pre prácu s databázou, ako aj konfiguráciu REST API, ktoré tento
+modul poskytuje.
+
 \section{Databázový model}\label{apx:dbmodel}
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.355]{db-model}
 \caption{Databázový model systému StackLetter.\label{fig:db-model}}\end{center}
 \end{figure}
 
+\afterpage{\blankpage}
+\newpage
+\chapter{Inštalačná príručka}
+
+\textbf{Závislosti systému}\\
+1. Python 3.6+, PIP, VirtualEnv\\
+2. PHP 7.1+, Composer\\
+3. PostgreSQL server 9.6+\\
+4. Redis server 2.8+\\
+5. Nginx server 1.6+\\
+6. Git 2.1+
+
+\textbf{Inštalácia modulu pre registráciu nových používateľov}\\
+Inštalácia prebieha prostredníctvom nástroja Composer -- správcu balíčkov pre jazyk PHP. Po inštalácii je potrebné nastaviť
+parametre v konfiguračnom súbore \textit{app/config/config.local.neon}.
+
+\lstset{language=nil}
+\begin{lstlisting}
+$ git clone https://github.com/StackLetter/LandingPage.git .
+$ composer install
+\end{lstlisting}
+
+\textbf{Inštalácia modulu pre generovanie a odosielanie informačných bulletinov}\\
+Inštalácia prebieha prostredníctvom nástroja Composer -- správcu balíčkov pre jazyk PHP. Po inštalácii je potrebné nastaviť
+parametre v konfiguračnom súbore \textit{config/local.neon}.
+
+\begin{lstlisting}
+$ git clone https://github.com/StackLetter/Mailer.git .
+$ composer install
+\end{lstlisting}
+
+\textbf{Inštalácia modulu pre spracovanie statickej zálohy databázy}\\
+Inštalácia prebieha prostredníctvom nástroja Composer -- správcu balíčkov pre jazyk PHP. Po inštalácii je potrebné nastaviť
+parametre v konfiguračných súboroch \textit{config.json, config.db.json}.
+
+\begin{lstlisting}
+$ git clone https://github.com/StackLetter/DumpImport.git .
+$ composer install
+\end{lstlisting}
+
+\textbf{Inštalácia modulu pre personalizované odporúčanie}\\
+Inštalácia prebieha prostredníctvom nástroja PIP -- správcu balíčkov pre jazyk Python. Po inštalácii je potrebné nastaviť
+parametre v konfiguračnom súbore \textit{recommender/config.py}.
+
+\begin{lstlisting}
+$ git clone https://github.com/StackLetter/Recommender.git .
+$ virtualenv env
+$ env/bin/pip install -r requirements.txt
+\end{lstlisting}
+
+
+\afterpage{\blankpage}
+\newpage
 \chapter{Výsledky dotazníku odoberateľov}
 \label{appendix:survey}
 \includepdf[pages={1,2,3}, pagecommand={}, offset={0.45in -0.3in}]{figures/survey-results.pdf}
+
 
 \chapter{Príspevok na konferencii IIT.SRC 2018}
 \includepdf[pages={1,2,3,4},pagecommand={}]{figures/iit-src.pdf}
 
 
-
+\afterpage{\blankpage}
+\newpage
 \chapter{Elektronické médium}
 
 Elektronické médium priložené k dokumentu má nasledovnú štruktúru:
