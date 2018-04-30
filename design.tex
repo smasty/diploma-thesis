@@ -6,10 +6,10 @@
 Cieľom našej práce je navrhnúť, zrealizovať a overiť metódu zostavovania personalizovaných informačných bulletinov v CQA systémoch
 so zameraním sa na podporu diverzity a~aktuálnosti obsahu odporúčaného v informačnom bulletine.
 
-Naše riešenie je navrhnuté pre použitie vrámci platformy Stack Exchange, ktorá patrí medzi najpopulárnejšie CQA systémy
+Naše riešenie je navrhnuté pre použitie v rámci platformy Stack Exchange, ktorá patrí medzi najpopulárnejšie CQA systémy
 v súčasnosti a tvorí ju viac ako 160 komunít zameraných na rôzne oblasti.
 
-Informačný bulletin bude tvoriť viacero sekcií, ktoré vyžadujú rôzne spôsoby odporúčania. Konkrétne ide o odporúčanie
+Informačný bulletin tvorí viacero sekcií, ktoré vyžadujú rôzne spôsoby odporúčania. Konkrétne ide o odporúčanie
 nových otázok a odporúčanie vyriešených otázok, pričom v~prvom prípade je dôležité pozerať sa na expertízu používateľa
 a v druhom prípade na oblasti jeho záujmu.
 
@@ -31,15 +31,15 @@ Celkový pohľad na metódu ilustruje obrázok~\ref{fig:overview}, Jednotlivé �
     (viď kap.~\ref{cold-start}).
 }
 \item{
-    Diverzifikáciu odporúčaného obsahu budeme zabezpečovať na úrovni tématického pre-filteru pred samotným procesom
-    odporúčania -- pre každú nezávislú tému sa bude vytvárať samostatný zoznam odporúčaní.
+    Diverzifikáciu odporúčaného obsahu zabezpečujeme na úrovni tématického pre-filteru pred samotným procesom
+    odporúčania -- pre každú nezávislú tému sa vytvára samostatný zoznam odporúčaní.
     Pri návrhu tejto metódy sme vychádzali z~\cite{Szpektor2013}.
 }
-\item{Výsledný zoznam odporúčaného obsahu vznikne spojením jednotlivých zoznamov z~kroku diverzifikácie.}
-\item{Pri odporúčaní sa okrem diverznosti a relevancie obsahu bude uvažovať aj jeho aktuálnosť.}
+\item{Výsledný zoznam odporúčaného obsahu vzniká spojením jednotlivých zoznamov z~kroku diverzifikácie.}
+\item{Pri odporúčaní sa okrem diverznosti a relevancie obsahu uvažuje aj jeho aktuálnosť.}
 \item{
-    Navrhnutá metóda bude reflektovať implicitnú aj explicitnú spätnú väzbu používateľa vo forme interakcie
-    s informačným bulletinom a profil používateľa sa bude na jej základe aktualizovať.
+    Navrhnutá metóda reflektuje implicitnú aj explicitnú spätnú väzbu používateľa vo forme interakcie
+    s informačným bulletinom a profil používateľa sa na jej základe aktualizuje.
 }
 \end{my_itemize}
 
@@ -51,31 +51,31 @@ Celkový pohľad na metódu ilustruje obrázok~\ref{fig:overview}, Jednotlivé �
 \section{Návrh metódy personalizovaného odporúčania}
 
 
-Pri vytváraní personalizovaného informačného bulletinu sa budeme zameriavať na odporúčanie relevantných otázok jednotlivým
+Pri vytváraní personalizovaného informačného bulletinu sa zameriavame na odporúčanie relevantných otázok jednotlivým
 používateľom CQA systému prostredníctvom aplikovania metódy filtrovania na základe obsahu (kapitola~\ref{rec:content}).
 Pre účely filtrovania na základe obsahu je potrebné definovať a zostaviť profily reprezentujúce jednak otázky, a tiež
 používateľov CQA systému.
 
 \subsection{Profil otázok}
 
-Profil otázky sa bude skladať z troch nezávislých modelov, ktoré sa na samotnú otázku pozerajú z rôznych perspektív.
+Profil otázky sa skladá z troch nezávislých modelov, ktoré sa na samotnú otázku pozerajú z rôznych perspektív.
 
 \textbf{1. Kategorický model otázok}\\
-Tento model reprezentuje otázku na najvyššej úrovni ako prislúchajúcu do určitých kategórií. Kategórie otázok sú vrámci
+Tento model reprezentuje otázku na najvyššej úrovni ako prislúchajúcu do určitých kategórií. Kategórie otázok sú v rámci
 platformy Stack Exchange reprezentované ako značky (angl.~\textit{tags}). Každá otázka môže obsahovať viacero značiek.
 
-Samotný kategorický model otázky bude reprezentovaný ako vektor v $n$-rozmernom priestore, kde každý rozmer $n_i$
-predstavuje príslušnosť otázky k danej značke. Nakoľko značky netvoria hierarchickú štruktúru, bude vektor v jednotlivých
-rozmeroch nadobúdať iba hodnoty $0$~alebo~$1$.
+Samotný kategorický model otázky je reprezentovaný ako vektor v $n$-rozmernom priestore, kde každý rozmer $n_i$
+predstavuje príslušnosť otázky k danej značke. Nakoľko značky netvoria hierarchickú štruktúru, vektor v jednotlivých
+rozmeroch nadobúda iba hodnoty $0$~alebo~$1$.
 
 \textbf{2. Tématický model otázok}\\
 Tématický model využíva metódu latentnej Dirichletovej alokácie (angl.~\emph{Latent Dirichlet Allocation - LDA})~\cite{blei2003latent}
-na určenie latentnej témy, ktorej sa daná otázka venuje.
+na určenie latentných tém, ktorým sa daná otázka venuje.
 
-LDA vektor tohto modelu bude reprezentovať distribúciu otázky vrámci jednotlivých latentných tém.
-Samotné LDA témy sa budú odvodzovať z nadpisu a textu otázky.
-Pre optimalizáciu modelu a zanedbanie tém s veľmi nízkou distribúciou sa do úvahy budú brať len latentné témy tvoriace
-75\% z celkovej distribúcie, teda tretí kvartil. Jednotlivé hodnoty tém budú následne normalizované, aby tvorili 100\%.
+LDA vektor tohto modelu reprezentuje distribúciu otázky v rámci jednotlivých latentných tém.
+Samotné LDA témy sa odvodzujú z nadpisu a textu otázky.
+Pre optimalizáciu modelu a zanedbanie tém s veľmi nízkou distribúciou sa do úvahy berú len latentné témy tvoriace
+75\% z celkovej distribúcie, teda tretí kvartil. Jednotlivé hodnoty tém sú následne normalizované, aby tvorili 100\%.
 
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.3]{lda-plate}
@@ -87,7 +87,7 @@ Pre optimalizáciu modelu a zanedbanie tém s veľmi nízkou distribúciou sa do
 \textbf{Nastavenie LDA}\\
 \label{design:lda-setup}
 Pre určenie vhodného počtu LDA tém ($n$) využijeme metódu hierarchických Dirichletových procesov~\cite{Teh2006}.
-Pre trénovanie LDA modelu bude využitý online variačný Bayesov algoritmus. Parametre modelu budú nastavené nasledovne:\\
+Pre trénovanie LDA modelu bol využitý online variačný Bayesov algoritmus. Parametre modelu boli nastavené nasledovne:\\
 $$\alpha = \frac{1}{n}; \kappa = 0.7; \tau_0 = 10; \eta = \frac{1}{n}$$
 
 $M$ -- Celkový počet dokumentov. \\
@@ -101,67 +101,68 @@ $\theta_d$ -- Distribúcia tém v dokumente $d$. \\
 $\kappa$   -- Úpadok učenia; parameter kontrolujúci mieru učenia v online metóde učenia. \\
 $\tau_0$   -- Posun učenia; znižuje váhu počiatočným iteráciám v online metóde učenia.
 
-Nakoľko jednotlivé komunity vrámci platformy Stack Exchange sú pomerne úzko zamerané, predpokladáme, že bude dostačujúce
-natrénovať LDA model na vzorke archívnych dát a nebude potrebné postupné dotrénovanie modelu. Napriek tomu sme zvolili
+Nakoľko jednotlivé komunity v rámci platformy Stack Exchange sú pomerne úzko zamerané, predpokladáme, že je dostačujúce
+natrénovať LDA model na vzorke archívnych dát a nie je potrebné postupné dotrénovanie modelu. Napriek tomu sme zvolili
 online variačný Bayesov algoritmus, keďže je pri veľkom množstve dát efektívnejší ako dávková varianta tohto algoritmu.
 \end{adjustwidth}
 
 \textbf{3. Lexikálny model otázok}\\
 Lexikálny model otázky využíva TF-IDF vektor reprezentujúci zastúpenie jednotlivých výrazov v texte otázky. Rovnako ako
-LDA vektor bude zostavený z nadpisu a textu samotnej otázky. Pred výpočtom bude text lematizovaný a budú z neho odstránené
+LDA vektor je zostavený z nadpisu a textu samotnej otázky. Pred výpočtom je text lematizovaný a sú z neho odstránené
 stop slová.
 
 $$\textrm{tf-idf}(t, d) = \textrm{tf}(t, d) \times \log\frac{n_d}{1+\textrm{df}(d, t)}$$
 
 \subsection{Profil používateľov}
+\label{design:userprofile}
 
-Pre každého používateľa budeme uvažovať dva nezávislé podprofily -- jeden bude profilovať záujem používateľa o určité témy a otázky,
-druhý bude profilovať jeho expertízu v určitej oblasti. Jeden bude použitý
+Pre každého používateľa uvažujeme dva nezávislé podprofily -- jeden profiluje záujem používateľa o určité témy a otázky,
+druhý profiluje jeho expertízu v určitej oblasti. podprofil reflektujúci záujem používateľa je použitý
 pri odporúčaní otázok, ktoré by používateľa mohli zaujímať, druhý pri odporúčaní otázok, ktoré by mohol vedieť zodpovedať.
-Oba podprofily budú z pohľadu svojej štruktúry presne rovnaké.
+Oba podprofily sú z pohľadu svojej štruktúry presne rovnaké.
 
 Takýto prístup k rozdeleniu profilu používateľa podľa záujmu a expertízy je vo svojej podstate unikátny, nakoľko ho využíva
 iba práca~\cite{Xu2012}. V ostatný prácach autori buď modelujú len jeden z týchto aspektov, alebo ich vôbec nerozlišujú~\cite{Srba2016}.
 
-Profil používateľa bude zostavený na základe jeho aktivity a bude sa analogicky k profilu otázok skladať z troch vektorov:
+Profil používateľa je zostavený na základe jeho aktivity a analogicky k profilu otázok sa skladá z troch vektorov:
 
 \begin{my_enumerate}
 \item{
-  Prvý vektor bude reprezentovať aktivitu používateľa naprieč značkami -- každý rozmer bude predstavovať jednu značku,
-  v ktorej má používateľ aktivitu. Hodnoty v jednotlivých rozmeroch budú predstavovať podiel aktivity v danej značke voči
+  Prvý vektor reprezentuje aktivitu používateľa naprieč značkami -- každý rozmer predstavuje jednu značku,
+  v ktorej má používateľ aktivitu. Hodnoty v jednotlivých rozmeroch predstavujú podiel aktivity v danej značke voči
   celkovému množstvu aktivity používateľa.
 }
 \item{
-  Druhý vektor bude analogicky k prvému reprezentovať aktivitu používateľa naprieč LDA témami, v ktorých má používateľ aktivitu.
+  Druhý vektor analogicky k prvému reprezentuje aktivitu používateľa naprieč LDA témami, v ktorých má používateľ aktivitu.
 }
 \item{
-  Tretí vektor bude reprezentovať zastúpenie jednotlivých výrazov v~textoch otázok, v~ktorých má používateľ aktivitu.
+  Tretí vektor reprezentuje zastúpenie jednotlivých výrazov v~textoch otázok, v~ktorých má používateľ aktivitu.
 }
 \end{my_enumerate}
 
 \textbf{Záujmový podprofil}\\
-Podprofil predstavujúci záujem používateľa bude zostavený zo všetkých otázok, ktoré používateľ položil, alebo ktoré označil
-za obľúbené. Každá takáto otázka bude do podprofilu prispievať rovnakou váhou.
+Podprofil predstavujúci záujem používateľa je zostavený zo všetkých otázok, ktoré používateľ položil, alebo ktoré označil
+za obľúbené. Každá takáto otázka do podprofilu prispieva rovnakou váhou.
 
 \textbf{Expertízny podprofil}\\
-Podprofil modelujúci expertízu používateľa sa bude skladať z otázok, ktoré používateľ označil za obľúbené alebo
-na ktoré používateľ odpovedal, pričom ich dopad na podprofil expertízy bude závislý od skóre jeho odpovede.
-Nezáporné skóre bude prispievať do podprofilu pozitívne -- bude to teda signalizovať
-fakt, že používateľ danej téme rozumie. Odpoveď so záporným skóre bude naopak signalizovať, že používateľ danej téme nerozumie,
-čo bude reflektované aj v jeho expertíznom podprofile. Odpovede označené za akceptované budú do podprofilu prispievať
+Podprofil modelujúci expertízu používateľa sa skladá z otázok, ktoré používateľ označil za obľúbené alebo
+na ktoré používateľ odpovedal, pričom ich dopad na podprofil expertízy je závislý od skóre jeho odpovede.
+Nezáporné skóre prispieva do podprofilu pozitívne -- signalizuje to teda
+fakt, že používateľ danej téme rozumie. Odpoveď so záporným skóre naopak signalizuje, že používateľ danej téme nerozumie,
+čo je reflektované aj v jeho expertíznom podprofile. Odpovede označené za akceptované do podprofilu prispievajú
 s~koeficientom $1.75$, čo je priemerný počet odpovedí na otázky s akceptovanou odpoveďou.
 
 \textbf{Komentáre}\\
-Okrem pokladania otázok, odpovedania alebo označenia za obľúbené budú uvažované aj používateľove komentáre. Keďže však
-zo samotného faktu že používateľ niečo okomentoval nemožno jednoznačne určiť, či táto aktivita predstavuje jeho záujem
-alebo expertízu, budú otázky, ktoré používateľ okomentoval prispievať do celého profilu -- záujmového aj expertízneho, avšak
-s~koeficientom $0.3$. Tento koeficient vychádza z faktu, že vrámci platformy Stack Exchange pripadajú na jednu
+Okrem pokladania otázok, odpovedania alebo označenia za obľúbené uvažujeme aj používateľove komentáre. Keďže však
+zo samotného faktu, že používateľ niečo okomentoval nemožno jednoznačne určiť, či táto aktivita predstavuje jeho záujem
+alebo expertízu, prispievajú otázky, ktoré používateľ okomentoval do celého profilu -- záujmového aj expertízneho, avšak
+s~koeficientom $0.3$. Tento koeficient vychádza z faktu, že v rámci platformy Stack Exchange pripadajú na jednu
 komentovanú otázku alebo odpoveď priemerne tri komentáre.
 
 \textbf{Spätná väzba}\\
-Do oboch podprofilov budú využitím rovnakého princípu prispievať aj implicitná a explicitná spätná väzba používateľa --
+Do oboch podprofilov prispievajú využitím rovnakého princípu aj implicitná a explicitná spätná väzba používateľa --
 teda jeho kliknutie na konkrétnu otázku v informačnom bulletine, alebo jej explicitné kladné alebo záporné ohodnotenie.
-Implicitná spätna väzba bude prispievať s koeficientom $0.3$, explicitná s koeficientom $\pm1$.
+Implicitná spätna väzba prispieva do podprofilov s koeficientom $0.3$, explicitná s koeficientom $\pm1$.
 
 \textbf{Vzorce pre zostavenie záujmového a expertízneho podprofilu používateľa}\\
 $$\mathbf{UP_{interest}} = \sum_{q \in Qa, Qf}T_q + \sum_{q \in Qc, Qif}0.3 \times T_q + \sum_{q \in Qef}\pm1 \times T_q$$
@@ -179,9 +180,9 @@ $Qef$ -- množina otázok s explicitnou spätnou väzbou\\
 
 \subsection{Výber odporúčaného obsahu}\label{design:rec-retrieval}
 
-Pre účely zostavovania zoznamu odporúčaných otázok použijeme prístup analogický štandardným nástrojom pre vyhľadávanie
-informácií (angl.~\emph{Information Retrieval Engines}). V našom prípade budú dokumentmi samotné otázky a dopytom bude
-príslušný profil používateľa. Pre ohodnocovanie podobnosti profilov bude použitý skalárny súčin vektorov reprezentujúcich
+Pre účely zostavovania zoznamu odporúčaných otázok používame prístup analogický štandardným nástrojom pre vyhľadávanie
+informácií (angl.~\emph{Information Retrieval Engines}). V našom prípade sú dokumentmi samotné otázky a dopytom je
+príslušný profil používateľa. Pre ohodnocovanie podobnosti profilov je použitý skalárny súčin vektorov reprezentujúcich
 profily otázky a používateľa.
 
 \textbf{Skalárny súčin (angl.~\textit{dot product}) vektorov $\mathbf{a}$ a $\mathbf{b}$.}\\
@@ -189,20 +190,20 @@ $$\mathbf{a}\cdot\mathbf{b}=\sum_{i=1}^n a_ib_i=a_1b_1+a_2b_2+\cdots+a_nb_n$$
 
 \subsection{Riešenie problému studeného štartu}
 
-Pre eliminovanie problému studeného štartu (kapitola~\ref{cold-start}) z pohľadu prvotného odporúčania otázok využijeme
+Pre eliminovanie problému studeného štartu (kapitola~\ref{cold-start}) z pohľadu prvotného odporúčania otázok využívame
 offline natrénovanie našich metód na archívnych dátach platformy Stack~Exchange.
 
 V prípade nových používateľov, ktorí v systéme nemajú žiadnu, alebo iba nedostatočnú aktivitu, sa zo začiatku namiesto profilu
-konkrétneho používateľa použije komunitný profil, ktorý je zostavený analogicky k profilu používateľa, no pozostáva
+konkrétneho používateľa používa komunitný profil, ktorý je zostavený analogicky k profilu používateľa, no pozostáva
 z celkovej aktivity v systéme.
 
 
 \subsection{Aktuálnosť odporúčaní}
 \label{design:freshness}
-Pri zostavovaní odporúčaní do informačného bulletinu sa budú uvažovať len otázky, ktoré pochádzajú
+Pri zostavovaní odporúčaní do informačného bulletinu sa uvažujú len otázky, ktoré pochádzajú
 z obdobia od posledného zostavenia informačného bulletinu.
 
-Aby profil používateľa reflektoval meniace sa záujmy používateľa v čase, zavedieme pri zostavovaní profilu z používateľovej
+Aby profil používateľa reflektoval meniace sa záujmy používateľa v čase, zaviedli sme pri zostavovaní profilu z používateľovej
 aktivity exponenciálny \textit{faktor úpadku} (angl.~\textit{decay factor}):
 $$y_{n+t} = y_n (1 - d)^t$$
 
@@ -215,10 +216,10 @@ $d$ -- percentuálny pokles danej hodnoty; vypočíta sa ako podiel množstva po
 
 \section{Návrh metódy diverzifikácie odporúčaní}
 
-Diverzifikácia obsahu personalizovaného informačného bulletinu sa bude vykonávať ešte pred samotným zostavovaním
-zoznamu odporúčaní formou pre-filteru. Diverzifikácia bude spočívať vo výbere \textit{značiek} a \textit{tém}, pričom
-následne v kroku zostavovania zoznamov odporúčaní sa bude pre každý zoznam uvažovať len obsah prislúchajúci do danej
-značky alebo témy. Okrem výberu značiek a tém bude diverzifikácia aplikovaná aj pri následnom výbere položiek z jednotlivých
+Diverzifikácia obsahu personalizovaného informačného bulletinu sa vykonávaa ešte pred samotným zostavovaním
+zoznamu odporúčaní formou pre-filteru. Diverzifikácia spočíva vo výbere \textit{značiek} a \textit{tém}, pričom
+následne v kroku zostavovania zoznamov odporúčaní sa pre každý zoznam uvažuje len obsah prislúchajúci do danej
+značky alebo témy. Okrem výberu značiek a tém je diverzifikácia aplikovaná aj pri následnom výbere položiek z jednotlivých
 zoznamov do výsledného zoznamu odporúčaní.
 
 Tento prístup k diverzifikácii sme zvolili okrem jeho prirodzenosti aj z dôvodu jeho veľmi dobrej škálovateľnosti,
@@ -231,22 +232,22 @@ Cieľom našej práce je vyhodnotiť dopad diverzifikácie odporúčaní na pers
 Za týmto účelom sme navrhli metódu tématického vzorkovania \textit{(angl. Thematic sampling)}.
 
 
-\subsection{Metóda tématického vzorkovania}
+\textbf{Metóda tématického vzorkovania}\\
 \label{sec:thematic-sampling}
 Pri návrhu tejto metódy sme sa inšpirovali rovnomennou metódou z~\cite{Szpektor2013}, ktorú sme prispôsobili
 podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilustruje schéma na obrázku~\ref{fig:tematic-sampling}.
 \begin{my_enumerate}
-\item{Pre každého používateľa vyberieme náhodne z jeho profilu $\left\lceil\frac{n}{2}\right\rceil$~značiek
-    a~$\left\lfloor\frac{n}{2}\right\rfloor$~tém, kde $n$ je počet položiek vo výslednom zozname. Pri výbere sa obmedzíme na značky a témy,
-    ktoré spadajú do štvrtého kvartilu, najmenej však vyberáme z piatich. Potlačíme tak značky a témy, ktoré majú pre používateľa nízku relevanciu.}
+\item{Pre každého používateľa vyberáme náhodne z jeho profilu $\left\lceil\frac{n}{2}\right\rceil$~značiek
+    a~$\left\lfloor\frac{n}{2}\right\rfloor$~tém, kde $n$ je počet položiek vo výslednom zozname. Pri výbere sa obmedzujeme na značky a témy,
+    ktoré spadajú do štvrtého kvartilu, najmenej však vyberáme z piatich. Potláčame tak značky a témy, ktoré majú pre používateľa nízku relevanciu.}
 \item{
     Prostredníctvom vyššie opísanej metódy (kapitola~\ref{design:rec-retrieval}) sa pre každú takúto značku a tému
-    následne zostaví zoznam $n$ odporúčaní, pričom sa budú uvažovať len otázky prislúchajúce tejto téme alebo značke.}
+    následne zostavuje zoznam $n$ odporúčaní, pričom sa uvažujú len otázky prislúchajúce tejto téme alebo značke.}
 \item{
     Následne náhodne vyberáme vzorky z jednotlivých zoznamov do výsledného zoznamu odporúčaní, pričom pravdepodobnosť
     výberu otázky z určitého zoznamu je proporčná k relevancii tohto zoznamu pre daného používateľa.}
 \item{
-    Konkrétne otázky do výsledného zoznamu odporúčaní z jednotlivých zoznamov sa budú vyberať z~$m$ najrelevantnejších otázok daného zoznamu,
+    Konkrétne otázky do výsledného zoznamu odporúčaní z jednotlivých zoznamov sa vyberajú z~$m \times n$ najrelevantnejších otázok daného zoznamu,
     pričom $m$ je relatívna relevancia tohto zoznamu.}
 \end{my_enumerate}
 
@@ -256,12 +257,12 @@ podmienkam špecifickým pre našu prácu. Proces tématického vzorkovania ilus
 \end{figure}
 
 Pre použitie práve takto navrhnutej metódy diverzifikácie sme sa rozhodli z viacerých dôvodov. Dôležitým faktorom bola
-jej veľmi dobrá škálovateľnosť, nakoľko umožňuje už v prvom kroku obmedziť množinu otázok, z ktorých sa budú vyberať odporúčania.
+jej veľmi dobrá škálovateľnosť, nakoľko umožňuje už v prvom kroku obmedziť množinu otázok, z ktorých sa vyberajú odporúčania.
 To je veľmi dôležité najmä v prípade systémov s veľkým množstvom obsahu, akými je aj platforma Stack Exchange.
 V~súvislosti s možnosťou škálovania nám tiež z preštudovaných metód diverzifikácie príde metóda tématického vzorkovania
 najprirodzenejším prístupom k diverzifikácii odporúčaní. V~neposlednom rade zavážil aj fakt, že pôvodná metóda,
 ktoru je naša metóda inšpirovaná, bola v minulosti úspešne otestovaná v nekontrolovanom online experimente
-v CQA systéme Yahoo! Answers.
+v CQA systéme Yahoo! Answers~\cite{Szpektor2013}.
 
 \section{Zhrnutie}
 

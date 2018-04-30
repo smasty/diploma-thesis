@@ -2,8 +2,8 @@
 \newpage
 \chapter{StackLetter -- personalizovaný informačný bulletin pre Stack Exchange}
 
-\textit{StackLetter} je systém pre vytváranie a rozosielanie personalizovaných informačných bulletinov vrámci platformy
-Stack Exchange. Tento systém vznikol ako súčasť spolupráce autora tejto práce a Bc. Matúša Saláta~\cite{Salat2018} vrámci
+\textit{StackLetter} je systém pre vytváranie a rozosielanie personalizovaných informačných bulletinov v rámci platformy
+Stack Exchange. Tento systém vznikol ako súčasť spolupráce autora tejto práce a Bc. Matúša Saláta~\cite{Salat2018} v rámci
 dvoch diplomových prác riešených v akademickom roku 2016/17 a 2017/18. Celý systém sa skladá
 z viacerých spolupracujúcich modulov, ktoré však boli vyvíjané samostatne a sú od seba navzájom nezávislé. Rozdelenie
 systému na nezávislé moduly umožňuje rýchlejší vývoj, ako aj možnosť jednoduchého rozširovania systému v budúcnosti.
@@ -68,6 +68,10 @@ Modul pre personalizované odporúčanie je navrhnutý ako samostatný modul, kt
 s modulom pre generovanie a odosielanie informačných bulletinov. Vďaka tomu je možné do budúcnosti jednoducho nahradiť
 tento modul iným modulom bez potreby výrazných zásahov do existujúcich častí systému.
 
+Každý informačný bulletin sa skladá z troch sekcií, ktoré sú vyberané personalizovane pre jednotlivých používateľov.
+Zoznam všetkých dostupných sekcií a aj výber sekcií pre konkrétneho používateľa je témou práce spolužiaka Matúša Saláta\cite{Salat2018},
+preto sa mu v tejto práci nevenujeme.
+
 \subsection{Zostavenie LDA a TF-IDF modelov}
 
 \textbf{Slovník}\\
@@ -85,7 +89,7 @@ hodnotu $k$ (počet zhlukov) sme vyberali z intervalu $<20,100>$. Pre každú ho
 
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.53]{silhouette}
-\caption{Siluetový koeficient vzhľadom na $K$. \label{fig:silhouette}}\end{center}
+\caption{Siluetový koeficient vzhľadom na $K$ -- počet zhlukov. \label{fig:silhouette}}\end{center}
 \end{figure}
 
 LDA model sme natrénovali na vzorke stotisíc náhodne zvolených otázok zo Stack Overflow, pričom sme využili slovník výrazov
@@ -102,14 +106,14 @@ bulletinom. Využíva sa implementácia \textit{TfidfTransformer} z~knižnice \t
 
 \textbf{Profil otázky}\\
 Profil otázky sa skladá z troch vektorov: 1) vektor značiek (tagov), ktorými je otázka označená, 2) vektor reprezentujúci
-distribúciu otázky vrámci LDA tém a 3) TF vektor. Vektor značiek sa vytvára za behu priamo požiadavkou do databázy. TF vektor
+distribúciu otázky v rámci LDA tém a 3) TF vektor. Vektor značiek sa vytvára za behu priamo požiadavkou do databázy. TF vektor
 sa tiež vytvára až za behu z textu otázky, nakoľko sa jedná o veľmi rýchlu operáciu. Vektor distribúcie LDA tém sa vytvára
 vždy pri vzniku novej otázky, alebo po interakcii používateľa s otázkou, pre ktorú ešte nebol vytvorený. Tento vektor
 sa po vytvorení ukladá do databázy. Vytváranie profilov pre novo vzniknuté otázky sa vykonáva raz denne.
 
 \textbf{Profil používateľa}\\
 Profil používateľa sa nevytvára za behu, ale sa perzistuje v binarizovanej podobe do súboru, odkiaľ sa v prípade použitia
-načítava. Profil používateľa sa delí na podporfily záujmu a expertízy, pričom tie sa vytvárajú z profilov otázok, s ktorými
+načítava. Profil používateľa sa delí na podprofily záujmu a expertízy, pričom tie sa vytvárajú z profilov otázok, s ktorými
 používateľ interagoval.
 
 Každý podprofil sa skladá z vektoru značiek, ktorý predstavuje relatívne zastúpenie značiek v otázkach, s ktorými používateľ interagoval,
@@ -119,8 +123,12 @@ a matice TF vektorov z profilov príslušných otázok. Z tejto matice sa násle
 \textbf{Aktualizácia profilov používateľov}\\
 Profil používateľa sa aktualizuje v pravidelných intervaloch na základe jeho preferencie prijímania informačných bulletinov, teda
 denne alebo týždenne. Pre zachytenie meniacich sa záujmov používateľa v čase (viď kapitola~\ref{design:freshness}) sa využíva
-faktor úpadku, ktorý sa počíta na základe relatívneho počtu aktivity za obdobie od poslednej aktualizácie modelu voči
-celkovému množstvu používateľovej aktivity.
+exponenciálny faktor úpadku: $df = (1-d)^t$.
+
+Čas ($t$) sa udáva ako počet aktualizácií profilu, a percentuálny pokles ($d$)
+sa vypočíta ako podiel množstva používateľovej aktivity od poslednej aktualizácie profilu a celkového množstva používateľovej aktivity.
+Množstvo používateľovej aktivity sa počíta s príslušnými váhami za jednotlivé aktivity (viď kapitola~\ref{design:userprofile}).
+Faktor úpadku sa počíta zvlášť pre oba používateľské podprofily.
 
 Pri aktualizácii profilu používateľa sa najprv týmto faktorom úpadku prenásobia vektory reprezentujúce doterajšiu aktivitu
 a následne sa k nim prirátajú hodnoty z obdobia od poslednej aktualizácie. Vektory značiek a LDA tém sa následne nanovo
@@ -160,8 +168,7 @@ Modul pre personalizované odporúčanie podporuje dve metódy pre zostavenie zo
 odporúčanie a personalizované odporúčanie s diverzifikačnou metódou tématického vzorkovania. Tieto dve metódy sme využili
 pri overení našich hypotéz prostredníctvom A/B testu (viď kapitola~\ref{sec:experiment}).
 
-\textbf{Personalizované odporúčanie}\\
-\label{impl:pers-method}
+\textbf{Personalizované odporúčanie}\label{impl:pers-method}\\
 Pri personalizovanom odporúčaní $n$ položiek je proces pomerne priamočiary: na základe sekcie informačného bulletinu
 sa vyberie príslušný podprofil používateľa, z ktorého sa následne vyberie $n$ najrelevantnejších značiek
 a $\left\lceil\frac{n}{2}\right\rceil$ najrelevantnejších LDA tém. Potom sa z databázy vyberú všetky otázky, položené
@@ -186,7 +193,7 @@ viackrát.
 
 \section{Charakteristika dát}
 
-Našu prácu sme sa rozhodli overiť nad dátami z komunity \textit{Stack Overflow},
+Našu prácu sme sa rozhodli realizovať nad dátami z komunity \textit{Stack Overflow},
 nakoľko je táto komunita zameraná na doménu, v ktorej máme hlbšie vedomosti a teda vieme lepšie posúdiť správnosť
 odporúčania v tejto doméne. Navrhnuté riešenie však nie je špecifické pre túto komunitu a je možné ho nasadiť v rámci
 celej platformy Stack Exchange, prípadne na iných CQA systémoch s podobnou štruktúrou.
@@ -225,7 +232,8 @@ prostedníctvom verejného API poskytovaného platformou Stack Exchange.
   \item{\textit{Votes.xml} -- Obsahuje anonymizované informácie o hlasoch príspevkov.}
 \end{my_itemize}
 
-Nakoľko dátový archív komunity Stack Overflow má pre naše možnosti neúnosnú veľkosť (cca 200GB dát vo formáte XML),
+Dátový archív komunity Stack Overflow poskytuje všetok obsah od vzniku systému (cca 200GB dát vo formáte XML). Nakoľko
+však pre naše účely (zostavenie slovníka výrazov, natrénovanie LDA tém) nie je potrebný celý archív,
 rozhodli sme sa použiť len obmedzené množstvo archívnych dát, konkrétne len príspevky od 1.6.2017.
 Okrem nich boli tiež stiahnuté všetky príspevky, s ktorými v minulosti prišli do kontaktu odoberatelia nášho informačného
 bulletinu. Keďže informačné bulletiny majú charakter periodického média s veľkým dôrazom na aktuálnosť obsahu, toto

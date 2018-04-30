@@ -23,7 +23,16 @@ medzi ktorými boli prítomní okrem iných aj úplni nováčikovia bez akejkoľ
 a dlhodobo rešpektovaní členovia komunity. Používatelia mali pri registrácii možnosť vybrať si buď denný alebo týždenný
 informačný bulletin. Túto voľbu tiež mohli kedykoľvek počas experimentu zmeniť.
 
-\textbf{TODO} -- GRAF - podiel daily/weekly subscriberov.
+\begin{figure}[H]\begin{center}
+\includegraphics[scale=0.48]{subscriber-doughnut}
+\caption{Podiel a počet odoberateľov variant informačného bulletinu.\label{fig:subscriber-chart}}\end{center}
+\end{figure}
+
+Systém StackLetter sme propagovali všetkými nami dostupnými spôsobmi: prostredníctvom portálu StackApps\footnote{\url{https://stackapps.com}},
+ktorý slúži na prezentáciu aplikácií využívajúcich API platformy Stack Exchange, taktiež prostredníctvom komunitných portálov
+Reddit\footnote{\url{https://www.reddit.com/r/stackoverflow/}} a Hacker News\footnote{\url{https://news.ycombinator.com/}},
+osobne na fakulte a tiež vo výskumnej skupine \textit{PeWe datalys}\footnote{\url{https://www.pewe.sk/datalys}}.
+
 
 \section{Metodológia experimentu}
 Experiment prebiehal formou A/B testovania. Na rozdiel od štandardného A/B testovania, v ktorom sa používatelia rozdelia
@@ -33,7 +42,7 @@ do dvoch alebo viacerých skupín, sme náš test vykonávali na báze striedani
 \textbf{1. Kontrolná skupina}\\
 V prvej fáze experimentu, od 9. novembra 2017 do 11. marca 2018, sme používateľom generovali informačný bulletin len
 prostredníctvom triviálnej metódy odporúčania, ktorá vyberala otázky označené značkami, v ktorých v minulosti používateľ
-položil otázku, ponúkol odpoveď alebo okomentoval príspevok. Dáta z tejto skupiny slúžili ako počiatočné dáta pre porovnanie
+položil otázku, ponúkol odpoveď alebo okomentoval príspevok. Dáta z tohto časového obdobia slúžili ako kontrolná skupina pre porovnanie
 s ostatnými metódami.
 
 Od 12. marca 2018 sme nasadili metódy vytvárania odporúčaní opisované v tejto práci. Metódy generovania informačných bulletinov
@@ -50,7 +59,7 @@ vzorkovania, ako aj metódy pre zabezpečenie aktuálnosti odporúčaného obsah
 
 A/B testovanie formou striedania metód nám umožnilo vyhnúť sa problému s nerovnomerne rozloženými používateľmi v jednotlivých
 skupinách z pohľadu ich aktivity, a tiež nespôsobilo problém pri postupne sa vyvíjajúcom počte používateľov.
-Naopak ako potencíalny problém, s~ktorým treba pri takomto riešení počítať, sa ukázalo prirodzené postupné znižovanie
+Naopak ako potenciálny problém, s~ktorým treba pri takomto riešení počítať, sa ukázalo prirodzené postupné znižovanie
 záujmu a~aktivity používateľov počas trvania experimentu.
 
 
@@ -95,79 +104,10 @@ predpokladali čiastočný pokles metrík relevancie odporúčaní (Precision@N,
 
 \section{Vyhodnotenie výsledkov experimentu}
 
-\textbf{Presnosť odporúčaní -- Precision@N}\\
-Podľa očakávania dosiahla metóda personalizovaného odporúčania výrazne lepšie výsledky pozitívnej predikčnej hodnoty
-ako triviálne odporúčanie (viď tabuľka~\ref{tab:pan}), konkrétne približne dvojnásobné. Rovnako podľa očakávania mala
-metóda diverzifikácie za dôsledok zníženie presnosti odporúčaní, ktoré však boli aj naďalej výrazne lepšie,
-ako v prípade triviálnej metódy.
-
-\begin{table}[H]
-\centering
-\caption{Priemerné hodnoty Precision@N.}
-\label{tab:pan}
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-                           & \textbf{N = 1} & \textbf{N = 2} & \textbf{N = 3} & \textbf{N = 4} & \textbf{N = 5} \\ \hline
-\textbf{Kontrolná skupina} & 0.0266         & 0.0235         & 0.0233         & 0.0232         & 0.0230         \\ \hline
-\rowcolor[HTML]{32CB00}
-\textbf{Metóda A}          & 0.0546         & 0.0506         & 0.0485         & 0.0449         & 0.0473         \\ \hline
-\textbf{Metóda B}          & 0.0361         & 0.0356         & 0.0301         & 0.0292         & 0.0274         \\ \hline
-\end{tabular}
-\end{table}
-
-
-\textbf{Užitočnosť odporúčaní -- DCG}\\
-Metriku DCG sme pre triviálnu metódu odporúčania nepočítali, nakoľko táto metóda nepočítala konkrétne hodnoty relevancie
-jednotlivých položiek. Dopad diverzifikačnej metódy tématického vzorkovania na celkovú užitočnosť zoznamu odporúčaní sa ukázal
-ako zanedbateľný.
-
-\begin{table}[H]
-\centering
-\caption{Priemerné hodnoty DCG na pozícii $p$.}
-\label{tab:dcgn}
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-                  & \textbf{p = 1} & \textbf{p = 2} & \textbf{p = 3} & \textbf{p = 4} & \textbf{p = 5} \\ \hline
-\rowcolor[HTML]{32CB00}
-\textbf{Metóda A} & 1.02           & 1.66           & 2.17           & 2.61           & 3.00           \\ \hline
-\textbf{Metóda B} & 1.01           & 1.65           & 2.16           & 2.60           & 2.98           \\ \hline
-\end{tabular}
-\end{table}
-
-
-\textbf{Spokojnosť používateľov -- CTR a používateľská aktivita}\\
-\textbf{TODO}, v skratke:\\
--- Hypoteza 1 sa potvrdila, pouzivatelia preferuju personalizovany newsletter, CTR je takmer 2.5x, Aktivita takmer 3.5x\\
--- Hypoteza 2 sa nepotvrdila, pouzivatelia vnimaju diverzifikaciu negativne, z toho vyplyva zvysene mnozstvo negativnej spatnej vazby
-a znizenie urovne CTR (voci personalizovanemu). Stale lepsie ako nepersonalizovane/trivialne.\\
--- Udaje su statisticky signifikantne, vid. analyza rozptylu - ANOVA.\\
-Z toho vyplyva: pouzivatelia maju radi filtracnu bublinu v pripade newslettrov. (Ale negeneralizovat privelmi!)
-
-\begin{table}[H]
-\centering
-\caption{Priemerné hodnoty CTR a používateľskej aktivity.}
-\label{tab:ctr}
-\begin{tabular}{|l|c|c|}
-\hline
-                           & \textbf{CTR} & \textbf{\begin{tabular}[c]{@{}c@{}}Používateľská\\ aktivita\end{tabular}} \\ \hline
-\textbf{Kontrolná skupina} & 0.024        & 0.036             \\ \hline
-\rowcolor[HTML]{32CB00}
-\textbf{Metóda A}          & 0.058        & 0.123             \\ \hline
-\textbf{Metóda B}          & 0.034        & 0.098             \\ \hline \hline
-\multicolumn{3}{|c|}{\textbf{ANOVA}}                          \\ \hline
-\textbf{F-value}           & 12.69        & 34.14             \\ \hline
-\textbf{P-value}           & $3×10^{-6}$  & $2×10^{-15}$      \\ \hline
-\end{tabular}
-\end{table}
-
-
-\subsection{Aktivita používateľov}
-
-Aktivita používateľov v informačnom bulletine sa ukázala ako problémový faktor nášho experimentu. Veľká časť používateľov
-bola totiž aktívna iba počas prvých dní alebo týždňov od registrácie, a ich aktivita postupom času klesala, ako to
-naznačuje aj trendová čiara v grafe~\ref{fig:user-act-hist}.
-Napriek tomu sa nám podarilo získať dostatočné množstvo dát o aktivite používateľov na to, aby sme vyhodnotili úspešnosť
-experimentu (viď tabuľka~\ref{tab:user-act}).
+V realizovanom online nekontrolovanom experimente, ktorý prebiehal od 9. novembra 2017 a v ktorom boli nasadené navrhnuté
+metódy od 12. marca 2018, sa celkovo generovali informačné bulletiny pre 40 používateľov. Počas trvania experimentu
+sa z odoberania informačného bulletinu odhlásili traja používatelia. Podrobnejšie štatistiky experimentu uvádza tabuľka
+\ref{tab:user-act}.
 
 \begin{table}[h]
 \centering
@@ -187,21 +127,114 @@ Odhlásenia informačného bulletinu &    3  \\\hline
 \end{tabular}
 \end{table}
 
+\footnotetext{Počet otvorení informačného bulletinu môže byť skreslený, nakoľko viaceré e-mailové klienty blokujú
+zobrazenie obrázkov použitých na vyhodnotenie otvorenia e-mailu. Jedná sa tak o spodnú hranicu reálneho počtu.}
+
+\subsection{Aktivita používateľov}
+
+Aktivita používateľov v informačnom bulletine sa ukázala ako problémový faktor nášho experimentu. Veľká časť používateľov
+bola totiž aktívna iba počas prvých dní alebo týždňov od registrácie, a ich aktivita postupom času klesala, ako to
+naznačuje aj trendová čiara v grafe~\ref{fig:user-act-hist}. Zvolená metodológia striedania metód po týždňoch však tento
+problém do značnej miery eliminovala,
+vďaka čomu sa nám podarilo získať dostatočné množstvo dát o aktivite používateľov na to, aby sme vyhodnotili úspešnosť
+experimentu (viď tabuľka~\ref{tab:user-act}).
+
+
 \begin{figure}[H]\begin{center}
 \includegraphics[scale=0.37]{user-activity-hist}
 \caption{Priemerná aktivita používateľov v jednotlivých dňoch. \label{fig:user-act-hist}}\end{center}
 \end{figure}
 
-\footnotetext{Počet otvorení informačného bulletinu môže byť skreslený, nakoľko viaceré e-mailové klienty blokujú
-zobrazenie obrázkov použitých na vyhodnotenie otvorenia e-mailu. Jedná sa tak o spodnú hranicu reálneho počtu.}
+
+
+\subsection{Vyhodnotenie sledovaných metrík}
+
+\textbf{Presnosť odporúčaní -- Precision@N}\\
+Podľa očakávania dosiahla metóda personalizovaného odporúčania výrazne lepšie výsledky pozitívnej predikčnej hodnoty
+ako triviálne odporúčanie (viď tabuľka~\ref{tab:pan}), konkrétne približne dvojnásobné. Rovnako podľa očakávania mala
+metóda diverzifikácie za dôsledok zníženie presnosti odporúčaní, ktoré však boli aj naďalej výrazne lepšie,
+ako v prípade triviálnej metódy.
+
+\begin{table}[H]
+\centering
+\caption{Priemerné hodnoty Precision@N.}
+\label{tab:pan}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+                           & \textbf{N = 1}  & \textbf{N = 2}  & \textbf{N = 3}  & \textbf{N = 4}  & \textbf{N = 5}  \\ \hline
+\textbf{Kontrolná skupina} & 0.0266          & 0.0235          & 0.0233          & 0.0232          & 0.0230          \\ \hline
+\textbf{Metóda A}          & \textbf{0.0546} & \textbf{0.0506} & \textbf{0.0485} & \textbf{0.0449} & \textbf{0.0473} \\ \hline
+\textbf{Metóda B}          & 0.0361          & 0.0356          & 0.0301          & 0.0292          & 0.0274          \\ \hline
+\end{tabular}
+\end{table}
+
+
+\textbf{Užitočnosť odporúčaní -- DCG}\\
+Metriku DCG sme pre triviálnu metódu odporúčania nepočítali, nakoľko táto metóda nepočítala konkrétne hodnoty relevancie
+jednotlivých položiek. Dopad diverzifikačnej metódy tématického vzorkovania na celkovú užitočnosť zoznamu odporúčaní sa ukázal
+ako zanedbateľný.
+
+\begin{table}[H]
+\centering
+\caption{Priemerné hodnoty DCG na pozícii $p$.}
+\label{tab:dcgn}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+                  & \textbf{p = 1} & \textbf{p = 2} & \textbf{p = 3} & \textbf{p = 4} & \textbf{p = 5} \\ \hline
+\textbf{Metóda A} & \textbf{1.02}  & \textbf{1.66}  & \textbf{2.17}  & \textbf{2.61}  & \textbf{3.00}  \\ \hline
+\textbf{Metóda B} & 1.01           & 1.65           & 2.16           & 2.60           & 2.98           \\ \hline
+\end{tabular}
+\end{table}
+
+
+\textbf{Spokojnosť používateľov -- CTR a používateľská aktivita}\\
+Podľa našich predpokladov z hypotézy 1 sa potvrdilo, že zavedenie personalizovaného odporúčania do informačného bulletinu
+CQA systému viedlo k zvýšeniu miery jeho používania a aj celkovej používateľskej aktivity. Hodnoty CTR dosiahli v metóde A
+(personalizovaný informačný bulletin) takmer 2,5-násobok voči kontrolnej skupine, celková používateľská aktivita narástla
+až na takmer 3,5-násobok.
+
+Predpoklady z hypotézy 2, ktorá hovorila o zvýšení používateľskej aktivity po aplikovaní diverzifikácie, sa v našom
+experimente nepotvrdili. Používatelia očakávali personalizované odporúčania, a preto akúkoľvek diverzifikáciu vnímali negatívne,
+čo sa prejavilo vo zvýšenom množstve záporných hodnotení položiek prostredníctvom explicitnej spätnej väzby.
+Napriek tomu metóda B dosiahla o 42\% lepšie výsledky v metrike CTR voči kontrolnej skupine, a 2,7-násobný nárast v celkovej
+aktivite, spôsobený prevažne spomínanou explicitnou spätnou väzbou na položky, ktoré používatelia vnímali ako nerelevantné.
+
+Namerané hodnoty týchto metrík sme overili prostredníctvom analýzy rozptylu (ANOVA), ktorá potvrdila, že sú štatisticky
+signifikantné.
+
+Výsledky týchto metrík ukazujú, že používatelia, ktorí boli súčasťou nášho online experimentu nevnímajú v prípade
+informačných bulletinov uzavretie do \textit{filtračnej bubliny} ako problém, ale naopak ako žiadaný stav.
+
+\begin{table}[H]
+\centering
+\caption{Priemerné hodnoty CTR a používateľskej aktivity.}
+\label{tab:ctr}
+\begin{tabular}{|l|c|c|}
+\hline
+                           & \textbf{CTR}   & \textbf{\begin{tabular}[c]{@{}c@{}}Používateľská\\ aktivita\end{tabular}} \\ \hline
+\textbf{Kontrolná skupina} & 0.024          & 0.036           \\ \hline
+\textbf{Metóda A}          & \textbf{0.058} & \textbf{0.123}  \\ \hline
+\textbf{Metóda B}          & 0.034          & 0.098           \\ \hline \hline
+\multicolumn{3}{|c|}{\textbf{ANOVA}}                          \\ \hline
+\textbf{F-value}           & 12.69        & 34.14             \\ \hline
+\textbf{P-value}           & $3×10^{-6}$  & $2×10^{-15}$      \\ \hline
+\end{tabular}
+\end{table}
 
 
 \subsection{Dotazník odoberateľov}
 
-\textbf{TODO}\\
--- Odpovedalo 27.5\% odoberatelov\\
--- Obsah sa im pacil, 63\% si vsimlo personalizaciu, vsetci ju povazuju za useful.\\
--- Nevedia velmi posudit ci bol pre nich obsah relevantny (63\% dalo strednu hodnotu), len 4 dali vyssiu.\\
--- Vsetci povazuju personalizovane newslettre za very good idea\\
--- 70\% sa priznalo ze neboli zrovna aktivni (2-4/10), 45\% si mysli ze boli relativne aktivni (7-8/10), nikto sa nesiel pretrhnut (8+).\\
--- Samozrjeme vysledky mozu byt do urcitej miery skreslene, kedze neaktivni nevyplnaju ani dotaznik.
+Súčasťou vyhodnotenia bol aj dotazník pre odoberateľov informačného bulletinu. Dotazník od 21. apríla 2018 vyplnilo 27.5\%
+odoberateľov. Celkovo boli odoberatelia na základe odpovedí z dotazníku spokojní s ponúkaným obsahom. 63\% z nich si všimlo,
+že obsah bol personalizovaný a všetci respondenti považujú personalizáciu obsahu informačných bulletinov za užitočnú a za veľmi
+dobrý nápad.
+
+Odoberatelia nevedeli subjektívne posúdiť, či bol pre nich ponúkaný obsah relevantný, väčšina z nich zvolila prostrednú možnosť.
+55\% respondentov označilo subjektívne svoju aktivitu za podpriemernú, 45\% z nich sa označilo za mierne aktívnejších.
+
+Výsledky z dotazníku samozrejme môžu byť do určitej miery skreslené, keďže v nich respondenti prezentujú svoje subjektívne
+postoje. Zároveň predpokladáme, že skupina neaktívnych odoberateľov dotazník nevyplnila vôbec, preto ich postoje nemusia
+byť adekvátne zastúpené. Podrobné výsledky dotazníku sú priložené v dokumente v prílohe~\ref{appendix:survey}.
+
+
+\subsection{Diskusia}
